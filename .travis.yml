@@ -12,7 +12,7 @@ install:
     - # source /opt/qt*/bin/qt*-env.sh
 
 script:
-  - ./configure --prefix=/usr
+  - bash ./configure --prefix=/usr
   - make -j$(nproc)
   - make install DESTDIR=$(readlink -f appdir) ; find appdir/
   - wget -c "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage"
