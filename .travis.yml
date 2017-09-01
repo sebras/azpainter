@@ -3,13 +3,8 @@ compiler: gcc
 sudo: require
 dist: trusty
 
-before_install:
-    - # sudo add-apt-repository ppa:beineri/opt-qt59-trusty -y
-    - # sudo apt-get update -qq
-
 install:
     - sudo apt-get -y install automake gcc make libx11-dev libxext-dev libxi-dev libfreetype6-dev libfontconfig1-dev zlib1g-dev libjpeg-dev libpng12-dev
-    - # source /opt/qt*/bin/qt*-env.sh
 
 script:
   - bash ./configure --prefix=/usr
