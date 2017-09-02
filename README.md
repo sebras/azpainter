@@ -1,4 +1,4 @@
-<a href="https://travis-ci.org/Symbian9/azpainter"><img src="https://travis-ci.org/Symbian9/azpainter.svg?branch=master"/></a>
+[![Build Status](https://travis-ci.org/Symbian9/azpainter.svg?branch=master)](https://travis-ci.org/Symbian9/azpainter)
 
 # About
 > AzPainter
