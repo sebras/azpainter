@@ -1,3 +1,5 @@
+<a href="https://travis-ci.org/Symbian9/"><img src="https://travis-ci.org/Symbian9/azpainter.svg?branch=master"/></a>
+
 # About
 > AzPainter
 > Copyright (C) 2013-2017 Azel <azelpg@gmail.com>
