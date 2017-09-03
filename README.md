@@ -1,7 +1,5 @@
-[![Build Status](https://travis-ci.org/Symbian9/azpainter.svg?branch=master)](https://travis-ci.org/Symbian9/azpainter)
+# AzPainter [![Build Status](https://travis-ci.org/Symbian9/azpainter.svg?branch=master)](https://travis-ci.org/Symbian9/azpainter)
 
-# About
-> AzPainter
 > Copyright (C) 2013-2017 Azel <azelpg@gmail.com>
 >
 > http://azsky2.html.xdomain.jp/linux/azpainter.html
