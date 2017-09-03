@@ -1,13 +1,16 @@
-# AzPainter [![Build Status](https://travis-ci.org/Symbian9/azpainter.svg?branch=master)](https://travis-ci.org/Symbian9/azpainter)
+# AzPainter
 
 > Copyright (C) 2013-2017 Azel <azelpg@gmail.com>
 >
 > http://azsky2.html.xdomain.jp/linux/azpainter.html
 
-## Overview
+AzPainter is mainly full color painting software for illustration drawing.
 
-It is mainly full color painting software for illustration drawing.
+## Build status
+[![Build status](https://travis-ci.org/Symbian9/azpainter.svg?branch=master)](https://travis-ci.org/Symbian9/azpainter)
 
+## Packaging status
+[![Packaging status](https://repology.org/badge/vertical-allrepos/azpainter.svg)](https://repology.org/metapackage/azpainter)
 
 ## Operating environment
 
