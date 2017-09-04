@@ -11,7 +11,7 @@ AzPainter is mainly full color painting software for illustration drawing.
   * https://azworldweb.wordpress.com
 * in Russian
   * http://zenway.ru/page/azpainter
-* in Brazilian Portugues
+* in Spanish 
   * https://aznosekai.wordpress.com
 
 ## Packaging status
