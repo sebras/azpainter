@@ -9,10 +9,10 @@ AzPainter is mainly full color painting software for illustration drawing.
 ## Reviews
 * in English
   * https://azworldweb.wordpress.com
+* in Brazilian Portuguese
+  * https://aznosekai.wordpress.com
 * in Russian
   * http://zenway.ru/page/azpainter
-* in Spanish 
-  * https://aznosekai.wordpress.com
 
 ## Packaging status
 AppImage (from `master`): [![Build status](https://travis-ci.org/Symbian9/azpainter.svg?branch=master)](https://travis-ci.org/Symbian9/azpainter)
