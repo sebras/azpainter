@@ -15,7 +15,7 @@ AzPainter is mainly full color painting software for illustration drawing.
   * https://aznosekai.wordpress.com
 
 ## Packaging status
-AppImage: [![Build status](https://travis-ci.org/Symbian9/azpainter.svg?branch=master)](https://travis-ci.org/Symbian9/azpainter)
+AppImage (from `master`): [![Build status](https://travis-ci.org/Symbian9/azpainter.svg?branch=master)](https://travis-ci.org/Symbian9/azpainter)
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/azpainter.svg)](https://repology.org/metapackage/azpainter)
 
