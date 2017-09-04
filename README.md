@@ -16,6 +16,7 @@ AzPainter is mainly full color painting software for illustration drawing.
 
 ## Packaging status
 AppImage: [![Build status](https://travis-ci.org/Symbian9/azpainter.svg?branch=master)](https://travis-ci.org/Symbian9/azpainter)
+
 [![Packaging status](https://repology.org/badge/vertical-allrepos/azpainter.svg)](https://repology.org/metapackage/azpainter)
 
 ## Operating environment
@@ -39,7 +40,6 @@ AppImage: [![Build status](https://travis-ci.org/Symbian9/azpainter.svg?branch=m
 - zlib
 - libpng
 - libjpeg
-
 
 ### Required packages in each distribution
 
@@ -66,7 +66,6 @@ AppImage: [![Build status](https://travis-ci.org/Symbian9/azpainter.svg?branch=m
 * Arch Linux
   > Generally already it has been installed.
 
-
 ## Compile and install
 
 ```
@@ -81,11 +80,9 @@ $ sudo make install-strip
 It will be installed in the `/usr/local` by default.
 When `./configure` to specify at the options, you can change the settings.
 
-
 ## Install to /usr
 
 `$ ./configure --prefix=/usr`
-
 
 ### If you can not find the header files of freetype
 
@@ -98,10 +95,7 @@ $ ./configure --with-freetype-dir=/usr/include/freetype2
 
 `~/.azpainter`
 
-
-
 ## How to use
-
 
 Shortcut to the "graphics" category of the main menu of the desktop
 has been created, you can start from there.
