@@ -19,6 +19,9 @@ AppImage (from `master`): [![Build status](https://travis-ci.org/Symbian9/azpain
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/azpainter.svg)](https://repology.org/metapackage/azpainter)
 
+## Code status
+[![Coverity Scan Build Status](https://scan.coverity.com/projects/13683/badge.svg)](https://scan.coverity.com/projects/symbian9-azpainter)
+
 ## Operating environment
 
 * X Window System (X11R6 or later)
