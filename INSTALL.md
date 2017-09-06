@@ -1,6 +1,6 @@
 ## General
 
-This document is about building **AzPainter** (based on **mlib** toolkit from source code.
+This document is about building **AzPainter** (based on **mlib** toolkit) from source code.
 
 The general build process prerequisites are:
 - Supported platform
