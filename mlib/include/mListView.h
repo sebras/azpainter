@@ -98,6 +98,8 @@ void mListViewSetImageList(mListView *p,mImageList *img);
 mListHeader *mListViewGetHeader(mListView *p);
 int mListViewGetItemNormalHeight(mListView *p);
 int mListViewGetColumnMarginWidth();
+int mListViewCalcAreaWidth(mListView *p,int w);
+int mListViewCalcWidgetWidth(mListView *p,int w);
 
 mListViewItem *mListViewGetItemByIndex(mListView *p,int index);
 mListViewItem *mListViewGetFocusItem(mListView *p);

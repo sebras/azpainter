@@ -420,21 +420,39 @@ static void _event_motion_popup(mListViewArea *p,mEvent *ev)
 
 static void _event_scroll(mListViewArea *p,mEvent *ev)
 {
-	mScrollBar *scrv;
-	int pos;
-	
-	scrv = mScrollViewAreaGetScrollBar(M_SCROLLVIEWAREA(p), TRUE);
-	
-	if(scrv)
-	{
-		pos = scrv->sb.pos;
+	mScrollBar *scr;
+	int pos,dir,n;
 
-		if(ev->scr.dir == MEVENT_SCROLL_DIR_UP)
-			pos -= p->lva.itemH * 3;
-		else
-			pos += p->lva.itemH * 3;
-		
-		if(mScrollBarSetPos(scrv, pos))
+	dir = ev->scr.dir;
+
+	scr = mScrollViewAreaGetScrollBar(M_SCROLLVIEWAREA(p),
+		(dir == MEVENT_SCROLL_DIR_UP || dir == MEVENT_SCROLL_DIR_DOWN));
+	
+	if(scr)
+	{
+		pos = scr->sb.pos;
+
+		switch(dir)
+		{
+			case MEVENT_SCROLL_DIR_UP:
+				pos -= p->lva.itemH * 3;
+				break;
+			case MEVENT_SCROLL_DIR_DOWN:
+				pos += p->lva.itemH * 3;
+				break;
+			case MEVENT_SCROLL_DIR_LEFT:
+			case MEVENT_SCROLL_DIR_RIGHT:
+				n = scr->sb.page >> 1;
+				if(n < 10) n = 10;
+
+				if(dir == MEVENT_SCROLL_DIR_LEFT)
+					pos -= n;
+				else
+					pos += n;
+				break;
+		}
+
+		if(mScrollBarSetPos(scr, pos))
 			mWidgetUpdate(M_WIDGET(p));
 	}
 }
@@ -577,9 +595,7 @@ int _event_handle(mWidget *wg,mEvent *ev)
 		
 		//ホイール
 		case MEVENT_SCROLL:
-			if(ev->scr.dir == MEVENT_SCROLL_DIR_UP
-				|| ev->scr.dir == MEVENT_SCROLL_DIR_DOWN)
-				_event_scroll(p, ev);
+			_event_scroll(p, ev);
 			break;
 
 		case MEVENT_KEYDOWN:

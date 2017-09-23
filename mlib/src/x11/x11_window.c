@@ -270,8 +270,6 @@ void __mWindowMaximize(mWindow *p,int type)
 
 void __mWindowMove(mWindow *p,int x,int y)
 {
-	XWindowChanges wc;
-
 	//非表示時はMAP時にセット
 
 	if(!(p->wg.fState & MWIDGET_STATE_VISIBLE))
@@ -279,23 +277,14 @@ void __mWindowMove(mWindow *p,int x,int y)
 
 	//
 
-	wc.x = x;
-	wc.y = y;
-
-	XReconfigureWMWindow(XDISP, WINDOW_XID(p), MAPP_SYS->screen, CWX | CWY, &wc);
+	XMoveWindow(XDISP, WINDOW_XID(p), x, y);
 }
 
 /** サイズ変更 */
 
 void __mWindowResize(mWindow *p,int w,int h)
 {
-	XWindowChanges wc;
-	
-	wc.width  = w;
-	wc.height = h;
-
-	XReconfigureWMWindow(XDISP, WINDOW_XID(p), MAPP_SYS->screen,
-		CWWidth | CWHeight, &wc);
+	XResizeWindow(XDISP, WINDOW_XID(p), w, h);
 }
 
 /** ポインタをグラブ */
@@ -423,15 +412,24 @@ void __mWindowSetIcon(mWindow *win,mImageBuf *img)
 
 void mWindowSetTitle(mWindow *p,const char *title)
 {
+	Window wid = WINDOW_XID(p);
 	int len;
 
 	len = (title)? strlen(title): 0;
 
-	XChangeProperty(XDISP, WINDOW_XID(p), mX11GetAtom("_NET_WM_NAME"),
+	//タイトルバー
+
+	XChangeProperty(XDISP, wid, mX11GetAtom("_NET_WM_NAME"),
 		MAPP_SYS->atoms[MX11_ATOM_UTF8_STRING], 8, PropModeReplace, (unsigned char *)title, len);
 
-	XChangeProperty(XDISP, WINDOW_XID(p), mX11GetAtom("_NET_WM_ICON_NAME"),
+	mX11SetPropertyCompoundText(wid, mX11GetAtom("WM_NAME"), title, len);
+
+	//タスクバー
+
+	XChangeProperty(XDISP, wid, mX11GetAtom("_NET_WM_ICON_NAME"),
 		MAPP_SYS->atoms[MX11_ATOM_UTF8_STRING], 8, PropModeReplace, (unsigned char *)title, len);
+
+	mX11SetPropertyCompoundText(wid, mX11GetAtom("WM_ICON_NAME"), title, len);
 }
 
 /** D&D を有効にする */
@@ -539,14 +537,19 @@ void mWindowGetFrameWidth(mWindow *p,mRect *rc)
 
 void mWindowGetFrameRootPos(mWindow *p,mPoint *pt)
 {
-	Window frame,parent;
+	Window root,child;
 	int x,y;
+	unsigned int w,h,b,d;
+	mRect rc;
+
+	mWindowGetFrameWidth(p, &rc);
+
+	XGetGeometry(XDISP, WINDOW_XID(p), &root, &x, &y, &w, &h, &b, &d);
 	
-	frame = mX11GetFrameWindow(WINDOW_XID(p));
+	XTranslateCoordinates(XDISP, WINDOW_XID(p), MAPP_SYS->root_window, 0, 0, &x, &y, &child);
 
-	XTranslateCoordinates(XDISP, frame, MAPP_SYS->root_window, 0, 0, &x, &y, &parent);
-
-	pt->x = x, pt->y = y;
+	pt->x = x - rc.x1;
+	pt->y = y - rc.y1;
 }
 
 /** 設定保存用のウィンドウ位置とサイズ取得

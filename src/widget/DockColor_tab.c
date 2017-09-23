@@ -49,13 +49,15 @@ $*/
 
 //----------------
 
+/** バーx3 の共通内容ウィジェット */
+
 typedef struct
 {
 	mWidget wg;
 	mContainerData ct;
 
 	ValueBar *bar[3];
-}_tabct_rgb_hsv;
+}_tabct_barcomm;
 
 enum
 {
@@ -102,7 +104,7 @@ static mContainer *_create_main_container(int size,mWidget *parent,
 	return ct;
 }
 
-/** HSV バーに値セット */
+/** HSV バーx3 に値セット */
 
 static void _set_hsv_bar(ValueBar **bar,int hsvcol)
 {
@@ -136,7 +138,7 @@ static void _set_hsv_bar(ValueBar **bar,int hsvcol)
 
 /** 数値入力 */
 
-static void _rgb_input(_tabct_rgb_hsv *p)
+static void _rgb_input(_tabct_barcomm *p)
 {
 	mStr str = MSTR_INIT;
 	int i,c[3] = {0,0,0};
@@ -170,7 +172,7 @@ static int _rgb_event_handle(mWidget *wg,mEvent *ev)
 	{
 		if(ev->notify.id == 100)
 			//数値入力
-			_rgb_input((_tabct_rgb_hsv *)wg);
+			_rgb_input((_tabct_barcomm *)wg);
 		else
 		{
 			//バーの値変更時
@@ -178,7 +180,7 @@ static int _rgb_event_handle(mWidget *wg,mEvent *ev)
 			int i,c[3];
 
 			for(i = 0; i < 3; i++)
-				c[i] = ValueBar_getPos(((_tabct_rgb_hsv *)wg)->bar[i]);
+				c[i] = ValueBar_getPos(((_tabct_barcomm *)wg)->bar[i]);
 
 			drawColor_setDrawColor(M_RGB(c[0], c[1], c[2]));
 
@@ -193,7 +195,7 @@ static int _rgb_event_handle(mWidget *wg,mEvent *ev)
 
 static void _rgb_change_drawcol(mWidget *wg,int hsvcol)
 {
-	_tabct_rgb_hsv *p = (_tabct_rgb_hsv *)wg;
+	_tabct_barcomm *p = (_tabct_barcomm *)wg;
 	int i,c[3];
 
 	drawColor_getDrawColor_rgb(c);
@@ -206,12 +208,12 @@ static void _rgb_change_drawcol(mWidget *wg,int hsvcol)
 
 mWidget *DockColor_tabRGB_create(mWidget *parent,int id)
 {
-	_tabct_rgb_hsv *p;
+	_tabct_barcomm *p;
 	mWidget *ct;
 	int i,c[3];
 	char m[2] = {0,0}, name[3] = {'R','G','B'};
 
-	p = (_tabct_rgb_hsv *)_create_main_container(sizeof(_tabct_rgb_hsv), parent, _rgb_event_handle);
+	p = (_tabct_barcomm *)_create_main_container(sizeof(_tabct_barcomm), parent, _rgb_event_handle);
 
 	p->wg.id = id;
 	p->wg.param = (intptr_t)_rgb_change_drawcol;
@@ -261,7 +263,7 @@ static int _hsv_event_handle(mWidget *wg,mEvent *ev)
 		int i,c[3];
 
 		for(i = 0; i < 3; i++)
-			c[i] = ValueBar_getPos(((_tabct_rgb_hsv *)wg)->bar[i]);
+			c[i] = ValueBar_getPos(((_tabct_barcomm *)wg)->bar[i]);
 
 		drawColor_setDrawColor(mHSVtoRGB_pac(c[0] / 360.0, c[1] / 255.0, c[2] / 255.0));
 
@@ -276,7 +278,7 @@ static int _hsv_event_handle(mWidget *wg,mEvent *ev)
 
 static void _hsv_change_drawcol(mWidget *wg,int hsvcol)
 {
-	_tabct_rgb_hsv *p = (_tabct_rgb_hsv *)wg;
+	_tabct_barcomm *p = (_tabct_barcomm *)wg;
 
 	_set_hsv_bar(p->bar, hsvcol);
 }
@@ -285,12 +287,12 @@ static void _hsv_change_drawcol(mWidget *wg,int hsvcol)
 
 mWidget *DockColor_tabHSV_create(mWidget *parent,int id)
 {
-	_tabct_rgb_hsv *p;
+	_tabct_barcomm *p;
 	char m[2] = {0,0}, name[3] = {'H','S','V'};
 	int i;
 	double d[3];
 
-	p = (_tabct_rgb_hsv *)_create_main_container(sizeof(_tabct_rgb_hsv), parent, _hsv_event_handle);
+	p = (_tabct_barcomm *)_create_main_container(sizeof(_tabct_barcomm), parent, _hsv_event_handle);
 
 	p->wg.id = id;
 	p->wg.param = (intptr_t)_hsv_change_drawcol;
@@ -300,6 +302,94 @@ mWidget *DockColor_tabHSV_create(mWidget *parent,int id)
 	//バー
 
 	mRGBtoHSV_pac(APP_DRAW->col.drawcol, d);
+
+	for(i = 0; i < 3; i++)
+	{
+		//ラベル
+
+		m[0] = name[i];
+		mLabelCreate(M_WIDGET(p), 0, MLF_MIDDLE, 0, m);
+
+		//バー
+
+		p->bar[i] = ValueBar_new(M_WIDGET(p), 0, MLF_EXPAND_W | MLF_MIDDLE,
+			0, 0, (i == 0)? 359: 255,
+			(i == 0)? (int)(d[0] * 360 + 0.5): (int)(d[i] * 255 + 0.5));
+	}
+
+	return (mWidget *)p;
+}
+
+
+/***************************************
+ * HLS バー
+ ***************************************/
+
+
+/** イベント */
+
+static int _hls_event_handle(mWidget *wg,mEvent *ev)
+{
+	if(ev->type == MEVENT_NOTIFY)
+	{
+		//バーの値変更時
+
+		int i,c[3];
+
+		for(i = 0; i < 3; i++)
+			c[i] = ValueBar_getPos(((_tabct_barcomm *)wg)->bar[i]);
+
+		drawColor_setDrawColor(mHLStoRGB_pac(c[0], c[1] / 255.0, c[2] / 255.0));
+
+		mWidgetAppendEvent_notify(MWIDGET_NOTIFYWIDGET_RAW, wg,
+			0, _NOTIFY_PARAM_RGB, 0);
+	}
+
+	return 1;
+}
+
+/** 描画色変更時 */
+
+static void _hls_change_drawcol(mWidget *wg,int hsvcol)
+{
+	_tabct_barcomm *p = (_tabct_barcomm *)wg;
+	double d[3];
+	int i,n;
+
+	mRGBtoHLS_pac(APP_DRAW->col.drawcol, d);
+
+	for(i = 0; i < 3; i++)
+	{
+		if(i == 0)
+			n = (int)(d[0] * 360 + 0.5);
+		else
+			n = (int)(d[i] * 255 + 0.5);
+	
+		ValueBar_setPos(p->bar[i], n);
+	}
+}
+
+/** タブ内容作成 */
+
+mWidget *DockColor_tabHLS_create(mWidget *parent,int id)
+{
+	_tabct_barcomm *p;
+	char m[2] = {0,0}, name[3] = {'H','L','S'};
+	int i;
+	double d[3];
+
+	p = (_tabct_barcomm *)_create_main_container(sizeof(_tabct_barcomm), parent, _hls_event_handle);
+
+	p->wg.id = id;
+	p->wg.param = (intptr_t)_hls_change_drawcol;
+
+	mContainerSetTypeGrid(M_CONTAINER(p), 2, 5, 5);
+
+	//RGB -> HLS
+
+	mRGBtoHLS_pac(APP_DRAW->col.drawcol, d);
+
+	//バー
 
 	for(i = 0; i < 3; i++)
 	{

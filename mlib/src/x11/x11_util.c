@@ -113,22 +113,32 @@ void mX11SetProperty8(Window id,Atom prop,Atom type,
 
 /** プロパティに COMPOUND_TEXT 文字列セット
  *
- * @param utf8 UTF-8 文字列 */
+ * @param utf8 UTF-8 文字列 (NULL で空文字列) */
 
 void mX11SetPropertyCompoundText(Window id,Atom prop,const char *utf8,int len)
 {
 	XTextProperty tp;
 	wchar_t *pwc;
 
-	pwc = mUTF8ToWide_alloc(utf8, len, NULL);
-	if(!pwc) return;
+	if(!utf8 || len <= 0)
+	{
+		//空にする
+		
+		XChangeProperty(XDISP, id, prop,
+			MAPP_SYS->atoms[MX11_ATOM_COMPOUND_TEXT], 8, PropModeReplace, NULL, 0);
+	}
+	else
+	{
+		pwc = mUTF8ToWide_alloc(utf8, len, NULL);
+		if(!pwc) return;
 
-	if(XwcTextListToTextProperty(XDISP, &pwc, 1, XCompoundTextStyle, &tp) == Success)
-		XSetTextProperty(XDISP, id, &tp, prop);
+		if(XwcTextListToTextProperty(XDISP, &pwc, 1, XCompoundTextStyle, &tp) == Success)
+			XSetTextProperty(XDISP, id, &tp, prop);
 
-	mFree(pwc);
+		mFree(pwc);
 
-	if(tp.value) XFree(tp.value);
+		if(tp.value) XFree(tp.value);
+	}
 }
 
 

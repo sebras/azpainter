@@ -75,7 +75,7 @@ $*/
 
 //----------------------
 
-#define _APP_VERSION_TEXT  "AzPainter ver 2.1.0\n\nCopyright (C) 2013-2017 Azel"
+#define _APP_VERSION_TEXT  "AzPainter ver 2.1.1\n\nCopyright (C) 2013-2017 Azel"
 
 #define _APP_LICENSE_TEXT \
 "AzPainter is free software: you can redistribute it and/or modify\n" \
@@ -1020,7 +1020,7 @@ int _event_handle(mWidget *wg,mEvent *ev)
 	
 		//閉じるボタン
 		case MEVENT_CLOSE:
-			MainWindow_quit(p);
+			MainWindow_quit();
 			break;
 		
 		default:

@@ -215,7 +215,10 @@ static double _hlstorgb_get_rgb(int h,double min,double max)
 }
 
 
-/** HLS -> RGB */
+/** HLS -> RGB
+ *
+ * @param h 0-360
+ * @param l,s 0.0-1.0 */
 
 void mHLStoRGB(int h,double l,double s,int *dst)
 {
@@ -308,5 +311,11 @@ void mRGBtoHLS(int r,int g,int b,double *dst)
 	dst[2] = s;
 }
 
+/** RGB -> HLS */
+
+void mRGBtoHLS_pac(mRgbCol rgb,double *dst)
+{
+	mRGBtoHLS((rgb >> 16) & 0xff, (rgb >> 8) & 0xff, rgb & 0xff, dst);
+}
 
 /* @} */

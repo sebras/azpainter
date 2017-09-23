@@ -82,6 +82,11 @@ mWidget \> mScrollView \> mListView
 - 単一列の場合にエリアの幅を指定したい場合は、width_single に幅の値をセットする (width_single は、0 以下で水平スクロールバーを表示しない)
 - 複数列の場合、テキストはタブで区切る。
 
+<h3>アイテムの独自描画</h3>
+- mListViewItem::draw に描画関数をセットする。
+- 背景 (通常背景、選択時の背景) はすでに描画されている。
+- 左右の余白は自動で付けられるので、描画範囲には余白を除いた部分が入っている。
+
 @ingroup group_widget
 @{
 
@@ -375,6 +380,51 @@ int mListViewGetItemNormalHeight(mListView *p)
 int mListViewGetColumnMarginWidth()
 {
 	return MLISTVIEW_DRAW_ITEM_MARGIN * 2;
+}
+
+/** アイテムの内容の幅から描画エリア全体の幅を計算
+ *
+ * チェック、アイコン、余白が追加される。\n
+ * 水平スクロールサイズを計算したい時などに。 */
+
+int mListViewCalcAreaWidth(mListView *p,int w)
+{
+	w += MLISTVIEW_DRAW_ITEM_MARGIN * 2;
+
+	//チェック
+
+	if(p->lv.style & MLISTVIEW_S_CHECKBOX)
+		w += MLISTVIEW_DRAW_CHECKBOX_SIZE + MLISTVIEW_DRAW_CHECKBOX_SPACE;
+
+	//アイコン
+
+	if(p->lv.iconimg)
+		w += p->lv.iconimg->eachw + MLISTVIEW_DRAW_ICON_SPACE;
+
+	return w;
+}
+
+/** アイテム幅からウィジェット全体の幅を計算
+ *
+ * ウィジェットを固定サイズにしたい時などに。
+ * 
+ * @param itemw チェック/アイコンなどの幅は含まない */
+
+int mListViewCalcWidgetWidth(mListView *p,int w)
+{
+	w = mListViewCalcAreaWidth(p, w);
+
+	//枠
+
+	if(p->sv.style & MSCROLLVIEW_S_FRAME)
+		w += 2;
+
+	//垂直スクロール
+
+	if(p->sv.style & MSCROLLVIEW_S_VERT)
+		w += MSCROLLBAR_WIDTH;
+
+	return w;
 }
 
 
@@ -692,25 +742,12 @@ void mListViewSetWidthAuto(mListView *p,mBool bHint)
 		}
 	}
 
-	maxw += MLISTVIEW_DRAW_ITEM_MARGIN * 2;
-
-	if(p->lv.style & MLISTVIEW_S_CHECKBOX)
-		maxw += MLISTVIEW_DRAW_CHECKBOX_SIZE + MLISTVIEW_DRAW_CHECKBOX_SPACE;
-
-	if(p->lv.iconimg)
-		maxw += p->lv.iconimg->eachw + MLISTVIEW_DRAW_ICON_SPACE;
-
-	p->lv.width_single = maxw;
+	p->lv.width_single = mListViewCalcAreaWidth(p, maxw);
 
 	//推奨サイズセット
 
 	if(bHint)
-	{
-		if(p->sv.style & MSCROLLVIEW_S_FRAME) maxw += 2;
-		if(p->sv.style & MSCROLLVIEW_S_VERT) maxw += MSCROLLBAR_WIDTH;
-	
-		p->wg.hintOverW = maxw;
-	}
+		p->wg.hintOverW = mListViewCalcWidgetWidth(p, maxw);
 
 	//再構成
 

@@ -357,7 +357,7 @@ void _draw_handle(mWidget *wg,mPixbuf *pixbuf)
 	}
 
 	*(pc++) = 12 + p->type;
-	*pc = 255;
+	*pc = -1;
 
 	if((bAngle && p->pos >= 0) || (!bAngle && p->pos >= 1000))
 		n = _SPACE_BAR_LEFT;

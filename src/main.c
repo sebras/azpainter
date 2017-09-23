@@ -378,7 +378,7 @@ int main(int argc,char **argv)
 
 	//翻訳データ
 
-	mAppLoadTranslation(g_deftransdat, NULL, PACKAGE_DATA_DIR "/tr");
+	mAppLoadTranslation(g_deftransdat, NULL, "tr");
 
 	//初期化
 

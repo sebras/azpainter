@@ -27,7 +27,8 @@ $*/
 #include "mContainerDef.h"
 #include "mWidget.h"
 #include "mContainer.h"
-#include "mTab.h"
+#include "mIconButtons.h"
+#include "mImageList.h"
 #include "mDockWidget.h"
 #include "mEvent.h"
 
@@ -56,8 +57,9 @@ typedef struct
 		*wg_colmask,		//色マスク
 		*tab_parent,		//タブの親
 		*contents;	//タブ内容のメインコンテナ
-					/* mWidget::param に描画色変更時の関数ポインタがセットされている */
-	mTab *tab;
+					/* mWidget::param に描画色変更時の関数ポインタ
+					 * (_changecol_func) がセットされている */
+	mIconButtons *iconbtt;
 }DockColor;
 
 //------------------------
@@ -66,7 +68,6 @@ enum
 {
 	WID_DRAWCOL = 100,
 	WID_COLMASK,
-	WID_TAB,
 	WID_TAB_CONTENTS
 };
 
@@ -74,6 +75,7 @@ enum
 {
 	TABNO_RGB,
 	TABNO_HSV,
+	TABNO_HLS,
 	TABNO_HSV_MAP
 };
 
@@ -82,6 +84,8 @@ enum
 	_UPDATE_F_DRAWCOL = 1<<0,
 	_UPDATE_F_TAB_CONTENTS = 1<<1
 };
+
+#define CMDID_ICONBTT_TOP  100
 
 //------------------------
 
@@ -92,6 +96,7 @@ mWidget *DockColorColorMask_new(mWidget *parent,int id);
 /* DockColor_tab.c */
 mWidget *DockColor_tabRGB_create(mWidget *parent,int id);
 mWidget *DockColor_tabHSV_create(mWidget *parent,int id);
+mWidget *DockColor_tabHLS_create(mWidget *parent,int id);
 mWidget *DockColor_tabHSVMap_create(mWidget *parent,int id);
 void DockColor_tabHSVMap_changeTheme(mWidget *wg);
 
@@ -108,8 +113,9 @@ void DockColor_tabHSVMap_changeTheme(mWidget *wg);
 
 static void _create_tab_contents(DockColor *p,mBool relayout)
 {
-	mWidget *(*func[3])(mWidget *,int) = {
-		DockColor_tabRGB_create, DockColor_tabHSV_create, DockColor_tabHSVMap_create
+	mWidget *(*func[])(mWidget *,int) = {
+		DockColor_tabRGB_create, DockColor_tabHSV_create,
+		DockColor_tabHLS_create, DockColor_tabHSVMap_create
 	};
 
 	//現在のウィジェット削除
@@ -155,42 +161,48 @@ static void _change_color(DockColor *p,uint8_t flags,int hsvcol)
 	DockColorWheel_changeDrawColor(hsvcol);
 }
 
+/** 通知イベント */
+
+static void _event_notify(DockColor *p,mEvent *ev)
+{
+	switch(ev->notify.id)
+	{
+		//タブ内容からの通知 (バーなどでの色変更時)
+		//param1: 負の値でRGB描画色、それ以外でHSV値
+		case WID_TAB_CONTENTS:
+			_change_color(p, _UPDATE_F_DRAWCOL, ev->notify.param1);
+			break;
+
+		//描画色/背景色入れ替え
+		case WID_DRAWCOL:
+			_change_color(p, _UPDATE_F_TAB_CONTENTS, -1);
+			break;
+
+		//色マスクからのスポイト時
+		case WID_COLMASK:
+			_change_color(p, _UPDATE_F_DRAWCOL | _UPDATE_F_TAB_CONTENTS, -1);
+			break;
+	}
+}
+
 /** イベント */
 
 static int _event_handle(mWidget *wg,mEvent *ev)
 {
 	DockColor *p = _DOCKCOLOR(wg->param);
 
-	if(ev->type == MEVENT_NOTIFY)
+	switch(ev->type)
 	{
-		switch(ev->notify.id)
-		{
-			//タブ内容からの通知 (バーなどでの色変更時)
-			//param1: 負の値でRGB描画色、それ以外でHSV値
-			case WID_TAB_CONTENTS:
-				_change_color(p, _UPDATE_F_DRAWCOL, ev->notify.param1);
-				break;
+		case MEVENT_NOTIFY:
+			_event_notify(p, ev);
+			break;
 
-			//描画色/背景色入れ替え
-			case WID_DRAWCOL:
-				_change_color(p, _UPDATE_F_TAB_CONTENTS, -1);
-				break;
+		//アイコンボタン
+		case MEVENT_COMMAND:
+			APP_CONF->dockcolor_tabno = ev->cmd.id - CMDID_ICONBTT_TOP;
 
-			//色マスクからのスポイト時
-			case WID_COLMASK:
-				_change_color(p, _UPDATE_F_DRAWCOL | _UPDATE_F_TAB_CONTENTS, -1);
-				break;
-
-			//タブ切り替え
-			case WID_TAB:
-				if(ev->notify.type == MTAB_N_CHANGESEL)
-				{
-					APP_CONF->dockcolor_tabno = ev->notify.param1;
-
-					_create_tab_contents(p, TRUE);
-				}
-				break;
-		}
+			_create_tab_contents(p, TRUE);
+			break;
 	}
 
 	return 1;
@@ -223,8 +235,8 @@ static mWidget *_dock_func_contents(mDockWidget *dockwg,int id,mWidget *parent)
 {
 	DockColor *p = _DC_PTR;
 	mWidget *ct_top,*ct;
+	mIconButtons *ib;
 	int i;
-	const char *tabname[] = {"RGB", "HSV", "MAP"};
 
 	//コンテナ (トップ)
 
@@ -236,7 +248,7 @@ static mWidget *_dock_func_contents(mDockWidget *dockwg,int id,mWidget *parent)
 	ct_top->param = (intptr_t)p;
 	ct_top->margin.top = ct_top->margin.bottom = 4;
 
-	//------ 上部
+	//------ 上部 (描画色/色マスク)
 
 	ct = mContainerCreate(ct_top, MCONTAINER_TYPE_HORZ, 0, 15, MLF_EXPAND_W);
 
@@ -246,20 +258,27 @@ static mWidget *_dock_func_contents(mDockWidget *dockwg,int id,mWidget *parent)
 	p->wg_drawcol = DockColorDrawCol_new(ct, WID_DRAWCOL);
 	p->wg_colmask = DockColorColorMask_new(ct, WID_COLMASK);
 
-	//------ タブ
+	//------ 内容/選択アイコン
 
 	p->tab_parent = ct = mContainerCreate(ct_top, MCONTAINER_TYPE_HORZ, 0, 7, MLF_EXPAND_WH);
 
 	ct->margin.left = ct->margin.right = 2;
 
-	//タブ
+	//ボタン
 
-	p->tab = mTabCreate(ct, WID_TAB, MTAB_S_RIGHT | MTAB_S_HAVE_SEP, MLF_EXPAND_H, 0);
+	ib = p->iconbtt = mIconButtonsNew(0, ct, MICONBUTTONS_S_VERT | MICONBUTTONS_S_DESTROY_IMAGELIST);
 
-	for(i = 0; i < 3; i++)
-		mTabAddItemText(p->tab, tabname[i]);
+	ib->wg.fLayout = MLF_EXPAND_H;
 
-	mTabSetSel_index(p->tab, APP_CONF->dockcolor_tabno);
+	mIconButtonsSetImageList(ib, mImageListLoadPNG("!/coltype.png", 18, -1)); 
+
+	for(i = 0; i < 4; i++)
+		mIconButtonsAdd(ib, CMDID_ICONBTT_TOP + i, i, -1, MICONBUTTONS_ITEMF_CHECKGROUP);
+
+	mIconButtonsSetCheck(ib, CMDID_ICONBTT_TOP + APP_CONF->dockcolor_tabno, 1);
+	mIconButtonsCalcHintSize(ib);
+
+	//内容
 
 	_create_tab_contents(p, FALSE);
 
@@ -308,7 +327,9 @@ void DockColor_changeDrawColor()
 
 /** 描画色変更時 (HSV)
  *
- * カラーホイールからの変更時 */
+ * カラーホイールからの変更時
+ *
+ * @param col  HSV パック値 */
 
 void DockColor_changeDrawColor_hsv(int col)
 {

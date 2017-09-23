@@ -455,6 +455,18 @@ static int _area_event_handle(mWidget *wg,mEvent *ev)
 			}
 			break;
 
+		//ホイール
+		case MEVENT_SCROLL:
+			if(ev->scr.dir == MEVENT_SCROLL_DIR_UP
+				|| ev->scr.dir == MEVENT_SCROLL_DIR_DOWN)
+			{
+				mScrollBarMovePos(p->scr,
+					(ev->scr.dir == MEVENT_SCROLL_DIR_UP)? -3: 3);
+
+				mWidgetUpdate(wg);
+			}
+			break;
+
 		case MEVENT_FOCUS:
 			if(ev->focus.bOut)
 				_grab_release(p, NULL);
@@ -532,7 +544,7 @@ static ColPalArea *_create_area(mWidget *parent)
 	p = (ColPalArea *)mWidgetNew(sizeof(ColPalArea), parent);
 
 	p->wg.fLayout = MLF_EXPAND_WH;
-	p->wg.fEventFilter |= MWIDGET_EVENTFILTER_POINTER;
+	p->wg.fEventFilter |= MWIDGET_EVENTFILTER_POINTER | MWIDGET_EVENTFILTER_SCROLL;
 	p->wg.fState |= MWIDGET_STATE_ENABLE_DROP;
 	p->wg.onSize = _area_on_size;
 	p->wg.draw = _area_draw_handle;

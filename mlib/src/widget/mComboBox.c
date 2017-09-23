@@ -238,6 +238,13 @@ mListViewItem *mComboBoxAddItem(mComboBox *p,const char *text,intptr_t param)
 	return mLVItemMan_addItem(p->cb.manager, 0, text, 0, 0, param);
 }
 
+/** アイテム追加 (テキストは静的) */
+
+mListViewItem *mComboBoxAddItem_static(mComboBox *p,const char *text,intptr_t param)
+{
+	return mLVItemMan_addItem(p->cb.manager, 0, text, 0, MLISTVIEW_ITEM_F_STATIC_TEXT, param);
+}
+
 /** 確保されたアイテム追加 */
 
 void mComboBoxAddItem_ptr(mComboBox *p,mListViewItem *item)
@@ -279,14 +286,14 @@ void mComboBoxAddItems(mComboBox *p,const char *text,intptr_t paramtop)
 	mStrFree(&str);
 }
 
-/** 文字列IDから複数アイテム追加 */
+/** 文字列IDから複数アイテム追加 (テキストは静的扱い) */
 
 void mComboBoxAddTrItems(mComboBox *p,int num,int tridtop,intptr_t paramtop)
 {
 	int i;
 
 	for(i = 0; i < num; i++)
-		mComboBoxAddItem(p, M_TR_T(tridtop + i), paramtop + i);
+		mComboBoxAddItem_static(p, M_TR_T(tridtop + i), paramtop + i);
 }
 
 

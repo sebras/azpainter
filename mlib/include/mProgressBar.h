@@ -70,6 +70,8 @@ void mProgressBarCalcHintHandle(mWidget *p);
 void mProgressBarDrawHandle(mWidget *p,mPixbuf *pixbuf);
 
 mProgressBar *mProgressBarNew(int size,mWidget *parent,uint32_t style);
+mProgressBar *mProgressBarCreate(mWidget *parent,int id,uint32_t style,
+	uint32_t fLayout,uint32_t marginB4);
 
 void mProgressBarSetStatus(mProgressBar *p,int min,int max,int pos);
 void mProgressBarSetText(mProgressBar *p,const char *text);

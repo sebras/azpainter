@@ -78,8 +78,8 @@
  * コンパイル・インストール
 =====================================
 
-$ tar xf azpainter-2.1.0.tar.bz2
-$ cd azpainter-2.1.0
+$ tar xf azpainter-2.1.1.tar.bz2
+$ cd azpainter-2.1.1
 
 $ ./configure
 $ make
@@ -205,3 +205,15 @@ $ sudo make uninstall
 <INSTALLDIR>/share/icons/hicolor/scalable/apps
   azpainter.svg
   application-x-azpainter-apd.svg
+
+
+=====================================
+ * 環境変数
+=====================================
+
+起動時に以下の環境変数が定義されていると、設定などを変更できます。
+
+MLIB_APPDATADIR
+	アプリを動作させるのに必要なデータファイルがある
+	ディレクトリの場所を指定します。
+	デフォルトでは、"<INSTALLDIR>/share/azpainterb" になっています。

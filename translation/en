@@ -1049,7 +1049,7 @@
 +=Image is changed.\nDo you want to save it?
 +=Creation of working directory failed.\nUndo does not work properly.
 +=Would you like to migrate ver.1 brush and pallet data?\n(Gradation data is shared with ver.1)
-+=Because the file does not exist, delete it from history
++=Because the file does not exist, delete it from history.
 
 #--------------------
 # Mask check
@@ -1251,6 +1251,7 @@
 +=Shift...
 
 +=All opaque to perfect opaque
++=HLS adjustment...
 
 ### 表示
 6000=Panel(&P)

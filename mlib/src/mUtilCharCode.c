@@ -299,8 +299,8 @@ int mUTF8ToLocal(const char *src,int srclen,char *dst,int dstlen)
 	uint32_t wc;
 	char mb[MB_CUR_MAX];
 	mbstate_t state;
-	int reslen = 0;
-	size_t ret;
+	int nret,reslen = 0;
+	size_t wret;
 
 	if(srclen < 0) srclen = strlen(src);
 	
@@ -313,27 +313,29 @@ int mUTF8ToLocal(const char *src,int srclen,char *dst,int dstlen)
 	{
 		//UTF8 -> UCS4
 	
-		ret = mUTF8ToUCS4Char(ps, psEnd - ps, &wc, &ps);
-		if(ret < 0) return -1;
-		if(ret > 0) continue;
-		if(wc > WCHAR_MAX) continue;
+		nret = mUTF8ToUCS4Char(ps, psEnd - ps, &wc, &ps);
+
+		if(nret < 0)
+			return -1;
+		else if(nret > 0 || wc > WCHAR_MAX)
+			continue;
 
 		//wchar_t -> local
 
-		ret = wcrtomb(mb, wc, &state);
-		if(ret == -1) continue;
+		wret = wcrtomb(mb, wc, &state);
+		if(wret == (size_t)-1) continue;
 
 		//セット
 		
 		if(dst)
 		{
-			if(reslen + ret > dstlen) break;
+			if(reslen + wret > dstlen) break;
 		
-			memcpy(dst, mb, ret);
-			dst += ret;
+			memcpy(dst, mb, wret);
+			dst += wret;
 		}
 		
-		reslen += ret;
+		reslen += wret;
 	}
 	
 	if(dst && reslen < dstlen) *dst = 0;

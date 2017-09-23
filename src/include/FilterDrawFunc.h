@@ -28,6 +28,7 @@ mBool FilterDraw_color_gamma(FilterDrawInfo *info);
 mBool FilterDraw_color_level(FilterDrawInfo *info);
 mBool FilterDraw_color_rgb(FilterDrawInfo *info);
 mBool FilterDraw_color_hsv(FilterDrawInfo *info);
+mBool FilterDraw_color_hls(FilterDrawInfo *info);
 mBool FilterDraw_color_nega(FilterDrawInfo *info);
 mBool FilterDraw_color_grayscale(FilterDrawInfo *info);
 mBool FilterDraw_color_sepia(FilterDrawInfo *info);

@@ -346,7 +346,7 @@ mWidget *EnvOptDlg_create_btt(mWidget *parent,EnvOptDlgCurData *dat)
 
 	cb = p->cb_btt = mComboBoxCreate(ct2, WID_CB_BTT, 0, 0, 0);
 
-	mComboBoxAddItem(cb, M_TR_T(TRID_BTT_ERASER), 0);
+	mComboBoxAddItem_static(cb, M_TR_T(TRID_BTT_ERASER), 0);
 
 	for(i = 1; i <= CONFIG_POINTERBTT_MAXNO; i++)
 	{

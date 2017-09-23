@@ -175,7 +175,8 @@ static _cmddat g_fcmddat[] = {
 
 	//---- 追加
 
-	{_INTTODAT(4), FilterDraw_alpha_current, _FDF_NODLG_INDEX}	//透明以外を完全不透明に
+	{_INTTODAT(4), FilterDraw_alpha_current, _FDF_NODLG_INDEX},	//透明以外を完全不透明に
+	{g_col_hls, FilterDraw_color_hls, _FDF_PROC_COLOR},		//HLS調整
 };
 
 //-----------------

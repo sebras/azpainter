@@ -57,14 +57,14 @@ struct _ColorWheel
 #define _WGSIZE    (_CENTER * 2 + 1)
 
 #define _HUE_RADIUS_OUT     (_CENTER - 1)
-#define _HUE_RADIUS_IN      70
+#define _HUE_RADIUS_IN      69
 #define _HUE_RADIUS_CURSOR  (_HUE_RADIUS_IN + (_HUE_RADIUS_OUT - _HUE_RADIUS_IN) / 2)
 
 #define _TRI_SV_RADIUS    (_HUE_RADIUS_IN - 2)
 #define _TRI_SV_TOP       (_CENTER - _HUE_RADIUS_IN)
 #define _TRI_SV_BOTTOM    (_CENTER + _HUE_RADIUS_IN)
 
-#define _RECT_SV_RADIUS   47
+#define _RECT_SV_RADIUS   46
 #define _RECT_SV_SIZE     (_RECT_SV_RADIUS * 2 + 1)
 #define _RECT_SV_TOP      (_CENTER - _RECT_SV_RADIUS)
 

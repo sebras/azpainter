@@ -838,7 +838,7 @@ void mDockWidgetSetState(mDockWidget *p,mDockWidgetState *info)
 
 /** タイトルをセット
  *
- * ヘッダ部分に表示される。英小文字とスペースのみ。 */
+ * ヘッダ部分に表示される。 */
 
 void mDockWidgetSetTitle(mDockWidget *p,const char *title)
 {

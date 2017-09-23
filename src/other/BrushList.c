@@ -462,7 +462,7 @@ void BrushList_setRegisteredItem(BrushItem *item)
 		 * [!] item != NULL なら BrushList_setBrushDrawParam() 時に
 		 *     行われるので必要ないが、item == NULL の場合は必要なので実行しておく */
 		
-		_release_drawparam_reg_image(p);
+		_release_drawparam_reg_image();
 	
 		p->regitem = item;
 		p->reg_radius = 0;

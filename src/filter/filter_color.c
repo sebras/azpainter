@@ -481,6 +481,48 @@ mBool FilterDraw_color_hsv(FilterDrawInfo *info)
 	return _color_common(info, _colfunc_hsv);
 }
 
+/** HLS 調整 */
+
+static void _colfunc_hls(FilterDrawInfo *info,int x,int y,RGBAFix15 *pix)
+{
+	int val[3],i;
+
+	for(i = 0; i < 3; i++)
+		val[i] = pix->c[i];
+
+	FilterSub_RGBtoHLS(val);
+
+	for(i = 0; i < 3; i++)
+	{
+		val[i] += info->ntmp[i];
+
+		if(i == 0)
+		{
+			if(val[0] < 0) val[0] += 360;
+			else if(val[0] >= 360) val[0] -= 360;
+		}
+		else
+		{
+			if(val[i] < 0) val[i] = 0;
+			else if(val[i] > 0x8000) val[i] = 0x8000;
+		}
+	}
+
+	FilterSub_HLStoRGB(val);
+
+	for(i = 0; i < 3; i++)
+		pix->c[i] = val[i];
+}
+
+mBool FilterDraw_color_hls(FilterDrawInfo *info)
+{
+	info->ntmp[0] = info->val_bar[0];
+	info->ntmp[1] = (int)(info->val_bar[1] / 100.0 * 0x8000 + 0.5);
+	info->ntmp[2] = (int)(info->val_bar[2] / 100.0 * 0x8000 + 0.5);
+
+	return _color_common(info, _colfunc_hls);
+}
+
 /** ネガポジ反転 */
 
 static void _colfunc_nega(FilterDrawInfo *info,int x,int y,RGBAFix15 *pix)

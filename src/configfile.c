@@ -357,7 +357,7 @@ static void _load_configdata(mIniRead *ini,ConfigData *cf)
 	cf->canvasview_btt[0] = 1;
 	cf->canvasview_btt[2] = 2;
 
-	mIniReadNums(ini, "btt", cf->canvasview_btt, 4, 1, FALSE);
+	mIniReadNums(ini, "btt", cf->canvasview_btt, 5, 1, FALSE);
 
 	//----- イメージビューア
 
@@ -373,7 +373,7 @@ static void _load_configdata(mIniRead *ini,ConfigData *cf)
 	cf->imageviewer_btt[2] = 2;
 	cf->imageviewer_btt[3] = 2;
 
-	mIniReadNums(ini, "btt", cf->imageviewer_btt, 4, 1, FALSE);
+	mIniReadNums(ini, "btt", cf->imageviewer_btt, 5, 1, FALSE);
 
 	//フラグ、左右反転は起動時常にOFF
 
@@ -771,7 +771,7 @@ static void _save_configdata(FILE *fp,ConfigData *cf)
 	mIniWriteInt(fp, "flags", cf->canvasview_flags);
 	mIniWriteInt(fp, "zoom_norm", cf->canvasview_zoom_normal);
 	mIniWriteInt(fp, "zoom_loupe", cf->canvasview_zoom_loupe);
-	mIniWriteNums(fp, "btt", cf->canvasview_btt, 4, 1, FALSE);
+	mIniWriteNums(fp, "btt", cf->canvasview_btt, 5, 1, FALSE);
 
 	//----- イメージビューア
 
@@ -779,7 +779,7 @@ static void _save_configdata(FILE *fp,ConfigData *cf)
 
 	mIniWriteStr(fp, "dir", &cf->strImageViewerDir);
 	mIniWriteInt(fp, "flags", cf->imageviewer_flags);
-	mIniWriteNums(fp, "btt", cf->imageviewer_btt, 4, 1, FALSE);
+	mIniWriteNums(fp, "btt", cf->imageviewer_btt, 5, 1, FALSE);
 
 	//----- グリッド
 

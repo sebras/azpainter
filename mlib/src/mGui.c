@@ -523,13 +523,19 @@ char *mAppGetFilePath(const char *path)
 		return mStrdup(path);
 }
 
-/** データファイルのある場所をセット */
+/** データファイルのある場所をセット
+ *
+ * 環境変数 MLIB_APPDATADIR がある場合は、その位置にセットされる。 */
 
 void mAppSetDataPath(const char *path)
 {
+	char *env;
+
 	mFree(MAPP->pathData);
 
-	MAPP->pathData = mStrdup(path);
+	env = getenv("MLIB_APPDATADIR");
+
+	MAPP->pathData = mStrdup(env? env: path);
 }
 
 /** データファイルのパスを取得 */
@@ -672,16 +678,25 @@ mBool mAppLoadThemeFile(const char *filename)
 	return TRUE;
 }
 
+/** デフォルトの翻訳データのみセット */
+
+void mAppSetTranslationDefault(const void *defdat)
+{
+	mTranslationSetEmbed(&MAPP_PV->transDef, defdat);
+}
+
 /** 翻訳データ読み込み
  *
  * コマンドラインで --trfile が指定されている場合は、そのファイルが読み込まれる。
  *
- * @param defdat 埋め込みデータ
+ * @param defdat デフォルトのデータ
  * @param lang 言語名(ja_JP など)。NULL でシステムの言語。
- * @param path ファイルの検索パス */
+ * @param path データディレクトリに追加する、検索先のパス。NULL でルート位置。 */
 
-void mAppLoadTranslation(const void *defdat,const char *lang,const char *path)
+void mAppLoadTranslation(const void *defdat,const char *lang,const char *pathadd)
 {
+	mStr str = MSTR_INIT;
+
 	//埋め込みデータ
 
 	mTranslationSetEmbed(&MAPP_PV->transDef, defdat);
@@ -689,9 +704,18 @@ void mAppLoadTranslation(const void *defdat,const char *lang,const char *path)
 	//翻訳ファイル読み込み
 
 	if(MAPP->pv->trans_filename)
+		//コマンドラインでファイル指定あり
 		mTranslationLoadFile(&MAPP_PV->transApp, MAPP->pv->trans_filename, TRUE);
 	else
-		mTranslationLoadFile_dir(&MAPP_PV->transApp, lang, path);
+	{
+		//データディレクトリから言語名で検索
+
+		mAppGetDataPath(&str, pathadd);
+
+		mTranslationLoadFile_dir(&MAPP_PV->transApp, lang, str.buf);
+
+		mStrFree(&str);
+	}
 }
 
 /** レイアウトサイズ計算 */

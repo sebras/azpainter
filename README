@@ -67,8 +67,8 @@ It is mainly full color painting software for illustration drawing.
  * Compile and install
 =====================================
 
-$ tar xf azpainter-2.1.0.tar.bz2
-$ cd azpainter-2.1.0
+$ tar xf azpainter-2.1.1.tar.bz2
+$ cd azpainter-2.1.1
 
 $ ./configure
 $ make
@@ -109,3 +109,16 @@ has been created, you can start from there.
 If you want to start from the terminal, you can start with the following command.
 
 $ azpainter
+
+
+=====================================
+ * Environment variable
+=====================================
+
+If the following environment variables are defined at startup,
+settings etc. can be changed.
+
+MLIB_APPDATADIR
+	Specify the location of the directory where the data files necessary
+	for running the application are located.
+	By default, it is "<INSTALLDIR>/share/azpainterb".

@@ -65,7 +65,8 @@ void mAppCopyFile_dataToConfig(const char *path);
 mBool mAppSetDefaultFont(const char *format);
 mBool mAppLoadThemeFile(const char *filename);
 
-void mAppLoadTranslation(const void *defdat,const char *lang,const char *path);
+void mAppSetTranslationDefault(const void *defdat);
+void mAppLoadTranslation(const void *defdat,const char *lang,const char *pathadd);
 
 void mGuiCalcHintSize(void);
 void mGuiDraw(void);

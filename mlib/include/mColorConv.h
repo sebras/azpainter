@@ -47,6 +47,7 @@ void mHLStoRGB(int h,double l,double s,int *dst);
 mRgbCol mHLStoRGB_pac(int h,double l,double s);
 
 void mRGBtoHLS(int r,int g,int b,double *dst);
+void mRGBtoHLS_pac(mRgbCol rgb,double *dst);
 
 #ifdef __cplusplus
 }

@@ -156,7 +156,7 @@ enum
 	TRID_RESET = 1,
 	TRID_CLIPPING,
 
-	//R,G,B,X,Y 用ID (仮値)
+	//アルファベット用ID (仮値)
 	TRID_LABEL_ALPHABET = 240
 };
 
@@ -809,7 +809,7 @@ static void _create_item_widgets(_filter_dlg *p,mWidget *parent,const uint8_t *d
 {
 	mWidget *ctg;
 	uint8_t type,trid,size;
-	char m[2] = {0,0},alphabet[] = {'R','G','B','X','Y'};
+	char m[2] = {0,0},alphabet[] = {'R','G','B','X','Y','H','L','S'};
 
 	ctg = mContainerCreateGrid(parent, 2, 6, 7, MLF_EXPAND_W);
 

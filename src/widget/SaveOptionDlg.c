@@ -181,7 +181,7 @@ static void _create_jpeg(_saveopt_dlg *p)
 	p->combo = mComboBoxCreate(ct, 0, 0, 0, 0);
 
 	for(i = 0; i < 3; i++)
-		mComboBoxAddItem(p->combo, M_TR_T(TRID_JPEG_SAMP_TOP + i), samp[i]);
+		mComboBoxAddItem_static(p->combo, M_TR_T(TRID_JPEG_SAMP_TOP + i), samp[i]);
 
 	mComboBoxSetWidthAuto(p->combo);
 	mComboBoxSetSel_findParam_notfind(p->combo, APP_CONF->save.jpeg_sampling_factor, 0);

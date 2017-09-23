@@ -123,7 +123,7 @@ mComboBox *DockOption_createPixelModeCombo(mWidget *parent,int id,uint8_t *dat,i
 
 	for(i = 0; *dat != 255; dat++, i++)
 	{
-		mComboBoxAddItem(cb, M_TR_T(*dat), *dat);
+		mComboBoxAddItem_static(cb, M_TR_T(*dat), *dat);
 
 		if(*dat == sel)
 		{

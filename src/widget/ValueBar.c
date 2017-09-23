@@ -256,7 +256,7 @@ static void _draw_handle(mWidget *wg,mPixbuf *pixbuf)
 			*pc -= '0';
 	}
 
-	*pc = 255;
+	*pc = -1;
 
 	mPixbufDrawBitPatternSum(pixbuf,
 		wg->w - 4 - 8 - (pc - m) * 5, 3,

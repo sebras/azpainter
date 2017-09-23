@@ -237,23 +237,25 @@ mBool mLoadImage_checkFormat(mLoadImageSource *src,mLoadImageFunc *pfunc,uint32_
 
 	//判定
 
-	if((flags & MLOADIMAGE_CHECKFORMAT_F_BMP) && size >= 2 && d[0] == 'B' && d[1] == 'M')
-		//BMP
-		func = mLoadImageBMP;
-
-	else if((flags & MLOADIMAGE_CHECKFORMAT_F_PNG) && size >= 8 && memcmp(d, png, 8) == 0)
+	if((flags & MLOADIMAGE_CHECKFORMAT_F_PNG) && size >= 8 && memcmp(d, png, 8) == 0)
 		//PNG
 		func = mLoadImagePNG;
+
+#ifndef MLIB_LOAD_PNG_ONLY
+	else if((flags & MLOADIMAGE_CHECKFORMAT_F_BMP) && size >= 2 && d[0] == 'B' && d[1] == 'M')
+		//BMP
+		func = mLoadImageBMP;
 
 	else if((flags & MLOADIMAGE_CHECKFORMAT_F_JPEG) && size >= 2 && d[0] == 0xff && d[1] == 0xd8)
 		//JPEG
 		func = mLoadImageJPEG;
 
-#ifndef MLIB_NO_GIF_DECODE
+	#ifndef MLIB_NO_GIF_DECODE
 	else if((flags & MLOADIMAGE_CHECKFORMAT_F_GIF) && size >= 3
 		&& d[0] == 'G' && d[1] == 'I' && d[2] == 'F')
 		//GIF
 		func = mLoadImageGIF;
+	#endif
 #endif
 
 	*pfunc = func;

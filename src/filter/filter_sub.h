@@ -108,5 +108,7 @@ void FilterSub_RGBtoYCrCb(int *val);
 void FilterSub_YCrCbtoRGB(int *val);
 void FilterSub_RGBtoHSV(int *val);
 void FilterSub_HSVtoRGB(int *val);
+void FilterSub_RGBtoHLS(int *val);
+void FilterSub_HLStoRGB(int *val);
 
 #endif

@@ -119,7 +119,7 @@ static _dialog *_create_dlg(mWindow *owner,mBool imageviewer)
 		p->cb[i] = cb = mComboBoxNew(0, ct, 0);
 
 		for(j = 0; j < num; j++)
-			mComboBoxAddItem(cb, M_TR_T(top + j), 0);
+			mComboBoxAddItem_static(cb, M_TR_T(top + j), 0);
 
 		if(i == 0)
 			mComboBoxSetWidthAuto(cb);

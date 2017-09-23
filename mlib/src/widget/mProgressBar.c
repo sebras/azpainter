@@ -45,8 +45,8 @@ $*/
 #include "mSysCol.h"
 
 
+/*****************//**
 
-/**
 @defgroup progressbar mProgressBar
 @brief プログレスバー
 
@@ -70,7 +70,8 @@ mWidget \> mProgressBar
 
 @var MPROGRESSBAR_STYLE::MPROGRESSBAR_S_TEXT_PERS
 "...％" のテキスト付き
-*/
+
+**************************/
 
 
 /** 解放処理 */
@@ -98,6 +99,24 @@ mProgressBar *mProgressBarNew(int size,mWidget *parent,uint32_t style)
 	p->pb.style = style;
 	p->pb.max = 100;
 	
+	return p;
+}
+
+/** 作成 */
+
+mProgressBar *mProgressBarCreate(mWidget *parent,int id,uint32_t style,
+	uint32_t fLayout,uint32_t marginB4)
+{
+	mProgressBar *p;
+
+	p = mProgressBarNew(0, parent, style);
+	if(!p) return NULL;
+
+	p->wg.id = id;
+	p->wg.fLayout = fLayout;
+
+	mWidgetSetMargin_b4(M_WIDGET(p), marginB4);
+
 	return p;
 }
 

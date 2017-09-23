@@ -1051,20 +1051,21 @@ void FilterSub_RGBtoHSV(int *val)
 
 void FilterSub_HSVtoRGB(int *val)
 {
-	int r,g,b,ht,d,t1,t2,t3,v;
+	int r,g,b,ht,d,t1,t2,t3,s,v;
 
+	s = val[1];
 	v = val[2];
 
-	if(val[1] == 0)
+	if(s == 0)
 		r = g = b = v;
 	else
 	{
 		ht = val[0] * 6;
 		d  = ht % 360;
 
-		t1 = v * (0x8000 - val[1]) >> 15;
-		t2 = v * (0x8000 - val[1] * d / 360) >> 15;
-		t3 = v * (0x8000 - val[1] * (360 - d) / 360) >> 15;
+		t1 = v * (0x8000 - s) >> 15;
+		t2 = v * (0x8000 - s * d / 360) >> 15;
+		t3 = v * (0x8000 - s * (360 - d) / 360) >> 15;
 
 		switch(ht / 360)
 		{
@@ -1075,6 +1076,107 @@ void FilterSub_HSVtoRGB(int *val)
 			case 4: r = t3, g = t1, b = v; break;
 			default: r = v, g = t1, b = t2;
 		}
+	}
+
+	val[0] = r;
+	val[1] = g;
+	val[2] = b;
+}
+
+/** RGB -> HLS */
+
+void FilterSub_RGBtoHLS(int *val)
+{
+	int r,g,b,min,max,h,l,s,d;
+
+	r = val[0];
+	g = val[1];
+	b = val[2];
+
+	//min,max
+
+	max = (r >= g)? r: g;
+	if(b > max) max = b;
+
+	min = (r <= g)? r: g;
+	if(b < min) min = b;
+
+	//
+
+	l = (max + min) >> 1;
+
+	if(max == min)
+		h = s = 0;
+	else
+	{
+		d = max - min;
+
+		//S
+
+		if(l <= 0x4000)
+			s = (d << 15) / (max + min);
+		else
+			s = (d << 15) / (0x10000 - max - min);
+
+		//H
+
+		if(r == max)
+			h = ((g - b) << 15) / d;
+		else if(g == max)
+			h = ((b - r) << 15) / d + (2 << 15);
+		else
+			h = ((r - g) << 15) / d + (4 << 15);
+
+		h = h * 60 >> 15;
+
+		if(h < 0) h += 360;
+		else if(h >= 360) h -= 360;
+	}
+
+	val[0] = h;
+	val[1] = l;
+	val[2] = s;
+}
+
+static int _hlstorgb_sub(int h,int min,int max)
+{
+	if(h >= 360) h -= 360;
+	else if(h < 0) h += 360;
+
+	if(h < 60)
+		return min + (max - min) * h / 60;
+	else if(h < 180)
+		return max;
+	else if(h < 240)
+		return min + (max - min) * (240 - h) / 60;
+	else
+		return min;
+}
+
+/** HLS -> RGB */
+
+void FilterSub_HLStoRGB(int *val)
+{
+	int h,l,s,r,g,b,min,max;
+
+	h = val[0];
+	l = val[1];
+	s = val[2];
+
+	if(l <= 0x4000)
+		max = l * (0x8000 + s) >> 15;
+	else
+		max = (l * (0x8000 - s) >> 15) + s;
+
+	min = (l << 1) - max;
+
+	if(s == 0)
+		r = g = b = l;
+	else
+	{
+		r = _hlstorgb_sub(h + 120, min, max);
+		g = _hlstorgb_sub(h, min, max);
+		b = _hlstorgb_sub(h - 120, min, max);
 	}
 
 	val[0] = r;

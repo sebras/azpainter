@@ -56,7 +56,6 @@ typedef struct _mComboBox
 	mComboBoxData cb;
 }mComboBox;
 
-
 enum MCOMBOBOX_NOTIFY
 {
 	MCOMBOBOX_N_CHANGESEL
@@ -75,6 +74,8 @@ mComboBox *mComboBoxNew(int size,mWidget *parent,uint32_t style);
 void mComboBoxSetItemHeight(mComboBox *p,int height);
 
 mListViewItem *mComboBoxAddItem(mComboBox *p,const char *text,intptr_t param);
+mListViewItem *mComboBoxAddItem_static(mComboBox *p,const char *text,intptr_t param);
+
 void mComboBoxAddItem_ptr(mComboBox *p,mListViewItem *item);
 mListViewItem *mComboBoxAddItem_draw(mComboBox *p,const char *text,intptr_t param,
 	void (*draw)(mPixbuf *,mListViewItem *,mListViewItemDraw *));

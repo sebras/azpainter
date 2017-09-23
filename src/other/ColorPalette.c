@@ -156,7 +156,7 @@ void ColorPalette_load()
 
 	//ファイル読み込み
 
-	_load_configfile(CONFIG_FILENAME_COLPALETTE);
+	_load_configfile();
 
 	//確保されていないパレットを作成
 

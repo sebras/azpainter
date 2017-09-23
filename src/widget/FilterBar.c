@@ -217,7 +217,7 @@ FilterBar *FilterBar_new(mWidget *parent,int id,uint32_t fLayout,int initw,
 	p->wg.event = _event_handle;
 	p->wg.draw = _draw_handle;
 	p->wg.hintW = 20;
-	p->wg.hintH = 15;
+	p->wg.hintH = 16;
 	p->wg.initW = initw;
 
 	if(pos < min) pos = min;

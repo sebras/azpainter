@@ -7,7 +7,8 @@ palette-2.dat \
 brush-2.dat \
 grad.dat \
 sckey-2.conf \
-icon.png
+icon.png \
+coltype.png
 
 # tr
 
