@@ -45,6 +45,8 @@ $*/
 #include "mPSDLoad.h"
 
 
+#define _CHANNEL_MAXNUM  6
+
 //---------------
 
 typedef struct
@@ -52,8 +54,8 @@ typedef struct
 	mPSDLoadLayerInfo i;
 
 	int channels;
-	uint16_t ch_id[5];
-	uint32_t ch_size[5],
+	uint16_t ch_id[_CHANNEL_MAXNUM];
+	uint32_t ch_size[_CHANNEL_MAXNUM],
 		ch_fullsize;		//チャンネルデータすべてのサイズ
 }_layerinfo;
 
@@ -561,9 +563,10 @@ static int _read_layerinfo(_psdload *p,_layerinfo *info)
 
 	_set_image_area(p, &info->i.box_img, left, top, right, bottom);
 
-	//チャンネル数 (最大 5 まで)
+	//チャンネル数 
 
-	if(chnum > 5) return MPSDLOAD_ERR_UNSUPPORTED;
+ 	if(chnum > _CHANNEL_MAXNUM)
+ 		return MPSDLOAD_ERR_UNSUPPORTED;
 
 	info->channels = chnum;
 

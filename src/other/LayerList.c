@@ -95,7 +95,7 @@ static LayerItem *_item_new(LayerList *list)
 {
 	LayerItem *p;
 
-	if(list->num >= 500) return NULL;
+	if(list->num >= 2000) return NULL;
 
 	p = (LayerItem *)mMalloc(sizeof(LayerItem), TRUE);
 	if(!p) return NULL;
