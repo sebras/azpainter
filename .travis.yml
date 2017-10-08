@@ -5,7 +5,10 @@ dist: trusty
 
 install:
     - sudo apt-get -y install automake gcc make libx11-dev libxext-dev libxi-dev libfreetype6-dev libfontconfig1-dev zlib1g-dev libjpeg-dev libpng12-dev
-
+    - sudo add-apt-repository ppa:ondrej/autotools
+    - sudo apt-get update
+    - sudo apt-get -y install automake-1.15
+    
 script:
   - bash ./configure --prefix=/usr
   - make -j$(nproc)
