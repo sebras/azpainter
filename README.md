@@ -15,7 +15,7 @@ AzPainter is mainly full color painting software for illustration drawing.
   * http://zenway.ru/page/azpainter
 
 ## Packaging status
-AppImage (from `master`): [![Build status](https://travis-ci.org/Symbian9/azpainter.svg?branch=master)](https://travis-ci.org/Symbian9/azpainter)
+[AppImage](https://github.com/Symbian9/azpainter/releases/tag/continuous) (from `master`): [![Build status](https://travis-ci.org/Symbian9/azpainter.svg?branch=master)](https://travis-ci.org/Symbian9/azpainter)
 
 [![Packaging status](https://repology.org/badge/vertical-allrepos/azpainter.svg)](https://repology.org/metapackage/azpainter)
 
@@ -48,8 +48,7 @@ AppImage (from `master`): [![Build status](https://travis-ci.org/Symbian9/azpain
 
 * Debian/Ubuntu
   ```
-  gcc make libx11-dev libxext-dev libxi-dev libfreetype6-dev
-  libfontconfig1-dev zlib1g-dev libjpeg-dev
+  gcc make libx11-dev libxext-dev libxi-dev libfreetype6-dev libfontconfig1-dev zlib1g-dev libjpeg-dev
   ```
   * Debian 9.0 / Ubuntu 16.10 or later
   ```
