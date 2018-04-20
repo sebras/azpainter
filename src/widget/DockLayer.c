@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2017 Azel.
+ Copyright (C) 2013-2018 Azel.
 
  This file is part of AzPainter.
 

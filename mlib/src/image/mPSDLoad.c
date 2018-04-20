@@ -1,5 +1,5 @@
 /*$
-Copyright (c) 2017, Azel
+Copyright (c) 2017-2018, Azel
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
@@ -565,8 +565,8 @@ static int _read_layerinfo(_psdload *p,_layerinfo *info)
 
 	//チャンネル数 
 
- 	if(chnum > _CHANNEL_MAXNUM)
- 		return MPSDLOAD_ERR_UNSUPPORTED;
+	if(chnum > _CHANNEL_MAXNUM)
+		return MPSDLOAD_ERR_UNSUPPORTED;
 
 	info->channels = chnum;
 

@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2017 Azel.
+ Copyright (C) 2013-2018 Azel.
 
  This file is part of AzPainter.
 
@@ -75,7 +75,7 @@ $*/
 
 //----------------------
 
-#define _APP_VERSION_TEXT  "AzPainter ver 2.1.1\n\nCopyright (C) 2013-2017 Azel"
+#define _APP_VERSION_TEXT  "AzPainter ver 2.1.2\n\nCopyright (C) 2013-2018 Azel"
 
 #define _APP_LICENSE_TEXT \
 "AzPainter is free software: you can redistribute it and/or modify\n" \

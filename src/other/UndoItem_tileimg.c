@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2017 Azel.
+ Copyright (C) 2013-2018 Azel.
 
  This file is part of AzPainter.
 
@@ -56,7 +56,7 @@ int UndoByteEncode(uint8_t *dst,uint8_t *src,int srcsize);
 void UndoByteDecode(uint8_t *dst,uint8_t *src,int srcsize);
 
 int UndoWordEncode(uint8_t *dst,uint8_t *src,int srcsize);
-void UndoWordDecode(uint8_t *dst,uint8_t *src,int srcsize);
+int UndoWordDecode(uint8_t *dst,uint8_t *src,int srcsize);
 
 //--------------------
 

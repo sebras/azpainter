@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2017 Azel.
+ Copyright (C) 2013-2018 Azel.
 
  This file is part of AzPainter.
 
@@ -50,7 +50,8 @@ int UndoByteEncode(uint8_t *dst,uint8_t *src,int srcsize)
 
 			for(ptop = ps; ps < psend - 1 && *ps != ps[1] && ps - ptop < 128; ps++);
 
-			if(ps == psend - 1) ps++;
+			if(ps == psend - 1 && ps - ptop < 128)
+				ps++;
 
 			num = ps - ptop;
 
@@ -149,7 +150,8 @@ int UndoWordEncode(uint8_t *dst,uint8_t *src,int srcsize)
 
 			for(ptop = ps; ps < psend - 1 && *ps != ps[1] && ps - ptop < 128; ps++);
 
-			if(ps == psend - 1) ps++;
+			if(ps == psend - 1 && ps - ptop < 128)
+				ps++;
 
 			num = ps - ptop;
 			addsize = 1 + (num << 1);
@@ -186,7 +188,7 @@ int UndoWordEncode(uint8_t *dst,uint8_t *src,int srcsize)
 
 /** 展開 (2byte) */
 
-void UndoWordDecode(uint8_t *dst,uint8_t *src,int srcsize)
+int UndoWordDecode(uint8_t *dst,uint8_t *src,int srcsize)
 {
 	uint8_t *ps,*psend;
 	uint16_t *pd,val;
@@ -228,5 +230,7 @@ void UndoWordDecode(uint8_t *dst,uint8_t *src,int srcsize)
 			ps += 2;
 		}
 	}
+
+	return (uint8_t *)pd - dst;
 }
 
