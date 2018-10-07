@@ -196,6 +196,11 @@ static mBool _init_type(DrawFill *p)
 			p->compare = _compare_alpha_0;
 			return (p->pix_start.a != 0);
 
+		//完全透明
+		case DRAWFILL_TYPE_ALPHA_0:
+			p->compare = _compare_alpha_0;
+			return (p->pix_start.a != 0);
+
 		//不透明範囲
 		default:
 			p->compare = _compare_opaque;

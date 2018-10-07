@@ -68,7 +68,8 @@ typedef struct
 		*cb_style,
 		*cb_weight,
 		*cb_slant,
-		*cb_hinting;
+		*cb_hinting,
+		*cb_dakuten;
 }_drawtext_dlg;
 
 //--------------------
@@ -82,10 +83,12 @@ enum
 	WID_EDIT_SIZE,
 	WID_CB_SIZE_UNIT,
 	WID_CB_HINTING,
+	WID_CB_DAKUTEN,
 	WID_EDIT_CHARSP,
 	WID_EDIT_LINESP,
 	WID_CK_VERT,
 	WID_CK_ANTIALIAS,
+	WID_CK_DPI_MONITOR,
 
 	WID_MEDIT = 200,
 	WID_CK_PREV,
@@ -105,10 +108,13 @@ enum
 	TRID_LINE_SPACE,
 	TRID_VERT,
 	TRID_ANTIALIAS,
+	TRID_DPI_MONITOR,
+	TRID_DAKUTEN,
 
 	TRID_HINTING_TOP = 100,
 	TRID_WEIGHT_TOP = 110,
-	TRID_SLANT_TOP = 120
+	TRID_SLANT_TOP = 120,
+	TRID_DAKUTEN_TOP = 130
 };
 
 //--------------------
@@ -415,6 +421,15 @@ static void _event_notify(_drawtext_dlg *p,mEvent *ev)
 				_update(p, _UPDATE_TIMER);
 			}
 			break;
+		//濁点合成
+		case WID_CB_DAKUTEN:
+			if(ev->notify.type == MCOMBOBOX_N_CHANGESEL)
+			{
+				pdat->dakuten_combine = ev->notify.param2;
+
+				_update(p, 0);
+			}
+			break;
 		//縦書き
 		case WID_CK_VERT:
 			pdat->flags ^= DRAW_DRAWTEXT_F_VERT;
@@ -424,6 +439,12 @@ static void _event_notify(_drawtext_dlg *p,mEvent *ev)
 		//アンチエイリアス
 		case WID_CK_ANTIALIAS:
 			pdat->flags ^= DRAW_DRAWTEXT_F_ANTIALIAS;
+
+			_update(p, _UPDATE_CREATEFONT);
+			break;
+		//DPIモニタ
+		case WID_CK_DPI_MONITOR:
+			pdat->flags ^= DRAW_DRAWTEXT_F_DPI_MONITOR;
 
 			_update(p, _UPDATE_CREATEFONT);
 			break;
@@ -496,7 +517,7 @@ static mLineEdit *_create_edit_space(mWidget *parent,uint16_t label_trid,int wid
 	edit = mLineEditCreate(parent, wid,
 		MLINEEDIT_S_SPIN | MLINEEDIT_S_NOTIFY_CHANGE, 0, 0);
 
-	mLineEditSetWidthByLen(edit, 4);
+	mLineEditSetWidthByLen(edit, 5);
 	mLineEditSetNumStatus(edit, -1000, 1000, 0);
 	mLineEditSetNum(edit, val);
 
@@ -566,8 +587,10 @@ static mWidget *_create_options_widget(_drawtext_dlg *p,mWidget *parent)
 	p->edit_size = mLineEditCreate(ct, WID_EDIT_SIZE,
 		MLINEEDIT_S_SPIN | MLINEEDIT_S_NOTIFY_CHANGE, MLF_EXPAND_W, 0);
 
-	mLineEditSetNumStatus(p->edit_size, 1, 1000, 0);
-	mLineEditSetInt(p->edit_size, pdat->size);
+	p->edit_size->le.spin_val = 10; //1.0単位でスピン
+
+	mLineEditSetNumStatus(p->edit_size, 1, 100000, 1);
+	mLineEditSetNum(p->edit_size, pdat->size);
 
 	cb = mComboBoxCreate(ct, WID_CB_SIZE_UNIT, 0, 0, 0);
 
@@ -593,6 +616,14 @@ static mWidget *_create_options_widget(_drawtext_dlg *p,mWidget *parent)
 
 	p->edit_linesp = _create_edit_space(ctg, TRID_LINE_SPACE, WID_EDIT_LINESP, pdat->line_space);
 
+	//濁点合成
+
+	cb = p->cb_dakuten = _create_combo(ctg, TRID_DAKUTEN, WID_CB_DAKUTEN);
+
+	mComboBoxAddTrItems(cb, 3, TRID_DAKUTEN_TOP, 0);
+	mComboBoxSetWidthAuto(cb);
+	mComboBoxSetSel_index(cb, pdat->dakuten_combine);
+
 	//縦書き
 
 	mCheckButtonCreate(ctv, WID_CK_VERT, 0, 0, 0, M_TR_T(TRID_VERT),
@@ -602,6 +633,11 @@ static mWidget *_create_options_widget(_drawtext_dlg *p,mWidget *parent)
 
 	mCheckButtonCreate(ctv, WID_CK_ANTIALIAS, 0, 0, 0, M_TR_T(TRID_ANTIALIAS),
 		pdat->flags & DRAW_DRAWTEXT_F_ANTIALIAS);
+
+	//モニタDPI
+
+	mCheckButtonCreate(ctv, WID_CK_DPI_MONITOR, 0, 0, 0, M_TR_T(TRID_DPI_MONITOR),
+		pdat->flags & DRAW_DRAWTEXT_F_DPI_MONITOR);
 
 	return ctv;
 }

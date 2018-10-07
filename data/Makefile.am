@@ -20,7 +20,9 @@ tr/ja.mtr \
 tr/pt_BR.mtr \
 tr/ru.mtr \
 tr/uk.mtr \
-tr/zh_CN.mtr
+tr/zh_CN.mtr \
+tr/be.mtr \
+tr/es_ES.mtr
 
 # theme
 

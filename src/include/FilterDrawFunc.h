@@ -98,6 +98,7 @@ mBool FilterDraw_trans_swirl(FilterDrawInfo *info);
 mBool FilterDraw_mozaic(FilterDrawInfo *info);
 mBool FilterDraw_crystal(FilterDrawInfo *info);
 mBool FilterDraw_halftone(FilterDrawInfo *info);
+mBool FilterDraw_gradtone(FilterDrawInfo *info);
 
 mBool FilterDraw_sharp(FilterDrawInfo *info);
 mBool FilterDraw_unsharpmask(FilterDrawInfo *info);

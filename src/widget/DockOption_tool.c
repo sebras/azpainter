@@ -325,7 +325,7 @@ static mWidget *_create_tab_fill(mWidget *parent)
 
 	cb = DockOption_createComboBox(ct, WID_FILL_TYPE, 0);
 
-	mComboBoxAddTrItems(cb, 4, 100, 0);
+	mComboBoxAddTrItems(cb, 5, 100, 0);
 	mComboBoxSetSel_index(cb, FILL_GET_TYPE(val));
 
 	//色差
@@ -414,7 +414,7 @@ static mWidget *_create_tab_magicwand(mWidget *parent)
 
 	cb = DockOption_createComboBox(ct, WID_MAGICWAND_TYPE, 0);
 
-	mComboBoxAddTrItems(cb, 4, 100, 0);
+	mComboBoxAddTrItems(cb, 5, 100, 0);
 	mComboBoxSetSel_index(cb, MAGICWAND_GET_TYPE(val));
 
 	//色差

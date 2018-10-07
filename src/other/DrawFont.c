@@ -163,9 +163,11 @@ void DrawFont_free(DrawFont *p)
 	}
 }
 
-/** フォント作成 */
+/** フォント作成
+ *
+ * \param dpi 0以下で fontconfig の値 */
 
-DrawFont *DrawFont_create(mFontInfo *info)
+DrawFont *DrawFont_create(mFontInfo *info,int dpi)
 {
 	DrawFont *p;
 	mFcPattern *pat;
@@ -206,12 +208,15 @@ DrawFont *DrawFont_create(mFontInfo *info)
 
 	size = p->info.size;
 
+	if(dpi <= 0)
+		dpi = p->info.dpi;
+
 	if(size < 0)
 		//px
 		FT_Set_Pixel_Sizes(face, 0, -size);
 	else
 		//pt
-		FT_Set_Char_Size(face, 0, (int)(size * 64 + 0.5), p->info.dpi, p->info.dpi);
+		FT_Set_Char_Size(face, 0, (int)(size * 64 + 0.5), dpi, dpi);
 
 	//他データセット
 
@@ -247,10 +252,12 @@ void DrawFont_drawText(DrawFont *p,int x,int y,const char *text,DrawFontInfo *in
 {
 	FT_BitmapGlyph glyph;
 	uint32_t ucs;
-	int ret,xx,yy;
+	int ret,xx,yy,daku_y,daku_x;
+	uint8_t daku_type,daku_have_left = 0;
 
 	if(!p || !text) return;
 
+	daku_type = info->dakuten_combine;
 	y += p->baseline;
 
 	xx = x;
@@ -266,6 +273,7 @@ void DrawFont_drawText(DrawFont *p,int x,int y,const char *text,DrawFontInfo *in
 			{
 				xx -= p->vertHeight + info->line_space;
 				yy = y;
+				daku_have_left = 0;
 				 
 				text++;
 			}
@@ -273,14 +281,53 @@ void DrawFont_drawText(DrawFont *p,int x,int y,const char *text,DrawFontInfo *in
 			{
 				ret = mUTF8ToUCS4Char(text, -1, &ucs, &text);
 				if(ret < 0) break;
-				else if(ret > 0) continue; 
-				
-				glyph = _getBitmapGlyph(g_ftlib, p, ucs, GETGLYPH_F_VERT);
-				if(!glyph) continue;
-				
-				_drawChar(p, glyph, xx + glyph->left, yy - glyph->top, info);
-				
-				yy += p->vertHeight + info->char_space;
+				else if(ret > 0) continue;
+
+				//濁点/半濁点を合成用文字に置換
+
+				if(daku_type)
+				{
+					if(ucs == 0x309B)
+						ucs = 0x3099;
+					else if(ucs == 0x309C)
+						ucs = 0x309A;
+				}
+
+				//描画
+
+				if((ucs == 0x3099 || ucs == 0x309A) && daku_type)
+				{
+					//合成用濁点/半濁点
+
+					if(daku_have_left)
+					{
+						glyph = _getBitmapGlyph(g_ftlib, p, ucs,
+							(daku_type == DRAWFONT_DAKUTEN_REPLACE_HORZ)? 0: GETGLYPH_F_VERT);
+						if(!glyph) continue;
+
+						_drawChar(p, glyph, daku_x + glyph->left, daku_y - glyph->top, info);
+
+						daku_have_left = 0;
+					}
+				}
+				else
+				{
+					//通常
+										
+					glyph = _getBitmapGlyph(g_ftlib, p, ucs, GETGLYPH_F_VERT);
+					if(!glyph) continue;
+
+					_drawChar(p, glyph, xx + glyph->left, yy - glyph->top, info);
+
+					daku_have_left = 1;
+					daku_x = xx;
+					daku_y = yy;
+
+					if(daku_type == DRAWFONT_DAKUTEN_REPLACE_HORZ)
+						daku_x += glyph->root.advance.x >> 16;
+					
+					yy += p->vertHeight + info->char_space;
+				}
 			}
 		}
 	}
@@ -294,6 +341,7 @@ void DrawFont_drawText(DrawFont *p,int x,int y,const char *text,DrawFontInfo *in
 			{
 				xx = x;
 				yy += p->horzHeight + info->line_space;
+				daku_have_left = 0;
 				 
 				text++;
 			}
@@ -303,12 +351,44 @@ void DrawFont_drawText(DrawFont *p,int x,int y,const char *text,DrawFontInfo *in
 				if(ret < 0) break;
 				else if(ret > 0) continue; 
 
+				//濁点/半濁点を合成用文字に置換
+
+				if(daku_type)
+				{
+					if(ucs == 0x309B)
+						ucs = 0x3099;
+					else if(ucs == 0x309C)
+						ucs = 0x309A;
+				}
+
+				//
+
 				glyph = _getBitmapGlyph(g_ftlib, p, ucs, 0);
 				if(!glyph) continue;
 				
-				_drawChar(p, glyph, xx + glyph->left, yy - glyph->top, info);
-				
-				xx += (glyph->root.advance.x >> 16) + info->char_space;
+				if((ucs == 0x3099 || ucs == 0x309A) && daku_type)
+				{
+					//濁点合成
+
+					if(daku_have_left)
+					{
+						_drawChar(p, glyph, daku_x + glyph->left, daku_y - glyph->top, info);
+
+						daku_have_left = 0;
+					}
+				}
+				else
+				{
+					//通常
+					
+					_drawChar(p, glyph, xx + glyph->left, yy - glyph->top, info);
+
+					daku_have_left = 1;
+					daku_x = xx;
+					daku_y = yy;
+					
+					xx += (glyph->root.advance.x >> 16) + info->char_space;
+				}
 			}
 		}
 	}
