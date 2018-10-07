@@ -482,6 +482,7 @@
 +=alpha value
 +=transparent (anti-aliasing is automatic)
 +=canvas color
++=transparent (A=0)
 
 #---------------
 # stamp
@@ -750,6 +751,8 @@
 +=Row space
 +=draw text vertically
 +=anti-aliasing
++=use monitor DPI
++=U+309B/U+309C
 100=Default
 +=no
 +=Normal
@@ -759,6 +762,9 @@
 120=Normal
 +=Italic
 +=Oblique
+130=as it is
++=replace U+3099/U+309A
++=replace and horizontal
 
 #-----------------------
 # Shortcut key setting
@@ -1091,8 +1097,8 @@
 +=Save a copy(&D)...
 +=Recent files(&R)
 +=Exit(&X)
-
 +=Clear history(&C)
++=Minimize(&M)
 
 ### edit
 2000=Undo(&Z)
