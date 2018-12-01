@@ -32,6 +32,7 @@ typedef struct
 {
 	int char_space,
 		line_space,
+		dakuten_combine,
 		flags;
 	void (*setpixel)(int,int,int,void *);
 	void *param;
@@ -42,12 +43,19 @@ enum
 	DRAWFONT_F_VERT = 1<<0
 };
 
+enum
+{
+	DRAWFONT_DAKUTEN_NONE,
+	DRAWFONT_DAKUTEN_REPLACE,
+	DRAWFONT_DAKUTEN_REPLACE_HORZ
+};
+
 
 mBool DrawFont_init();
 void DrawFont_finish();
 
 void DrawFont_free(DrawFont *p);
-DrawFont *DrawFont_create(mFontInfo *info);
+DrawFont *DrawFont_create(mFontInfo *info,int dpi);
 
 void DrawFont_setHinting(DrawFont *p,int type);
 

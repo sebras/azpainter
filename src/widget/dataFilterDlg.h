@@ -482,6 +482,7 @@ static const uint8_t g_pix_halftone[] = {
 	WG_END
 };
 
+
 //------ 輪郭
 
 //シャープ

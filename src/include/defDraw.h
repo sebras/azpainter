@@ -154,6 +154,7 @@ typedef struct
 		slant,
 		hinting,
 		flags,
+		dakuten_combine,	//濁点合成方法
 		in_dialog;		//ダイアログ表示中か
 }DrawTextData;
 
@@ -294,7 +295,8 @@ enum
 	DRAW_DRAWTEXT_F_PREVIEW = 1<<0,
 	DRAW_DRAWTEXT_F_VERT = 1<<1,
 	DRAW_DRAWTEXT_F_ANTIALIAS = 1<<2,
-	DRAW_DRAWTEXT_F_SIZE_PIXEL = 1<<3
+	DRAW_DRAWTEXT_F_SIZE_PIXEL = 1<<3,
+	DRAW_DRAWTEXT_F_DPI_MONITOR = 1<<4
 };
 
 #endif

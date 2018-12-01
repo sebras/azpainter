@@ -75,7 +75,7 @@ $*/
 
 //----------------------
 
-#define _APP_VERSION_TEXT  "AzPainter ver 2.1.2\n\nCopyright (C) 2013-2018 Azel"
+#define _APP_VERSION_TEXT  "AzPainter ver 2.1.3\n\nCopyright (C) 2013-2018 Azel"
 
 #define _APP_LICENSE_TEXT \
 "AzPainter is free software: you can redistribute it and/or modify\n" \
@@ -735,6 +735,10 @@ static void _event_command(MainWindow *p,mEvent *ev)
 		case TRMENU_FILE_RECENTFILE_CLEAR:
 			mStrArrayFree(APP_CONF->strRecentFile, CONFIG_RECENTFILE_NUM);
 			MainWindow_setRecentFileMenu(p);
+			break;
+		//最小化
+		case TRMENU_FILE_MINIMIZE:
+			mWindowMinimize(M_WINDOW(p), 1);
 			break;
 		//終了
 		case TRMENU_FILE_EXIT:

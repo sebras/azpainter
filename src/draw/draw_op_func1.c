@@ -953,16 +953,20 @@ void drawText_createFont()
 
 	//サイズ
 
-	info.size = pt->size;
-	if(pt->flags & DRAW_DRAWTEXT_F_SIZE_PIXEL) info.size = -info.size;
+	info.size = pt->size * 0.1;
+
+	if(pt->flags & DRAW_DRAWTEXT_F_SIZE_PIXEL)
+		info.size = -info.size;
 
 	//レンダリング
 
-	info.render = (pt->flags & DRAW_DRAWTEXT_F_ANTIALIAS)? MFONTINFO_RENDER_GRAY: MFONTINFO_RENDER_MONO;
+	info.render = (pt->flags & DRAW_DRAWTEXT_F_ANTIALIAS)
+		? MFONTINFO_RENDER_GRAY: MFONTINFO_RENDER_MONO;
 
 	//------ フォント作成
 
-	pt->font = DrawFont_create(&info);
+	pt->font = DrawFont_create(&info,
+		(pt->flags & DRAW_DRAWTEXT_F_DPI_MONITOR)? 0: APP_DRAW->imgdpi);
 
 	mFontInfoFree(&info);
 }
@@ -980,6 +984,7 @@ static void _drawtext_set_info(DrawFontInfo *dst,DrawTextData *src,TileImage *im
 {
 	dst->char_space = src->char_space;
 	dst->line_space = src->line_space;
+	dst->dakuten_combine = src->dakuten_combine;
 
 	dst->flags = 0;
 	if(src->flags & DRAW_DRAWTEXT_F_VERT) dst->flags |= DRAWFONT_F_VERT;

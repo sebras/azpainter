@@ -546,6 +546,7 @@ static void _load_drawdata(mIniRead *ini,DrawData *p)
 	p->drawtext.hinting = mIniReadInt(ini, "hinting", 0);
 	p->drawtext.char_space = mIniReadInt(ini, "charsp", 0);
 	p->drawtext.line_space = mIniReadInt(ini, "linesp", 0);
+	p->drawtext.dakuten_combine = mIniReadInt(ini, "dakuten", 0);
 	p->drawtext.flags = mIniReadInt(ini, "flags", DRAW_DRAWTEXT_F_PREVIEW | DRAW_DRAWTEXT_F_ANTIALIAS);
 
 	//定規
@@ -929,6 +930,7 @@ static void _save_drawdata(FILE *fp,DrawData *p)
 	mIniWriteInt(fp, "hinting", p->drawtext.hinting);
 	mIniWriteInt(fp, "charsp", p->drawtext.char_space);
 	mIniWriteInt(fp, "linesp", p->drawtext.line_space);
+	mIniWriteInt(fp, "dakuten", p->drawtext.dakuten_combine);
 	mIniWriteInt(fp, "flags", p->drawtext.flags);
 
 	//定規
