@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -160,7 +160,7 @@ static void _draw_dnd(DockLayerArea *p,mBool erase);
 static const char *g_blend_name[] = {
 	"NORM", "MUL", "ADD", "SUB", "SCRN", "OVERL", "HARDL", "SOFTL",
 	"DODGE", "BURN", "LBURN", "VIVID", "LINRL", "PINL",
-	"DARK", "LIGHT", "DIFF"
+	"DARK", "LIGHT", "DIFF", "LMADD", "LMDOD"
 };
 
 //----------------------

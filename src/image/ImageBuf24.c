@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -266,13 +266,13 @@ void ImageBuf24_drawCanvas_nearest(ImageBuf24 *src,mPixbuf *dst,
 	}
 }
 
-/** キャンバス描画 (4x4 オーバーサンプリング) */
+/** キャンバス描画 (8x8 オーバーサンプリング) */
 
 void ImageBuf24_drawCanvas_oversamp(ImageBuf24 *src,mPixbuf *dst,
 	mBox *boxdst,ImageBuf24CanvasInfo *info)
 {
-	int sw,sh,dbpp,pitchd,ix,iy,jx,jy,n,tblX[4],r,g,b;
-	uint8_t *pd,*tbl_psY[4],*ps;
+	int sw,sh,dbpp,pitchd,ix,iy,jx,jy,n,tblX[8],r,g,b;
+	uint8_t *pd,*tbl_psY[8],*ps;
 	mPixCol pixbkgnd;
 	mBox box;
 	int64_t fincx,fincy,fincx2,fincy2,fxleft,fx,fy,f;
@@ -300,8 +300,8 @@ void ImageBuf24_drawCanvas_oversamp(ImageBuf24 *src,mPixbuf *dst,
 	if(info->mirror)
 		fincx = -fincx, scalex = -scalex;
 
-	fincx2 = fincx >> 2;
-	fincy2 = fincy >> 2;
+	fincx2 = fincx >> 3;
+	fincy2 = fincy >> 3;
 
 	fxleft = (int64_t)((info->scrollx * scalex + info->originx) * FIXF_VAL)
 		+ box.x * fincx;
@@ -325,7 +325,7 @@ void ImageBuf24_drawCanvas_oversamp(ImageBuf24 *src,mPixbuf *dst,
 
 		//Yテーブル
 
-		for(jy = 0, f = fy; jy < 4; jy++, f += fincy2)
+		for(jy = 0, f = fy; jy < 8; jy++, f += fincy2)
 		{
 			n = f >> FIXF_BIT;
 			if(n >= sh) n = sh - 1;
@@ -346,7 +346,7 @@ void ImageBuf24_drawCanvas_oversamp(ImageBuf24 *src,mPixbuf *dst,
 			{
 				//X テーブル
 
-				for(jx = 0, f = fx; jx < 4; jx++, f += fincx2)
+				for(jx = 0, f = fx; jx < 8; jx++, f += fincx2)
 				{
 					n = f >> FIXF_BIT;
 					if(n >= sw) n = sw - 1;
@@ -358,9 +358,9 @@ void ImageBuf24_drawCanvas_oversamp(ImageBuf24 *src,mPixbuf *dst,
 
 				r = g = b = 0;
 
-				for(jy = 0; jy < 4; jy++)
+				for(jy = 0; jy < 8; jy++)
 				{
-					for(jx = 0; jx < 4; jx++)
+					for(jx = 0; jx < 8; jx++)
 					{
 						ps = tbl_psY[jy] + tblX[jx];
 
@@ -370,7 +370,7 @@ void ImageBuf24_drawCanvas_oversamp(ImageBuf24 *src,mPixbuf *dst,
 					}
 				}
 			
-				(dst->setbuf)(pd, mRGBtoPix2(r >> 4, g >> 4, b >> 4));
+				(dst->setbuf)(pd, mRGBtoPix2(r >> 6, g >> 6, b >> 6));
 			}
 		}
 

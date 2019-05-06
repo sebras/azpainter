@@ -1,6 +1,6 @@
 **********************************************
   AzPainter
-  Copyright (C) 2013-2018 Azel
+  Copyright (C) 2013-2019 Azel
 
   http://azsky2.html.xdomain.jp/
   https://osdn.net/projects/azpainter/
@@ -67,8 +67,8 @@ It is mainly full color painting software for illustration drawing.
  * Compile and install
 =====================================
 
-$ tar xf azpainter-2.1.3.tar.bz2
-$ cd azpainter-2.1.3
+$ tar xf azpainter-2.1.4.tar.bz2
+$ cd azpainter-2.1.4
 
 $ ./configure
 $ make

@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -335,8 +335,8 @@ mBool FilterDraw_halftone(FilterDrawInfo *info)
 				else if(info->val_ckbtt[1])
 				{
 					//アンチエイリアス
-					/* サブピクセルごとに計算しないと、
-					 * 次のボックスにまたがっている部分が問題になる */
+					//サブピクセルごとに計算しないと、
+					//次のボックスにまたがっている部分が問題になる
 
 					c = 0;
 

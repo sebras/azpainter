@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -43,6 +43,8 @@ enum
 	BLENDMODE_DARK,
 	BLENDMODE_LIGHT,
 	BLENDMODE_DIFF,
+	BLENDMODE_LUMINOUS_ADD,
+	BLENDMODE_LUMINOUS_DODGE,
 
 	BLENDMODE_NUM
 };

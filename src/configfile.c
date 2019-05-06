@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -540,7 +540,7 @@ static void _load_drawdata(mIniRead *ini,DrawData *p)
 	mIniReadStr(ini, "name", &p->drawtext.strName, NULL);
 	mIniReadStr(ini, "style", &p->drawtext.strStyle, NULL);
 
-	p->drawtext.size = mIniReadInt(ini, "size", 12);
+	p->drawtext.size = mIniReadInt(ini, "size", 90);
 	p->drawtext.weight = mIniReadInt(ini, "weight", 0);
 	p->drawtext.slant = mIniReadInt(ini, "slant", 0);
 	p->drawtext.hinting = mIniReadInt(ini, "hinting", 0);

@@ -1,6 +1,6 @@
 
 AC_PREREQ([2.69])
-AC_INIT([azpainter], [2.1.3], [azelpg@gmail.com])
+AC_INIT([azpainter], [2.1.4], [azelpg@gmail.com])
 AM_INIT_AUTOMAKE([subdir-objects])
 
 AC_CONFIG_SRCDIR([src/main.c])

@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -28,7 +28,7 @@ $*/
 
 #define IMAGE_SIZE_MAX    20000		//イメージ最大サイズ
 #define CANVAS_ZOOM_MIN   10		//キャンバス表示倍率、最小 (1%=10)
-#define CANVAS_ZOOM_MAX   10000
+#define CANVAS_ZOOM_MAX   20000
 
 #define FILEFILTER_NORMAL_IMAGE   "Image File (BMP/PNG/GIF/JPEG)\t*.bmp;*.png;*.gif;*.jpg;*.jpeg\tAll Files (*)\t*\t"
 

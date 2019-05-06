@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -29,7 +29,7 @@ typedef struct _ImageBuf8 ImageBuf8;
 typedef union  _RGBFix15 RGBFix15;
 typedef union  _RGBAFix15 RGBAFix15;
 
-typedef void (*TileImageFunc_BlendColor)(RGBFix15 *,RGBFix15 *);
+typedef mBool (*TileImageFunc_BlendColor)(RGBFix15 *,RGBFix15 *,int);
 
 
 #define TILEIMAGE_DOTSTYLE_RADIUS_MAX  50

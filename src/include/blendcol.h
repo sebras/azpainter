@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -25,28 +25,30 @@ $*/
 #define BLENDCOL_H
 
 typedef union _RGBFix15 RGBFix15;
-typedef void (*BlendColorFunc)(RGBFix15 *,RGBFix15 *);
+typedef mBool (*BlendColorFunc)(RGBFix15 *,RGBFix15 *,int);
 
 void BlendColor_setFuncTable();
 
-void BlendColor_normal(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_mul(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_add(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_sub(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_screen(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_overlay(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_hardlight(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_softlight(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_dodge(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_burn(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_linearburn(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_vividlight(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_linearlight(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_pinlight(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_darken(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_lighten(RGBFix15 *src,RGBFix15 *dst);
-void BlendColor_difference(RGBFix15 *src,RGBFix15 *dst);
+mBool BlendColor_normal(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_mul(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_add(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_sub(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_screen(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_overlay(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_hardlight(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_softlight(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_dodge(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_burn(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_linearburn(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_vividlight(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_linearlight(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_pinlight(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_darken(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_lighten(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_difference(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_luminous_add(RGBFix15 *src,RGBFix15 *dst,int a);
+mBool BlendColor_luminous_dodge(RGBFix15 *src,RGBFix15 *dst,int a);
 
-extern BlendColorFunc g_blendcolfuncs[17];
+extern BlendColorFunc g_blendcolfuncs[19];
 
 #endif

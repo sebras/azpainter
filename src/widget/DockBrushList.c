@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -87,7 +87,6 @@ typedef struct
 	int itemh,
 		headerh,
 		fbtt;
-	mPoint ptPress;			//D&D 押した時の位置
 	_POINTINFO info_dst;	//D&D先の情報
 	BrushItem *dnd_src;		//D&D元のアイテム
 }DockBrushListArea;
@@ -909,8 +908,6 @@ static void _event_press(DockBrushListArea *p,mEvent *ev)
 					//D&D 開始
 
 					p->fbtt = _BTT_F_DND_FIRST;
-					p->ptPress.x = ev->pt.x;
-					p->ptPress.y = ev->pt.y;
 					p->dnd_src = info.item;
 					p->info_dst = info;
 
@@ -937,14 +934,19 @@ static void _event_motion(DockBrushListArea *p,mEvent *ev)
 	int area;
 	_POINTINFO info;
 
-	//押し位置から少し離れた場合、D&D 開始
+	//押し位置とは別のアイテムに移動した場合、D&D 開始
 
-	if(p->fbtt == _BTT_F_DND_FIRST
-		&& (abs(ev->pt.x - p->ptPress.x) > 10 || abs(ev->pt.y - p->ptPress.y) > 10))
+	if(p->fbtt == _BTT_F_DND_FIRST)
 	{
-		p->fbtt = _BTT_F_DND;
+		area = _get_pointinfo(p, ev->pt.x, ev->pt.y, &info);
 
-		mWidgetSetCursor(M_WIDGET(p), AppCursor_getForDrag(APP_CURSOR_ITEM_MOVE));
+		if(area == POINTINFO_NONE
+			|| (area == POINTINFO_BRUSHITEM && info.item != p->dnd_src))
+		{
+			p->fbtt = _BTT_F_DND;
+
+			mWidgetSetCursor(M_WIDGET(p), AppCursor_getForDrag(APP_CURSOR_ITEM_MOVE));
+		}
 	}
 
 	//D&D 中

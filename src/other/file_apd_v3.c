@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -85,7 +85,7 @@ static uint32_t g_blendid[] = {
 	_MAKE_ID('s','c','r','n'), _MAKE_ID('o','v','r','l'), _MAKE_ID('h','d','l','g'), _MAKE_ID('s','t','l','g'),
 	_MAKE_ID('d','o','d','g'), _MAKE_ID('b','u','r','n'), _MAKE_ID('l','b','u','n'), _MAKE_ID('v','i','v','l'),
 	_MAKE_ID('l','i','n','l'), _MAKE_ID('p','i','n','l'), _MAKE_ID('l','i','g','t'), _MAKE_ID('d','a','r','k'),
-	_MAKE_ID('d','i','f','f'), 0
+	_MAKE_ID('d','i','f','f'), _MAKE_ID('l','m','a','d'), _MAKE_ID('l','m','d','g'), 0
 };
 
 //----------------------
@@ -120,8 +120,8 @@ static mBool _read_header(loadAPDv3 *p,FILE *fp,loadapdv3_info *info)
 		|| !mFILEreadByte(fp, &unit)
 		|| !mFILEread32BE(fp, &p->dpi)
 		|| p->width <= 0 || p->height <= 0
-		|| p->width >= IMAGE_SIZE_MAX
-		|| p->height >= IMAGE_SIZE_MAX)
+		|| p->width > IMAGE_SIZE_MAX
+		|| p->height > IMAGE_SIZE_MAX)
 		return FALSE;
 
 	//チャンク先頭

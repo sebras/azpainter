@@ -1,6 +1,6 @@
 **********************************************
   AzPainter for Linux
-  Copyright (C) 2013-2018 Azel
+  Copyright (C) 2013-2019 Azel
 
   http://azsky2.html.xdomain.jp/
   http://osdn.net/projects/azpainter/
@@ -78,8 +78,8 @@
  * コンパイル・インストール
 =====================================
 
-$ tar xf azpainter-2.1.3.tar.bz2
-$ cd azpainter-2.1.3
+$ tar xf azpainter-2.1.4.tar.bz2
+$ cd azpainter-2.1.4
 
 $ ./configure
 $ make

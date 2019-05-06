@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -145,7 +145,10 @@ static void _enter_param(_dialog *p)
 	if(sx <= 0) sx = 0.001;
 	if(sy <= 0) sy = 0.001;
 
-	rd = fmod(rd, 180) / 180 * M_MATH_PI;
+	while(rd > 360) rd -= 360;
+	while(rd < -360) rd += 360;
+
+	rd = rd / 180 * M_MATH_PI;
 
 	//
 

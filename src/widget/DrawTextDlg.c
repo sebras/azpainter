@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -230,10 +230,10 @@ static void _set_style_list(_drawtext_dlg *p,DrawTextData *pdat)
 
 	//削除
 
-	pi = mComboBoxGetItemByIndex(p->cb_style, 1);
+	pi = mComboBoxGetTopItem(p->cb_style);
 
-	for(; pi; pi = M_LISTVIEWITEM(pi->i.next))
-		mComboBoxDeleteItem(p->cb_style, pi);
+	while(pi->i.next)
+		mComboBoxDeleteItem(p->cb_style, M_LISTVIEWITEM(pi->i.next));
 
 	//追加
 
