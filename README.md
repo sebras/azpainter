@@ -1,10 +1,10 @@
-# AzPainter
+# ![🖌](data/icon.png) AzPainter
 
-> Copyright (C) 2013-2018 Azel <azelpg@gmail.com>
+> Copyright (C) 2013-2019 Azel <azelpg@gmail.com>
 >
 > http://azsky2.html.xdomain.jp/linux/azpainter.html
 
-AzPainter is mainly full color painting software for illustration drawing.
+🖌 *AzPainter* is mainly full color painting software for illustration drawing.
 
 ## Reviews
 
@@ -14,6 +14,16 @@ AzPainter is mainly full color painting software for illustration drawing.
   * https://aznosekai.wordpress.com
 * in Russian
   * http://zenway.ru/page/azpainter
+
+Take a look on [«Tutorials» wiki-page](https://github.com/Symbian9/azpainter/wiki/Tutorials) for textual and video tutorials.
+
+## Brushes
+
+Built-in and community created breshes listed on [«Brushes» wiki-page](https://github.com/Symbian9/azpainter/wiki/Brushes).
+
+## Themes
+
+Read [«Themes» wiki-page](https://github.com/Symbian9/azpainter/wiki/Themes) for more info on customizing interface colors.
 
 ## Packaging status
 
