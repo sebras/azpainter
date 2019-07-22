@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -113,7 +113,7 @@ static mBool _isTransparentTile(uint8_t *tile)
 static void _blendTile(TileImage *p,TileImageBlendInfo *info)
 {
 	int ix,iy,dx,dy,opacity,a,srca;
-	RGBFix15 *pd,src,dst,imgcol;
+	RGBFix15 *pd,dst,src,imgcol;
 	uint8_t *ps,*ps_bk,stf,f;
 	TileImageFunc_BlendColor funcBlend;
 	ImageBuf8 *imgtex;
@@ -149,17 +149,20 @@ static void _blendTile(TileImage *p,TileImageBlendInfo *info)
 				src = imgcol;
 				dst = *pd;
 
-				(funcBlend)(&src, &dst);
-				
-				//アルファ合成
-
-				if(a == 0x8000)
+				if((funcBlend)(&src, &dst, a))
 					*pd = src;
 				else
 				{
-					pd->r = ((src.r - dst.r) * a >> 15) + dst.r;
-					pd->g = ((src.g - dst.g) * a >> 15) + dst.g;
-					pd->b = ((src.b - dst.b) * a >> 15) + dst.b;
+					//アルファ合成
+
+					if(a == 0x8000)
+						*pd = src;
+					else
+					{
+						pd->r = ((src.r - dst.r) * a >> 15) + dst.r;
+						pd->g = ((src.g - dst.g) * a >> 15) + dst.g;
+						pd->b = ((src.b - dst.b) * a >> 15) + dst.b;
+					}
 				}
 			}
 

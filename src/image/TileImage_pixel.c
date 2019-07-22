@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -867,13 +867,16 @@ void TileImage_getBlendPixel(TileImage *p,int x,int y,RGBFix15 *pix,
 
 	dst = *pix;
 
-	(g_blendcolfuncs[blendmode])(&src, &dst);
+	if((g_blendcolfuncs[blendmode])(&src, &dst, a))
+		*pix = src;
+	else
+	{
+		//アルファ合成
 
-	//アルファ合成
-
-	pix->r = ((src.r - dst.r) * a >> 15) + dst.r;
-	pix->g = ((src.g - dst.g) * a >> 15) + dst.g;
-	pix->b = ((src.b - dst.b) * a >> 15) + dst.b;
+		pix->r = ((src.r - dst.r) * a >> 15) + dst.r;
+		pix->g = ((src.g - dst.g) * a >> 15) + dst.g;
+		pix->b = ((src.b - dst.b) * a >> 15) + dst.b;
+	}
 }
 
 

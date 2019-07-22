@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -124,6 +124,116 @@ void ImageBufRGB16_drawMainCanvas_nearest(ImageBufRGB16 *src,mPixbuf *dst,Canvas
 
 void ImageBufRGB16_drawMainCanvas_oversamp(ImageBufRGB16 *src,mPixbuf *dst,CanvasDrawInfo *info)
 {
+	int sw,sh,dbpp,pitchd,ix,iy,jx,jy,n,tblX[8],r,g,b;
+	uint8_t *pd;
+	RGBFix15 *tbl_psY[8],*ps;
+	mPixCol pixbkgnd;
+	mBox box;
+	int64_t fincx,fincy,fincx2,fincy2,fxleft,fx,fy,f;
+	double scalex;
+
+	//クリッピング
+
+	if(!mPixbufGetClipBox_box(dst, &box, &info->boxdst)) return;
+
+	//
+
+	sw = src->width, sh = src->height;
+
+	pd = mPixbufGetBufPtFast(dst, box.x, box.y);
+	dbpp = dst->bpp;
+	pitchd = dst->pitch_dir - box.w * dbpp;
+	pixbkgnd = mRGBtoPix(info->bkgndcol);
+
+	//
+
+	scalex = info->param->scalediv;
+
+	fincx = fincy = (int64_t)(scalex * FIXF_VAL + 0.5);
+
+	if(info->mirror)
+		scalex = -scalex, fincx = -fincx;
+
+	fincx2 = fincx >> 3;
+	fincy2 = fincy >> 3;
+
+	fxleft = (int64_t)((info->scrollx * scalex + info->originx) * FIXF_VAL) + box.x * fincx;
+	fy = (int64_t)((info->scrolly * info->param->scalediv + info->originy) * FIXF_VAL) + box.y * fincy;
+
+	//
+
+	for(iy = box.h; iy > 0; iy--, fy += fincy)
+	{
+		n = fy >> FIXF_BIT;
+
+		//Yが範囲外
+
+		if(n < 0 || n >= sh)
+		{
+			mPixbufRawLineH(dst, pd, box.w, pixbkgnd);
+			pd += dst->pitch_dir;
+			continue;
+		}
+
+		//Yテーブル
+
+		for(jy = 0, f = fy; jy < 8; jy++, f += fincy2)
+		{
+			n = f >> FIXF_BIT;
+			if(n >= sh) n = sh - 1;
+
+			tbl_psY[jy] = src->buf + n * src->width;
+		}
+
+		//---- X
+
+		for(ix = box.w, fx = fxleft; ix > 0; ix--, fx += fincx, pd += dbpp)
+		{
+			n = fx >> FIXF_BIT;
+
+			if(n < 0 || n >= sw)
+				//範囲外
+				(dst->setbuf)(pd, pixbkgnd);
+			else
+			{
+				//X テーブル
+
+				for(jx = 0, f = fx; jx < 8; jx++, f += fincx2)
+				{
+					n = f >> FIXF_BIT;
+					if(n < 0) n = 0; else if(n >= sw) n = sw - 1;
+
+					tblX[jx] = n;
+				}
+
+				//オーバーサンプリング
+
+				r = g = b = 0;
+
+				for(jy = 0; jy < 8; jy++)
+				{
+					for(jx = 0; jx < 8; jx++)
+					{
+						ps = tbl_psY[jy] + tblX[jx];
+
+						r += ps->r;
+						g += ps->g;
+						b += ps->b;
+					}
+				}
+
+				r = (r >> 6) * 255 >> 15;
+				g = (g >> 6) * 255 >> 15;
+				b = (b >> 6) * 255 >> 15;
+			
+				(dst->setbuf)(pd, mRGBtoPix2(r, g, b));
+			}
+		}
+
+		pd += pitchd;
+	}
+
+/*
 	int sw,sh,dbpp,pitchd,ix,iy,jx,jy,n,tblX[4],r,g,b;
 	uint8_t *pd;
 	RGBFix15 *tbl_psY[4],*ps;
@@ -232,6 +342,7 @@ void ImageBufRGB16_drawMainCanvas_oversamp(ImageBufRGB16 *src,mPixbuf *dst,Canva
 
 		pd += pitchd;
 	}
+*/
 }
 
 /** メインウィンドウキャンバス描画 (回転あり、補間なし) */
@@ -351,8 +462,8 @@ void ImageBufRGB16_drawMainCanvas_rotate_oversamp(ImageBufRGB16 *src,mPixbuf *ds
 	if(info->mirror)
 		fincxx = -fincxx, fincyx = -fincyx;
 
-	fincxx2 = fincxx >> 2, fincxy2 = fincxy >> 2;
-	fincyx2 = fincyx >> 2, fincyy2 = fincyy >> 2;
+	fincxx2 = fincxx / 5, fincxy2 = fincxy / 5;
+	fincyx2 = fincyx / 5, fincyy2 = fincyy / 5;
 
 	//
 
@@ -389,11 +500,11 @@ void ImageBufRGB16_drawMainCanvas_rotate_oversamp(ImageBufRGB16 *src,mPixbuf *ds
 				r = g = b = 0;
 				fjx2 = fx, fjy2 = fy;
 
-				for(jy = 4; jy; jy--, fjx2 += fincyx2, fjy2 += fincyy2)
+				for(jy = 5; jy; jy--, fjx2 += fincyx2, fjy2 += fincyy2)
 				{
 					fjx = fjx2, fjy = fjy2;
 
-					for(jx = 4; jx; jx--, fjx += fincxx2, fjy += fincxy2)
+					for(jx = 5; jx; jx--, fjx += fincxx2, fjy += fincxy2)
 					{
 						sx = fjx >> FIXF_BIT;
 						sy = fjy >> FIXF_BIT;
@@ -409,9 +520,9 @@ void ImageBufRGB16_drawMainCanvas_rotate_oversamp(ImageBufRGB16 *src,mPixbuf *ds
 					}
 				}
 
-				r = (r >> 4) * 255 >> 15;
-				g = (g >> 4) * 255 >> 15;
-				b = (b >> 4) * 255 >> 15;
+				r = (r / 25) * 255 >> 15;
+				g = (g / 25) * 255 >> 15;
+				b = (b / 25) * 255 >> 15;
 			
 				(dst->setbuf)(pd, mRGBtoPix2(r, g, b));
 			}

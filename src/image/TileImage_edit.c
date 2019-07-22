@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -116,7 +116,7 @@ void TileImage_convertType(TileImage *p,int newtype,mBool bLumtoAlpha)
 void TileImage_combine(TileImage *dst,TileImage *src,mRect *rc,int opasrc,int opadst,
 	int blendmode,ImageBuf8 *src_texture,mPopupProgress *prog)
 {
-	int ix,iy,dstrawa;
+	int ix,iy,dstrawa,ret;
 	RGBAFix15 colsrc,coldst;
 	RGBFix15 bsrc,bdst;
 	BlendColorFunc blendfunc;
@@ -140,6 +140,7 @@ void TileImage_combine(TileImage *dst,TileImage *src,mRect *rc,int opasrc,int op
 			TileImage_getPixel(src, ix, iy, &colsrc);
 
 			//テクスチャ適用
+			
 			if(src_texture)
 				colsrc.a = colsrc.a * ImageBuf8_getPixel_forTexture(src_texture, ix, iy) / 255;
 
@@ -159,7 +160,9 @@ void TileImage_combine(TileImage *dst,TileImage *src,mRect *rc,int opasrc,int op
 
 			//色合成
 
-			if(blendmode)
+			if(blendmode == 0)
+				ret = FALSE;
+			else
 			{
 				bsrc = *((RGBFix15 *)&colsrc);
 			
@@ -168,14 +171,26 @@ void TileImage_combine(TileImage *dst,TileImage *src,mRect *rc,int opasrc,int op
 				else
 					bdst = *((RGBFix15 *)&coldst);
 
-				(blendfunc)(&bsrc, &bdst);
+				ret = (blendfunc)(&bsrc, &bdst, colsrc.a);
 
-				*((RGBFix15 *)&colsrc) = bsrc;
+				colsrc.r = bsrc.r;
+				colsrc.g = bsrc.g;
+				colsrc.b = bsrc.b;
 			}
 
-			//アルファ合成 => coldst
+			//coldst にアルファ合成
 
-			TileImage_colfunc_normal(dst, &coldst, &colsrc, NULL);
+			if(!ret)
+				TileImage_colfunc_normal(dst, &coldst, &colsrc, NULL);
+			else
+			{
+				/* 色合成でソースのアルファ値を適用した場合、
+				 * dst のアルファ値はそのままで、合成後の色を使う */
+				
+				coldst.r = colsrc.r;
+				coldst.g = colsrc.g;
+				coldst.b = colsrc.b;
+			}
 
 			//セット
 			/* 結合前と結合後がどちらも透明ならそのまま。

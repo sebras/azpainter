@@ -203,6 +203,8 @@
 +=dim
 +=brighten
 +=difference
++=luminous (add)
++=luminous (dodge)
 
 #----------------
 # scale type

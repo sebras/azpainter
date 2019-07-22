@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2018 Azel.
+ Copyright (C) 2013-2019 Azel.
 
  This file is part of AzPainter.
 
@@ -29,7 +29,7 @@ $*/
 
 //-----------------
 
-BlendColorFunc g_blendcolfuncs[17];
+BlendColorFunc g_blendcolfuncs[19];
 
 #define _MAXVAL  0x8000
 
@@ -59,27 +59,35 @@ void BlendColor_setFuncTable()
 	p[14] = BlendColor_darken;
 	p[15] = BlendColor_lighten;
 	p[16] = BlendColor_difference;
+	p[17] = BlendColor_luminous_add;
+	p[18] = BlendColor_luminous_dodge;
 }
+
+/* a: ソースのアルファ値
+ * 戻り値: FALSE で、この後アルファ合成を行う。
+ *         TRUE で、ソースのアルファ値を使ったのでアルファ合成は行わない。 */
 
 /** 通常 */
 
-void BlendColor_normal(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_normal(RGBFix15 *src,RGBFix15 *dst,int a)
 {
-
+	return FALSE;
 }
 
 /** 乗算 */
 
-void BlendColor_mul(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_mul(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	src->r = src->r * dst->r >> 15;
 	src->g = src->g * dst->g >> 15;
-	src->b = src->b * dst->b >> 15;	
+	src->b = src->b * dst->b >> 15;
+
+	return FALSE;
 }
 
 /** 加算 */
 
-void BlendColor_add(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_add(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i,n;
 
@@ -90,11 +98,13 @@ void BlendColor_add(RGBFix15 *src,RGBFix15 *dst)
 
 		src->c[i] = n;
 	}
+
+	return FALSE;
 }
 
 /** 減算 */
 
-void BlendColor_sub(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_sub(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i,n;
 
@@ -105,11 +115,13 @@ void BlendColor_sub(RGBFix15 *src,RGBFix15 *dst)
 
 		src->c[i] = n;
 	}
+
+	return FALSE;
 }
 
 /** スクリーン */
 
-void BlendColor_screen(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_screen(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i,s,d;
 
@@ -120,11 +132,13 @@ void BlendColor_screen(RGBFix15 *src,RGBFix15 *dst)
 		
 		src->c[i] = s + d - (s * d >> 15);
 	}
+
+	return FALSE;
 }
 
 /** オーバーレイ */
 
-void BlendColor_overlay(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_overlay(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i,s,d;
 
@@ -138,11 +152,13 @@ void BlendColor_overlay(RGBFix15 *src,RGBFix15 *dst)
 		else
 			src->c[i] = _MAXVAL - ((_MAXVAL - d) * (_MAXVAL - s) >> 14);
 	}
+
+	return FALSE;
 }
 
 /** ハードライト */
 
-void BlendColor_hardlight(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_hardlight(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i,s,d;
 
@@ -156,11 +172,13 @@ void BlendColor_hardlight(RGBFix15 *src,RGBFix15 *dst)
 		else
 			src->c[i] = _MAXVAL - ((_MAXVAL - d) * (_MAXVAL - s) >> 14);
 	}
+
+	return FALSE;
 }
 
 /** ソフトライト */
 
-void BlendColor_softlight(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_softlight(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i,s,d,n;
 
@@ -173,11 +191,13 @@ void BlendColor_softlight(RGBFix15 *src,RGBFix15 *dst)
 
 		src->c[i] = n + (d * (_MAXVAL - n - ((_MAXVAL - s) * (_MAXVAL - d) >> 15)) >> 15);
 	}
+
+	return FALSE;
 }
 
 /** 覆い焼き */
 
-void BlendColor_dodge(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_dodge(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i,s,d,n;
 
@@ -196,11 +216,13 @@ void BlendColor_dodge(RGBFix15 *src,RGBFix15 *dst)
 
 		src->c[i] = n;
 	}
+
+	return FALSE;
 }
 
 /** 焼き込み */
 
-void BlendColor_burn(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_burn(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i,s,d,n;
 
@@ -219,11 +241,13 @@ void BlendColor_burn(RGBFix15 *src,RGBFix15 *dst)
 
 		src->c[i] = n;
 	}
+
+	return FALSE;
 }
 
 /** 焼き込みリニア */
 
-void BlendColor_linearburn(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_linearburn(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i,n;
 
@@ -234,11 +258,13 @@ void BlendColor_linearburn(RGBFix15 *src,RGBFix15 *dst)
 		
 		src->c[i] = n;
 	}
+
+	return FALSE;
 }
 
 /** ビビットライト */
 
-void BlendColor_vividlight(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_vividlight(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i,s,d,n;
 
@@ -268,11 +294,13 @@ void BlendColor_vividlight(RGBFix15 *src,RGBFix15 *dst)
 
 		src->c[i] = n;
 	}
+
+	return FALSE;
 }
 
 /** リニアライト */
 
-void BlendColor_linearlight(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_linearlight(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i,n;
 
@@ -285,11 +313,13 @@ void BlendColor_linearlight(RGBFix15 *src,RGBFix15 *dst)
 		
 		src->c[i] = n;
 	}
+
+	return FALSE;
 }
 
 /** ピンライト */
 
-void BlendColor_pinlight(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_pinlight(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i,s,d,n;
 
@@ -311,11 +341,13 @@ void BlendColor_pinlight(RGBFix15 *src,RGBFix15 *dst)
 
 		src->c[i] = n;
 	}
+
+	return FALSE;
 }
 
 /** 比較(暗) */
 
-void BlendColor_darken(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_darken(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i;
 
@@ -324,11 +356,13 @@ void BlendColor_darken(RGBFix15 *src,RGBFix15 *dst)
 		if(dst->c[i] < src->c[i])
 			src->c[i] = dst->c[i];
 	}
+
+	return FALSE;
 }
 
 /** 比較(明) */
 
-void BlendColor_lighten(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_lighten(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i;
 
@@ -337,11 +371,13 @@ void BlendColor_lighten(RGBFix15 *src,RGBFix15 *dst)
 		if(dst->c[i] > src->c[i])
 			src->c[i] = dst->c[i];
 	}
+
+	return FALSE;
 }
 
 /** 差の絶対値 */
 
-void BlendColor_difference(RGBFix15 *src,RGBFix15 *dst)
+mBool BlendColor_difference(RGBFix15 *src,RGBFix15 *dst,int a)
 {
 	int i,n;
 
@@ -352,5 +388,48 @@ void BlendColor_difference(RGBFix15 *src,RGBFix15 *dst)
 
 		src->c[i] = n;
 	}
+
+	return FALSE;
 }
 
+/** 発光(加算) */
+
+mBool BlendColor_luminous_add(RGBFix15 *src,RGBFix15 *dst,int a)
+{
+	int i,n;
+
+	for(i = 0; i < 3; i++)
+	{
+		n = (src->c[i] * a >> 15) + dst->c[i];
+		if(n > _MAXVAL) n = _MAXVAL;
+
+		src->c[i] = n;
+	}
+
+	return TRUE;
+}
+
+/** 発光(覆い焼き) */
+
+mBool BlendColor_luminous_dodge(RGBFix15 *src,RGBFix15 *dst,int a)
+{
+	int i,s,d,n;
+
+	for(i = 0; i < 3; i++)
+	{
+		s = src->c[i] * a >> 15;
+		d = dst->c[i];
+
+		if(s == _MAXVAL)
+			n = _MAXVAL;
+		else
+		{
+			n = (d << 15) / (_MAXVAL - s);
+			if(n > _MAXVAL) n = _MAXVAL;
+		}
+
+		src->c[i] = n;
+	}
+
+	return TRUE;
+}
