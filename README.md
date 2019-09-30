@@ -18,12 +18,9 @@ Other:
 <details>
   <summary>Expand to see screenshots of AzPainter</summary>
 
-![Screenshot][Screenshot1]
+![Screeenshot 1, Japanese UI][http://azsky2.html.xdomain.jp/linux/img/azpainter.png]
 
-![Screenshot][Screenshot2]
-
-[Screenshot1]: https://azworldweb.files.wordpress.com/2017/03/azpainterb-pt-br.jpg
-[Screenshot2]: http://azsky2.html.xdomain.jp/linux/img/azpainter.png "Japanese UI"
+![Screenshot 2, Free Software][http://i.imgur.com/p551IRB.png]
 
 </details>
 
