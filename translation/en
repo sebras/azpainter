@@ -847,7 +847,7 @@
 +=Cursor
 +=Interface
 
-100=image width when starting up
+100=image width when starting up\n(negative value: increase / decrease current * n / 100)
 +=image height when starting up
 +=canvas background color
 +=color of plaid background
