@@ -149,7 +149,8 @@ typedef struct
 		strStyle;		//フォントスタイル
 	int size,
 		char_space,
-		line_space;
+		line_space,
+		create_dpi;		//現在のフォントが作成された時の dpi
 	uint8_t weight,
 		slant,
 		hinting,

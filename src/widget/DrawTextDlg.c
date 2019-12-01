@@ -702,9 +702,11 @@ static _drawtext_dlg *_create_dlg(mWindow *owner)
 
 	//=========
 
-	//フォントが未作成の場合は、作成
+	//フォントが未作成、または
+	//作成済みで DPI が異なる場合は、作成
 
-	if(!APP_DRAW->drawtext.font)
+	if(!APP_DRAW->drawtext.font
+		|| APP_DRAW->drawtext.create_dpi != APP_DRAW->imgdpi)
 		drawText_createFont();
 
 	//前回のテキストがある場合

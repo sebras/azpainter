@@ -78,8 +78,8 @@
  * コンパイル・インストール
 =====================================
 
-$ tar xf azpainter-2.1.4.tar.bz2
-$ cd azpainter-2.1.4
+$ tar xf azpainter-2.1.5.tar.bz2
+$ cd azpainter-2.1.5
 
 $ ./configure
 $ make

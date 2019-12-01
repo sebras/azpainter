@@ -360,7 +360,7 @@ mWidget *EnvOptDlg_create_step(mWidget *parent,EnvOptDlgCurData *dat)
 {
 	_ct_step *p;
 	mLineEdit *le;
-	int i,max[4] = { 100, 1000, 180, 1000 };
+	int i,min[4] = {-50,1,1,1}, max[4] = { 100, 1000, 180, 1000 };
 
 	p = (_ct_step *)EnvOptDlg_createContentsBase(parent, sizeof(_ct_step), _step_getval);
 
@@ -377,7 +377,7 @@ mWidget *EnvOptDlg_create_step(mWidget *parent,EnvOptDlgCurData *dat)
 		le = p->edit[i] = mLineEditCreate(M_WIDGET(p), 0, MLINEEDIT_S_SPIN, 0, 0);
 
 		mLineEditSetWidthByLen(le, 7);
-		mLineEditSetNumStatus(le, 1, max[i], (i == 3)? 1: 0);
+		mLineEditSetNumStatus(le, min[i], max[i], (i == 3)? 1: 0);
 		mLineEditSetNum(le, dat->step[i]);
 	}
 

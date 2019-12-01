@@ -969,6 +969,10 @@ void drawText_createFont()
 		(pt->flags & DRAW_DRAWTEXT_F_DPI_MONITOR)? 0: APP_DRAW->imgdpi);
 
 	mFontInfoFree(&info);
+
+	//dpi を記録
+
+	pt->create_dpi = APP_DRAW->imgdpi;
 }
 
 /** ヒンティング変更 */

@@ -23,7 +23,8 @@ tr/uk.mtr \
 tr/zh_CN.mtr \
 tr/be.mtr \
 tr/es_ES.mtr \
-tr/fr.mtr
+tr/fr.mtr \
+tr/it.mtr
 
 # theme
 

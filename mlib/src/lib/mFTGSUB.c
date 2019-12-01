@@ -430,7 +430,7 @@ uint32_t mFTGSUB_getVertGlyph(void *table,uint32_t glyph)
 			//見つかった
 
 			if(type == DST_GLYPH_TYPE_ADD)
-				return glyph + *((int16_t *)ps);
+				return (glyph + *((int16_t *)ps)) & 0xffff;
 			else
 			{
 				num = *((uint16_t *)ps);
