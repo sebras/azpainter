@@ -1,0 +1,1307 @@
+[65535]
+1=OK
+2=Cancella
+3=Si
+4=No
+5=Salva
+6=Non Salvare
+7=Annulla
+8=Non mostrare questo messaggio
+9=Apri
+10=Nome del file
+11=Tipo
+12=Anteprima
+13=Stile
+14=Dimensione
+15=Pressione
+16=Inclinazione
+17=Rendering
+18=abcdefg ABCDEFG 01234
+19=Dimensione file
+20=Modificato
+21=Mostra file nascosti
+1000=Apri File
+1001=Salva File
+1002=Seleziona Cartella
+1003=Scegli Colore
+1004=Scegli Font
+2000=File già esistente.\nVuoi sovrascrivere?
+2001=Nome del file errato.
+
+#-----------------
+# parole
+
+[0]
+0=Larchezza
+1=Altezza
+2=Colore
+3=Densità
+4=Pittura
+5=Anti-aliasing
+6=Cartella
+7=Livello
+8=Nome
+
+#-------------------------------
+# FinestraPrincipale - informazioni sulla barra degli strumenti
+
+[4]
+0=Nuovo file
++=Apri
++=Sorvrascrivi
++=Salva come
++=Salva una copia
++=Mostra panelli
++=Rispecchia tela orizzontalmente
++=Mostra lo sfondo come motivo a quadri
++=Mostra griglia
++=Mostra linea di demarcazione
++=Ingrandimento
++=Annulla
++=Rifai
++=Pulisci livello
++=Deseleziona
++=File recenti
+
+#-----------------------
+# menu a discesa - salva copia
+
+[5]
+0=estensione salvataggio
++=stessa estensione del file attuale
+
+#------------------------
+# barra di stato - aiuto
+
+[8]
+0=[Shift: cambia dimensione pennello] [Ctrl: impostazioni righello] [Alt: seleziona colore con il seleziona colore]
++=[Shift: Ignora il livello sorgente dello strumento di riempimento] [Ctrl: determina con "trasparenza"]
++=[clicca per inserire il testo] [clicca durante l'inserimento per cambiare posizione]
++=[Shift: orizzontalmente] [Ctrl: verticalmente]
++=[+Ctrl when pressed: cancella selezione]
++=[+Shift quando premuto: sovrascrivi] [Ctrl: nasconde il riquadro di selezione durante il trascinamento]
++=[clicca per incollare quando c'è un'immagine] [Ctrl: pulisci l'immagine e riseleziona]
++=[Ctrl: colore su livello corrente] [Shift: seleziona come maschera di colore] [Alt: aggiungi come maschera di colore]
+
++=[Shift: in denominazione di 45°]
++=[Shift: quadrato]
++=[Shift: cerchio]
++=[Shift: in denominazione di 45°] [DoppioClick-Destro/Sinistro/Invio/ESC: fine] [BackSpace: collegamento con il punto iniziale e finale]
++=[Shift: in denominazione di 45°] [DoppioClick-Destro/Sinistro/Invio/ESC: fine]
++=[Shift: in denominazione di 45°] [Destra/ESC: Cancella] [BackSpace: torna al punto di controllo 1]
++=[aggiungi punti cliccando (+Ctrl: pressione 0)] [BackSpace: back one] [DoppioClick-Destro/Sinistro/Invio: disegna] [ESC: cancella]
++=[Shift: in denominazione di 45°] [DoppioClick-Destro/Sinistro/Invio: disegna] [ESC: cancella]
+
+
+#----------------
+# strumento
+
+[100]
+0=Pennello
++=Strumento di riempimento sagomato
++=Gomma sagomata
++=Strumento di riempimento
++=Pulizia della zona opaca
++=Gradiente
++=Testo
++=Sposta
++=Bacchetta magica
++=Seleziona
++=Rettangolo di modifica
++=Timbro
++=Muovi tela
++=Ruota tela
++=Selettore dei colori
+
+#----------------
+# sotto strumenti
+
+[101]
+0=Mano libera
++=Linea
++=Rettangolo
++=Cerchio
++=Line interrotta
++=Punto centrale
++=Curva di Bézier
++=Curva di Spline
+100=Rettangolo
++=Ellisse
++=Poligono
++=Mano libera
+200=Muovi immagine
++=Copia immagine
++=Muovi posizione
+300=Rifletti orizzontalmente
++=Rifletti verticalmente
++=Ruota a sinistra 90 gradi
++=Ruota a destra 90 gradi
++=Transformazione
++=Rifilatura
+
+#-----------------
+# tipo di colori del livello
+
+[102]
+0=Quadricromia
++=Scala di grigi
++=Solo canale alpha
++=Solo canale alpha (1bit)
+
+#---------------------
+# modalità pixel (pennelli)
+
+[103]
+0=sovrapposizione di pixel
++=sovrapposizione tratto
++=sovrascrivi confrontando con A
++=sovrascrittura sagomata
++=sovrascrittura rettangolare
++=scherma
++=brucia
++=aggiunta
++=gomma
+
+#--------------------
+# modalità pixel (strumento)
+
+[104]
+0=sovrapposizione di pixel
++=sovrascrivi confrontando con A
++=sovrascrivi
++=gomma
+
+#------------------------
+# seleziona l'immagine materiale
+
+[105]
+0=nulla
++=nulla (forzato)
++=usa texture opzionali
++=normalmente circolare
+100=seleziona immagine
++=seleziona immagine di texture
+
+#-----------------
+# modalità di fusione
+
+[106]
+0=normale
++=moltiplica
++=aggiungi
++=sottrai
++=schermo (filtro colorato)
++=sovrapponi
++=hard light
++=soft light
++=scherma
++=brucia
++=bruciatura lineare
++=luce intensa
++=luce lineare
++=luce focale
++=scurisci
++=schiarisci
++=differenza
++=brillante(aggiungi)
++=brillante(scherma)
+
+#----------------
+# tipo di scala
+
+[107]
+0=Vicino più prossimo
++=Mitchell
++=Lagrange
++=Lanczos2
++=Lanczos3
+
+#-----------------
+# nomi dei dock
+
+[108]
+0=Strumento
++=Opzione
++=Livello
++=Pennello
++=Colore
++=Tavolozza dei colori
++=Controllo della tela
++=Anteprima tela
++=Visualizzatore immagini
++=Lista dei filtri
++=Ruota dei colori
+
+
+#**********************
+# finestra dei panelli
+#**********************
+
+
+#-------------------
+# visualizzatore immagini
+
+[1000]
+0=Apri(&O)...
++=Anteprima(&P)
++=Successivo(&N)
++=Cancella(&C)
++=Impostazioni operative(&S)...
++=Visualizzazione completa(&F)
++=Specchio(&H)
+
+100=Menu
++=Apri
++=Precedente
++=Successivo
++=Ingrandimento
++=Visualizzazione completa
++=Specchio
+
+#------------------
+# anteprima tela
+
+[1001]
+0=Modalità lente
++=Visualizzazione completa (ingrandimento automatico)
++=Ingrandimento
++=Impostazioni operative
+
+#-------------------
+# colore
+
+[1002]
+0=valore di ingresso
+1=valore RGB\n(il testo tranne il numero viene trattato come un segno separato)\nesempio:255,0,128
+
+100=imposta il colore della pittura come maschera di colore(&S) [click sinistro]
++=aggiungi il colore della pittura come maschera di colore(&A)
++=cambia il colore della maschera solo al primo colore(&F)
++=elimina il colore selezionato(&D) [Ctrl + click sinistro]
++=imposta il colore selezionato come colore di pittura(&P) [Shift + click sinistro]
+
+#----------------------
+# tavolozza dei colori
+
+[1003]
+0=tavolozza
++=HLS
++=mezza tintura
+
+100=impostazione del segmento
++=segmento (3 ~ 64, 0 per il più grande)
+
+1000=imposta qui il colore(&S) [Shift + click sinistro]
++=procura questo colore(&P) [click sinistro]
+
+1100=Modifica(&E)...
++=Cambia conteggi(&R)...
++=Ottieni tavolozza dall'immagine(&M)...
++=Rendi tutto bianco(&C)...
++=Carica file(&L)...
++=Salva su file(&S)...
++=Impostazione display(&O)...
+
+1200=Cambia conteggi
++=Conta
++=La tavolozza corrente diventerà tutta bianca, OK?
++=Impostazione display
++=numero massimo in orizzontale\n(0 = automatico)
+
+#------------------
+# opzioni
+
+[1004]
+0=strumenti
++=righello
++=texture
++=dissolvenza
+
+#------------------
+# livello
+
+[1005]
+## tooltip
+0=nuovo
++=copia
++=cancella immagine
++=cancella
++=fondi con livello sottostante
++=sposta immagine al livello sottostante
++=muovi in alto
++=muovi in basso
+
+## maschera alpha
+100=maschera alpha OFF
++=mantieni valore alpha
++=mantieni trasparenza
++=mantieni opacità
+
+## menu
+1000=Impostazioni(&O)...
++=Impostazione colore(&C)...
++=Cambia tipo di livello(&T)...
++=Palette1(&P)
++=Palette2(&A)
++=Blocca pittura(&L)
++=Sorgente dello strumento di riempimento(&F)
++=Imposta livello maschera(&S)
++=Imposta livello sotto la maschera(&M)
++=Controllare(&K)
++=Crea nuovo livello sopra questa cartella(&N)
++=Sposta il livello selezionato in questa cartella(&V)
+
+#---------------------
+# pennello - lista dimensioni
+
+[1006]
+0=Aggiungi(&A)
++=Elimina(&D) [Shift+click sinistro]
+100=aggiungi
++=Inserisci le dimensioni del pennello.\nFai più aggiunte con '/'. (esempio: 1.0/2.4/100)
+
+#----------------------
+# pennelli - lista pennelli
+
+[1007]
+0=Nuovo pennello - predefinito(&B)
++=Nuovo pennello - incolla(&P)
++=Nuovo gruppo(&G)
++=Impostazione gruppo(&O)
++=Modifica elenco(&E)
++=Nuovo pennello - copia(&D)
+
+100=Rinomina(&N)
++=Copia(&C)
++=Incolla e sovrascrivi(&P)
++=Elimina(&D)
++=Imposta pennello registrato(&R)
++=Rilascia pennello registrato(&L)
+200=Nuovo gruppo
++=Gruppo di impostazioni
++=Colonna
++=Rinomina
+1000=Non è possibile incollare i dati del pennello
+
+#----------------------
+# pennello - valore dell'oggetto
+
+[1008]
+10=principale
++=minimo e intervallo
++=casuale
++=acqua
++=sagoma
++=rotazione sagoma
++=pressione
++=altro
+
+100=tipo
++=raggio
++=densità
++=pittura
++=correzione
++=dimensione minima (%)
++=densità minima (%)
++=intervallo di punti (1.0 = radius)
++=dimensione minima (%)
++=posizione distanza massima
++=preset
++=rifornimento di colore
++=rapporto colore tela
++=percentuale di colore della pittura
++=durezza
++=ruvidezza
++=progressing direction
++=angolo
++=angolo di larghezza casuale
++=texture
++=anti-aliasing
++=complemento di curva
+
+200=normale
++=gomma
++=acquerello
++=sfocatura
++=penna da 1px
++=dito
+
+220=no
++=debole
++=media
++=forte
+
+230=curva
++=un punto lineare
++=due punti lineari
+
+240=registra pe %c
++=resetta
+
+#-------------------
+# ruota dei colori
+
+[1009]
+0=triangolo HSV
++=rettangolo HSV
+
+
+#**********************
+# opzione strumento
+#**********************
+
+
+#---------------
+# movimenti
+
+[1100]
+0=Livello corrente
++=Livello bloccato
++=Tutti i livelli
+
+#---------------
+# gradazione
+
+[1101]
+0=colore della pittura -> colore di sfondo
++=Personalizzato
++=Inverti
++=Ripeti
+
+100=Modifica(&E)...
++=Nuovo(&N)
++=Copia(&C)
++=Elimina(&D)
+
+#-----------------------
+# strumento di riempimento/bacchetta magica
+
+[1102]
+0=determina
++=differenza colore
++=ignora il livello sorgente di determinazione
+100=RGB (*la sorgente di determinazione esiste una sola volta)
++=valore alfa
++=trasparenza (l'antialiasing è automatico)
++=colore della tela
++=trasparenza (A = 0)
+
+#---------------
+# timbro
+
+[1103]
+0=pulisci
++=carica immagine
++=sovrascrivi
++=incolla da in alto a sinistra
+
+#--------------
+# righello
+
+[1104]
+0=OFF
++=linea parallela
++=linea parallela (griglia)
++=punto centrale
++=cerchi concentrici (Cerchio)
++=cerchi concentrici (Ellisse)
+100=estrai
++=registra
+
+#---------------
+# testa/coda
+
+[1105]
+0=Linea
++=curva di Bézier
++=dissolvenza in entrata
++=dissolvenza in uscita
++=togli
++=registra
+
+
+#**********************
+# dialog
+#**********************
+
+
+#----------------
+# file dialog
+
+[2000]
+1=Ignora canale alfa
+
+#------------------------------------
+# anteprima tela/visualizzatore immagini - impostazioni
+
+[2001]
+0=impostazioni di controllo
++=sinistro
++=Ctrl+sinistro
++=Shift+sinistro
++=destro
++=centrale
+
+100=visualizza scorrimento
++=scorrimento tela
++=trascina verso l'alto per modificare la velocità d'ingrandimento
+
+200=Scorrimento
++=trascina verso l'alto per modificare la velocità d'ingrandimento
++=selettore colore (colore della pittura)
++=selettore colore (colore di sfondo)
+
+#---------------------
+# impostazioni della griglia
+
+[2002]
+0=Impostazione griglia
++=Griglia
++=Linea di demarcazione
++=orizzontale
++=verticale
+
+#--------------------
+# nuova immagine
+
+[2003]
+0=Nuova
++=Risoluzione
++=Tipo di livello
++=Aggiungi
++=Elimina
+100=Storico
++=Registro
++=Modello
+1000=La dimensione massima di modifica è %d px
+
+#------------------
+# modifica tavolozza
+
+[2004]
+0=Modifica tavolozza
++=Elimina
++=Gradazione
++=numero
++=Aggiungi
++=Inserisci
++=Valore RGB (esempio: 255,0,128)\npremi Invio per impostare
++=+Shift: seleziona la posizione specificata\nD&D: sposta
+
+#-------------------
+# finestre di dialogo del livello
+
+[2005]
+0=Nuovo
++=Seleziona colore
++=Impostazioni livello
++=Cambia tipo di colore
++=Unisci vari livelli
+
+100=tipo
++=modalità di fusione
++=colore
++=[tavolozza]\nClick destro/Ctrl+click sinistro: registra il colore
++=Facendo doppio Clicksulla parte di anteprima dell'immagine dell'elenco dei layer\nverrà visualizzata una finestra di selezione dei colori.
++=luminosità del colore invertita al valore alfa
++=unisci con nuovo livello
++=tipo di colore
++=Se il metodo di fusione è diverso da "normale", non può essere unito correttamente.\nA meno che il livello inferiore non sia completamente opaco.
++=Modifica elenco di registrazione (&E)
++=Modifica elenco di registrazione del nome del livello
++=Specifica un elenco multiplo di nomi di livelli, separati da ";".\n[esempio] livello1;livello2;livello3
+
+200=tutti i livelli visibili
++=tutti i livelli visibili nella cartella
++=livelli controllati (quando nuovo livello)
+
+#--------------------
+# modifica gradiente
+
+[2006]
+0=Modifica gradiente
++=colore
++=posizione
++=colore della pittura
++=colore di sfondo
++=colore assegnato
++=opacità
++=valore
++=ripeti (sempre)
++=monocromatico
++=+Ctrl: separa i punti dalla posizione corrente alla posizione premuta distanziando uniformemente\n+Shift: imposta il colore corrente sulla posizione premuta\n+Alt: elimina punto
+
+100=elimina punto corrente(&D)
++=dividere lo spazio tra quello a destra(&V)
++=spostati al centro tra i punti sinistro e destro(&C)
++=imposta tutti i punti equidistanti(&E)
++=Punti inversi(&R)
+
+#-----------------
+# cambia le dimensioni della tela
+
+[2007]
+0=cambia le dimensioni della tela
++=configura
++=tagliare l'area esterna
+
+#--------------------
+# ridimensionamento tela
+
+[2008]
+0=ridimensionamento tela
++=dimensione(px)
++=%
++=mantieni le proporzioni
++=cambia DPI
++=metodo del complemento
+
+#-------------------
+# Cambia valore DPI
+
+[2009]
+0=Cambia valore DPI
++=Inserisci il valore DPI.\nRiscrivendo il valore, non vi saranno cambiamenti nell'immagine.
+
+#--------------------
+# opzione di salvataggio
+
+[2010]
+0=salva le impostazioni
++=rapporto compressione [0-9]
++=canale alfa
++=↑Unisci le modalità dei livelli tutte in Normale
++=qualità [0-100]
++=rapporto di campionamento
++=progressivo
++=nessuna compressione
+100=mantieni livello
++=un dipinto (8bit RGB)
++=un dipinto (scala di grigi)
++=un dipinto (monocromatico)
+110=4:4:4 (alta qualità)
++=4:2:2
++=4:2:0 (bassa qualità)
+
+#--------------------------
+# Impostazione dettagliata del pennello
+
+[2011]
+0=Impostazione dettagliata del pennello
++=salva sempre quando il valore cambia
++=Raggio
++=valore minimo
++=valore massimo
+
+#----------------------------
+# Modifica gruppi e pennelli
+
+[2012]
+0=Modifica gruppi e pennelli
++=Gruppo
++=Pennello
+
+100=Aggiungi
++=Elimina
++=Modifica
++=Copia
++=Incolla
++=Sposta in alto
++=Sposta in basso
++=Sposta gruppo
+
+500=Rinomina
+
+1000=Elimina il gruppo. Va bene?\nQuesta operazione non può essere annullata.
++=Non può essere eliminato se c'è un solo gruppo
+
+#-------------------------
+# espandi/riduci selezione
+
+[2013]
+0=espandi e riduci selezione
++=Numero di pixel (riduci con valori negativi)
+
+#---------------------------------
+# Modifica rettangolo - trasforma
+
+[2014]
+0=Trasformazione
++=Reset
++=Ingrandimento X
++=Ingrandimento Y
++=rotazione
++=Determina
++=Mantieni proporzioni
++=[Ctrl+Sinistra, Centro]\nscorri tela\n[Shift+Sinistra]\ningrandisci tela
+100=normale
++=Prospettiva
+
+#----------------------
+# Scrivi testo
+
+[2015]
+0=Scrivi testo
++=Anteprima
++=- Click sinistro del mouse nell'area di disegno per modificare la posizione del disegno.\n- Nella casella di inserimento del testo, usa [Ctrl+su/giù/sinistra/destra] per cambiare la posizione del disegno di 1 px.
++=Stile
++=Grassetto
++=Corsivo
++=Dimensione
++=Suggerimento
++=Spazio tra le parole
++=Spazio tra le riga
++=disegna il testo in verticale
++=Anti-aliasing
++=usa DPI del monitor
++=U+309B/U+309C
+100=Predefinito
++=no
++=Normale
++=Massimo
+110=Normale
++=Grassetto
+120=Normale
++=Corsivo
++=Obliquo
+130=così com'è
++=sostituisci U+3099/U+309A
++=sostituisci e orizzontale
+
+#-----------------------
+# Impostazione tasti scorciatoia
+
+[2016]
+0=Impostazione tasto scorciatoia
++=Comando
++=Tasti rapidi
++=Cancella
++=Cancella tutto
+
+#--------------------
+# Impostazione tasti tela
+
+[2017]
+0=canvas key setting
++=Quando si imposta l'elemento selezionato,\npremere un solo tasto.\nPuoi annullare premendo Spazio.
++=Cancella tutto
+
+100=cambia strumento
++=cambia il tipo di pittura
++=altri comandi
++=+tasto per azionare lo strumento
++=+tasto per azionare il pennello da disegno
++=+tasto per far funzionare altre cose
++=+tasto per azionare lo strumento di selezione
+
+1000=seleziona il livello sopra
++=seleziona il livello sotto
++=livello corrente visibile/invisibile
++=interscambio colore pittura/sfondo
++=aumenta la velocità d'ingrandimento di un livello
++=diminuisci la velocità d'ingrandimento di un livello
++=ripristina la rotazione della tela
++=annulla
++=ripeti
++=passa al pennello precedente
++=seleziona il pennello precedente
++=seleziona il pennello successivo
+
+1100=disegno libero con pennello registrato
++=disegno libero con pennello registrato (pressione massima)
++=modifica la velocità d'ingrandimento (trascina su-giù)
++=cambia le dimensioni del pennello (trascina a sinistra-destra)
++=cambia le dimensioni del pennello registrato (trascinamento da sinistra a destra)
++=genera colore di mezzo(fare Clicksu 2 punti)
++=cambia colore (colore selezionato con selettore colore -> colore pittura)
++=cambia colore (colore selezionato con selettore colore -> trasparente)
++=seleziona il livello acquisito
+
+1200=selezione: rettangolo
++=selezione: poligono
++=selezione: a mano libera
++=sposta l'immagine
++=copia immagine
++=sposta la posizione di selezione
+
+#--------------------
+# Impostazione del pannello
+
+[2018]
+0=Impostazione del pannello
++=pannelli
++=posizione
++=Pannello%d
++=Tela
+
+# ----------------------
+# Impostazione dell'ambiente
+
+[2019]
+0=impostazione dell'ambiente
++=Impostazione 1
++=Impostazione 2
++=Intervallo d'ingrandimento
++=Tasto
++=Sistema
++=Cursore
++=Interfaccia
+
+100=larghezza dell'immagine all'avvio
++=altezza dell'immagine all'avvio
++=colore di sfondo della tela
++=colore di sfondo
++=numero massimo di annullamenti [2-400]
++=annulla dimensione buffer
++=DPI all'avvio
+
+200=conferma quando sovrascrivi
++=conferma quando salvi in formati diversi da APD
++=quando si salva come APD, l'inclusione di una singola immagine non è consentita
++=fai doppio click sull'elemento nella Lista dei filtri per eseguirlo
+
+300=un livello d'ingrandimento (~100%)
++=un livello d'ingrandimento (100%~)
++=un livello di rotazione della tela
++=ogni pixel quando si cambia la dimensione del pennello usando il trascinamento da sinistra a destra
+
+400=predefinito
++=tavoletta grafica
++=gomma
++=niente (predefinito)
++=azione dello strumento
++=altra azione
++=comando
++=tasto
++=si prega di premere questo tasto
++=imposta
+
+500=cartella di lavoro
++=cartella dei pennelli
++=cartella delle texture
+
+600=posizione srea attiva
++=carica immagine
++=Predefinito
++=larghezza, altezza sono di 1~32px.\nil colore nero e bianco dell'immagine rimarrà in bianco e nero.\nGli altri colori saranno trasformati in trasparente.
+
++=tema
++=Icona
++=barra degli strumenti
++=livello
++=altro
++=personalizza barra degli strumenti
++=font (applicato al riavvio del programma)
++=predefinito
++=pannello
+
+1000=cartella inesistente impostata come cartella di lavoro.
++=Le unità possono essere utilizzate per K, M, G. Byte senza unità.\nMassimo 1 GB.\n0 per mostrare tutti i file.
+
+#-------------------------
+# personalizza barra degli strumenti
+
+[2021]
+0=Personalizza barra degli strumenti
++=--- separatore ---
+
+#----------------------
+# filtro
+
+[2020]
+1=riavvia
++=procedi solo all'interno dell'area di disegno
+10=luminosità
++=contrasto
++=valore di gamma
++=fase colore
++=crominanza
++=soglia
++=tipo
++=gradazione
++=raggio
++=numero di cicli
++=vivido
++=colore
++=numero di riga
++=densità
++=angolo
++=DPI
++=anti-aliasing
++=dimensione
++=usa il colore medio
++=angolo R
++=angolo G
++=angolo B
++=imposta l'angolo di G, B come R
++=scala di grigi
++=spessore
++=spessore minimo
++=spessore massimo
++=spazio minimo
++=spazio massimo
++=linea orizzontale
++=linea verticale
++=intervallo orizzontale
++=intervallo verticale
++=imposta l'intervallo verticale come l'intervallo orizzontale
++=forza
++=importa
++=densità
++=casuale: raggio minimo (%)
++=casuale: densità minima (%)
++=tipo di punto
++=distanza
++=inverti
++=lunghezza
++=larghezza
++=crea loop laterale
++=click sinistro su tela,\npuoi cambiare la posizione centrale.
++=sfondo
++=ingrandimento
++=rendi liscia
++=depressione
++=volte
++=crea la sorgente del livello selezionato
++=ritaglia l'immagine sorgente
++=enfasi
++=numero di colori
++=proporzioni
++=spazio: casuale
++=spessore: casuale
++=lunghezza: casuale
++=lunghezza d'onda
++=sbiadimento dello spessore
++=anteprima semplice
++=anteprima in rosso
+
+1000=Bayer2x2
++=Bayer4x4
++=A spirale
++=Punto
++=Casuale
+
+1010=Nero/Bianco
++=colore della pittura/colore di sfondo
++=nero+valore alfa
+
+1020=colore della pittura
++=colore di sfondo
++=nero
++=bianco
+
+1030=punto circolare
++=anti-aliasing cerchio
++=cerchio morbido
+
+1040=colore della pittura
++=casuale (scala di grigi)
++=casuale (fase di colore)
++=casuale (RGB)
+
+1050=lato esterno dell'area di opacità
++=lato interno dell'area di opacità
+
+1060=inclinazione
++=orizzontale
++=verticale
+
+1070=valore minimo
++=valore medio
++=valore massimo
+
+1080=solo orizzontale
++=solo verticale
++=entrambi
+
+1090=coordinate rettangolari -> coordinate polari
++=coordinate polari -> coordinate rettangolari
+
+1110=pennello (anti-aliasing)
++=pennello (no anti-aliasing)
++=altri
+
+1110=pennello (anti-aliasing)
++=pennello (no anti-aliasing)
++=penna da 1px
+
+
+#**********************
+# altro
+#**********************
+
+
+#----------------
+# messaggio di errore
+
+[1]
+1=non riuscito
++=allocazione della memoria non riuscita
++=il formato non è corrispondente
++=caricamento fallito
++=la dimensione è troppo grande
++=può leggere soltanto i file APD ver3
++=Questa tasto è già in uso.
++=Il livello di destinazione non può essere disegnato a causa della cartella.
++=Il livello di destinazione non può essere disegnato perché è bloccato.
++=controlla il livello che desideri visualizzare in base all'elenco dei livelli.
++=L'immagine di texture non è impostata.
++=Poiché il livello corrente è un tipo di colore senza informazioni sul colore,\nil filtro non ha alcun effetto
+
+#------------------
+# messaggio
+
+[2]
+0=Sovrascrivi e salva?
++=Sembra che tu stia cercando di salvare in un formato diverso da APD.\nVuoi sovrascriverlo comunque?
++=L'immagine è stata modificata.\nVuoi salvarla?
++=Creazione della directory di lavoro non riuscita.\nL'annullamento non funziona correttamente.
++=Desideri trasferire i dati di pennello e pallet ver.1?\n(I dati di gradazione sono condivisi con la ver.1)
++=Poiché il file non esiste, eliminalo dalla cronologia.
+
+#--------------------
+# Verifica maschera
+
+[6]
+0=Verifica maschera
++=Selezione
++=livello - blocca
++=livello - maschera del livello sottostante
++=livello - maschera alfa
++=maschera di livello
++=maschera di colore
+
+# --------------------
+# messaggio di disegno
+
+[7]
+1=Stai tentando di disegnare per una cartella
++=Il livello corrente è bloccato
++=Stai provando a disegnare su un livello nascosto
+
+#----------------
+# menu principale
+
+[3]
+1=File(&F)
++=Modifica(&E)
++=Livello(&L)
++=Selezione(&S)
++=Filtro(&T)
++=Visualizza(&V)
++=Impostazioni(&O)
+
+### file
+1000=Nuovo(&N)...
++=Apri(&O)...
++=Salva(&S)
++=Salva come(&W)...
++=Salva una copia(&D)...
++=File recenti(&R)
++=Esci(&X)
++=Cancella cronologia(&C)
++=Minimizza(&M)
+
+### modifica
+2000=Annulla(&Z)
++=Ripeti(&Y)
++=Controlla lo stato delle maschere(&M)
++=Riempi(&F)
++=Cancella(&E)
++=Modifica le dimensioni della tela(&S)...
++=Ridimensiona la tela(&R)...
++=Modifica valore DPI(&D)...
+
+### seleziona
+3000=Deseleziona(&D)
++=Inverti(&I)
++=Seleziona tutto(&A)
++=Copia(&C)
++=Taglia(&X)
++=Incolla come nuovo livello(&V)
++=Espandi/Restringi(&E)...
++=Esporta selezione come PNG(&P)
+
+### livello
+4000=Nuovo livello(&N)...
++=Nuova cartella(&F)
++=Nuovo livello da file(&I)...
++=Copia(&C)
++=Elimina(&D)
++=Elimina tutto(&X)
++=Impostazione(&O)...
++=Impostazione del colore(&R)...
++=Cambia tipo di colore(&T)...
++=Sposta l'immagine verso al livello inferiore(&Z)
++=Unisci con il livello sottostante(&B)
++=Unisci vari livelli(&W)...
++=Unisci tutto(&M)
++=Modifica(&E)
++=Visualizza(&V)
++=Bandiera(&G)
++=Esporta su file(&S)...
++=Chiudi tutte le cartelle(&Q)
+
+4100=Capovolgi orizzontalmente(&H)
++=Sottosopra(&V)
++=Ruota a sinistra di 90 gradi(&L)
++=Ruota a destra di 90 gradi(&R)
+
+4200=Mostra tutto(&A)
++=Nascondi tutto(&H)
++=Mostra solo il livello corrente(&C)
++=Attiva/disattiva il livello selezionato(&K)
++=Attiva/disattiva i livelli escludendo le cartelle(&N)
+
+4300=Sblocca tutti i blocchi(&L)
++=Tutti i livelli sorgente di determinazione sono disattivati(&F)
++=Deseleziona tutti i controlli(&K)
+
+### filtri
+5000=Colore
++=Sostituzione del colore
++=Valore alfa (livello selezionato)
++=Valore alfa (livello corrente)
++=Sfocatura
++=Pittura
++=Pittura (fumetto)
++=Pixelizazione
++=Contorno
++=Effetto
++=Trasformazione
++=Altri
+
+5100=Luminosità/Contrasto...
++=Gamma...
++=Livello...
++=Regolazione RGB...
++=Regolazione HSV...
++=Inversione negativo-positivo
++=Scala di grigi
++=Colore seppia
++=Mappa sfumatura
++=Soglia...
++=Soglia (Retinatura)...
++=Posterizzazione...
++=Riduzione del colore...
+
++=Cambia il colore della pittura...
++=Cambia il colore della pittura in trasparente
++=Cambia colore ad eccezione del colore di pittura in trasparente
++=Cambia il colore della pittura con il colore di sfondo
++=Cambia il colore trasparente con il colore di pittura
+
++=(multiplo) tutti i punti di trasparenza in trasparente
++=(multiplo) da un qualsiasi punto opaco a trasparente
++=(multiplo) combina tutti i valori e copia
++=(multiplo) aggiungi tutti i valori
++=(multiplo) sottrai tutti i valori
++=(multiplo) moltiplica tutti i valori
++=(singola) inverti la luminosità del livello selezionato e impostala
++=(singolo) imposta la luminosità del livello selezionato
++=Imposta la luminosità invertita
++=Imposta dalla luminosità
++=Applicazione texture
++=Crea scala di grigi dal valore alfa
+
++=Sfocatura...
++=Sfocatura di Gauss...
++=Sfocatura di movimento...
++=Sfocatura radiale...
++=Sfocatura obiettivo...
+
++=Nuvole...
++=Schema punti (1)...
++=Schema punti (2)...
++=Disegna punti casuali...
++=Disegna punti lungo il bordo...
++=Bordo...
++=Linee orizzontali e verticali...
++=Scacchiera...
+
++=Linea di concentrazione...
++=Flash (anello di fuoco)...
++=Flash fisso (sole)...
++=Flash unico...
++=Flash unico (onda)...
+
++=Mosaico...
++=Cristallo...
++=Mezzo tono...
+
++=Nitido...
++=Maschera di contrasto...
++=Estrazione del contorno (Sobel)
++=Estrazione del contorno (Laplacian)
++=Passa-alto...
+
++=Bagliore...
++=Slittamento RGB...
++=Pittura ad olio...
++=Rilievo...
++=Rumore...
++=Effusione...
++=Graffi...
++=Mediana...
++=Sfocatura...
+
++=Onda...
++=Increspatura...
++=Coordinate polari...
++=Slittamento radiale...
++=Spirale...
+
++=Estrazione della linea tracciata
++=Correzione della linea di 1px
++=Anti-aliasing...
++=Bordatura...
++=Cornice tridimensionale...
++=Smuovi...
+
++=Tutto l'opaco a perfetto opaco
++=Regolazione HLS...
+
+### 表示
+6000=Pannello(&P)
++=Specchia tela orizzontalmente(&Q)
++=Mostra lo sfondo come modello a griglia(&K)
++=Mostra griglia(&G)
++=Mostra linee di divisione(&M)
++=Barra degli strumenti(&T)
++=Barra di stato(&S)
++=Tasso d'ingrandimento della tela(&C)
++=Ruota tela(&R)
+
+6100=Visualizza(&V)
++=Modalità a finestra separate(&W)
++=Modalità a finestra singola(&S)
++=Strumenti(&T)
++=Opzioni(&O)
++=Livelli(&L)
++=Pennelli(&B)
++=Colore(&C)
++=Tavolozza dei colori(&P)
++=Operazioni su tela(&R)
++=Anteprima tela(&V)
++=Visualizzatore immagini(&I)
++=Lista dei filtri(&F)
++=Ruota dei colori(&H)
+
+6200=Espandi di 1 levello(&U)
++=Riduci di 1 levello(&D)
++=Adatta alla finestra(&F)
+
+6300=Ruota un po' a sinistra(&L)
++=Ruota un po' a destra(&R)
++=0 gradi
++=90 gradi
++=180 gradi
++=270 gradi
+
+### Altre impostazioni
+7000=Impostazioni generali(&E)...
++=Impostazioni griglia(&G)...
++=Imposta tasti scorciatoia(&K)...
++=Scorciatoie su tela(&C)...
++=Impostazioni pannello(&P)...
++=Informazioni sulla versione(&A)...

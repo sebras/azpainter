@@ -410,6 +410,7 @@ int mCheckButtonEventHandle(mWidget *wg,mEvent *ev)
 		//キー
 		case MEVENT_KEYDOWN:
 			if(ev->key.code == MKEY_SPACE
+				&& !((p->ck.style & MCHECKBUTTON_S_RADIO) && (p->ck.flags & MCHECKBTT_FLAGS_CHECKED))
 				&& !(p->ck.flags & (MCHECKBTT_FLAGS_GRAB_PT | MCHECKBTT_FLAGS_GRAB_KEY)))
 			{
 				p->ck.flags |= MCHECKBTT_FLAGS_GRAB_KEY;

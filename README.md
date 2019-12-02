@@ -115,6 +115,7 @@ You can use [yay](https://github.com/Jguer/yay) or [trizen](https://github.com/t
 ----
 
 ## Compile from Source
+
 <details>
   <summary>Expand this section for instructions on how to compile AzPainter from source</summary>
 
@@ -158,8 +159,11 @@ You can use [yay](https://github.com/Jguer/yay) or [trizen](https://github.com/t
   ```
 
 ## Tutorials
+
 To learn how to use AzPainter, take a look at the [«Tutorials» wiki-page](https://github.com/Symbian9/azpainter/wiki/Tutorials) for textual and video tutorials.
 
 ## Developer
 
 > Copyright (C) 2013-2019 Azel <azelpg@gmail.com>
+
+- https://github.com/azelpg

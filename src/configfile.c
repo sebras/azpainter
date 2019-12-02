@@ -310,7 +310,7 @@ static void _load_configdata(mIniRead *ini,ConfigData *cf)
 	cf->undo_maxbufsize = mIniReadInt(ini, "undo_maxbufsize", 1024 * 1024);
 	cf->undo_maxnum = mIniReadInt(ini, "undo_maxnum", 100);
 
-	cf->canvasZoomStep_low = mIniReadInt(ini, "zoomstep_low", 15);
+	cf->canvasZoomStep_low = mIniReadInt(ini, "zoomstep_low", -5);
 	cf->canvasZoomStep_hi = mIniReadInt(ini, "zoomstep_hi", 100);
 	cf->canvasAngleStep = mIniReadInt(ini, "anglestep", 15);
 	cf->dragBrushSize_step = mIniReadInt(ini, "dragbrushsize_step", 10);

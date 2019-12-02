@@ -528,14 +528,36 @@ int drawCalc_getZoom_step(DrawData *p,mBool zoomup)
 		//100% 以下
 
 		step = APP_CONF->canvasZoomStep_low;
+		if(step == 0) step = 1;
 
-		if(zoomup)
+		if(step < 0)
 		{
-			n = 100 - (100 - n - 1) / step * step;
-			if(n > 100) n = 100;
+			//元の倍率*指定倍率を増減
+			
+			step = -step;
+			n = round(p->canvas_zoom * (step / 100.0));
+
+			if(zoomup)
+			{
+				n += p->canvas_zoom;
+				if(n > 1000) n = 1000;
+			}
+			else
+				n = p->canvas_zoom - n;
 		}
 		else
-			n = 100 - (100 - n + step) / step * step;
+		{
+			//段階
+			if(zoomup)
+			{
+				n = 100 - (100 - n - 1) / step * step;
+				if(n > 100) n = 100;
+			}
+			else
+				n = 100 - (100 - n + step) / step * step;
+
+			n *= 10;
+		}
 	}
 	else
 	{
@@ -550,11 +572,11 @@ int drawCalc_getZoom_step(DrawData *p,mBool zoomup)
 			n = (n - 1) / step * step;
 			if(n < 100) n = 100;
 		}
+
+		n *= 10;
 	}
 
 	//
-
-	n *= 10;
 
 	if(n < CANVAS_ZOOM_MIN)
 		n = CANVAS_ZOOM_MIN;

@@ -120,7 +120,7 @@ void ImageBufRGB16_drawMainCanvas_nearest(ImageBufRGB16 *src,mPixbuf *dst,Canvas
 	}
 }
 
-/** メインウィンドウキャンバス描画 (4x4 オーバーサンプリング) */
+/** メインウィンドウキャンバス描画 (オーバーサンプリング) */
 
 void ImageBufRGB16_drawMainCanvas_oversamp(ImageBufRGB16 *src,mPixbuf *dst,CanvasDrawInfo *info)
 {

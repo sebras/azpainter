@@ -174,6 +174,15 @@ static int _event_handle(mWidget *wg,mEvent *ev)
 					_release_grab(p);
 			}
 			break;
+		//ホイール
+		case MEVENT_SCROLL:
+			if(ev->scr.dir == MEVENT_SCROLL_DIR_UP
+				|| ev->scr.dir == MEVENT_SCROLL_DIR_DOWN)
+			{
+				if(ValueBar_setPos(p, p->pos + (ev->scr.dir == MEVENT_SCROLL_DIR_UP? 1: -1)))
+					_notify(p, 1);
+			}
+			break;
 		
 		case MEVENT_FOCUS:
 			if(ev->focus.bOut)
@@ -280,7 +289,7 @@ ValueBar *ValueBar_new(mWidget *parent,int id,uint32_t fLayout,
 
 	p->wg.id = id;
 	p->wg.fLayout = fLayout;
-	p->wg.fEventFilter |= MWIDGET_EVENTFILTER_POINTER;
+	p->wg.fEventFilter |= MWIDGET_EVENTFILTER_POINTER | MWIDGET_EVENTFILTER_SCROLL;
 	p->wg.event = _event_handle;
 	p->wg.draw = _draw_handle;
 	p->wg.hintW = 15;

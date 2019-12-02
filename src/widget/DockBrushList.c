@@ -89,6 +89,7 @@ typedef struct
 		fbtt;
 	_POINTINFO info_dst;	//D&D先の情報
 	BrushItem *dnd_src;		//D&D元のアイテム
+	mPoint ptdnd;			//D&Dボタン押し時の位置
 }DockBrushListArea;
 
 //---------------------
@@ -904,14 +905,18 @@ static void _event_press(DockBrushListArea *p,mEvent *ev)
 
 						drawTool_setTool(APP_DRAW, TOOL_BRUSH);
 					}
+					else
+					{
+						//すでに選択してあるアイテム上で押した場合、D&D 開始
 
-					//D&D 開始
+						p->fbtt = _BTT_F_DND_FIRST;
+						p->dnd_src = info.item;
+						p->info_dst = info;
+						p->ptdnd.x = ev->pt.x;
+						p->ptdnd.y = ev->pt.y;
 
-					p->fbtt = _BTT_F_DND_FIRST;
-					p->dnd_src = info.item;
-					p->info_dst = info;
-
-					mWidgetGrabPointer(M_WIDGET(p));
+						mWidgetGrabPointer(M_WIDGET(p));
+					}
 				}
 				break;
 			//グループ展開 (矢印部分)
@@ -934,14 +939,15 @@ static void _event_motion(DockBrushListArea *p,mEvent *ev)
 	int area;
 	_POINTINFO info;
 
-	//押し位置とは別のアイテムに移動した場合、D&D 開始
+	//押し位置とは別のアイテムに移動した＋数px移動した場合、D&D 開始
 
 	if(p->fbtt == _BTT_F_DND_FIRST)
 	{
 		area = _get_pointinfo(p, ev->pt.x, ev->pt.y, &info);
 
-		if(area == POINTINFO_NONE
+		if((area == POINTINFO_NONE
 			|| (area == POINTINFO_BRUSHITEM && info.item != p->dnd_src))
+			&& (abs(ev->pt.x - p->ptdnd.x) > 20 || abs(ev->pt.y - p->ptdnd.y) > 20))
 		{
 			p->fbtt = _BTT_F_DND;
 

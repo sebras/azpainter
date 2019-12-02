@@ -89,7 +89,8 @@ typedef struct _ConfigData
 		canvasview_zoom_normal,	//キャンバスビュー:非ルーペ時の倍率 (100%=100)
 		canvasview_zoom_loupe,	//ルーペ時の倍率
 		savedup_type,			//複製保存時の保存形式 (0 で現在のファイルと同じ)
-		undo_maxbufsize;		//アンドゥ最大バッファサイズ
+		undo_maxbufsize,		//アンドゥ最大バッファサイズ
+		canvasZoomStep_low;		//キャンバス倍率、1段階 (100%以下): 負の値で倍率
 
 	uint32_t fView,				//表示フラグ
 		optflags,				//オプションフラグ
@@ -102,7 +103,6 @@ typedef struct _ConfigData
 		init_imgw,				//起動時の初期幅、高さ、DPI
 		init_imgh,
 		init_dpi,
-		canvasZoomStep_low,			//キャンバス倍率、1段階 (100%以下)
 		canvasZoomStep_hi,			//キャンバス倍率、1段階 (100%以上)
 		canvasAngleStep,			//キャンバス回転角度、1段階
 		dragBrushSize_step,			//+Shift ブラシサイズ変更の増減幅

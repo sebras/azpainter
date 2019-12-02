@@ -580,19 +580,27 @@ static void _event_btt_left_press(mLineEdit *p,mEvent *ev)
 	else
 	{
 		//テキスト部分
-		
-		pos = _getPtToTextPos(p, ev->pt.x);
-		
-		mEditTextBuf_moveCursorPos(p->le.buf,
-			pos, ev->pt.state & M_MODS_SHIFT);
-		
-		_changeCurPos(p, FALSE);
 
-		p->le.fpress = _PRESS_F_DRAG;
-		p->le.posLast = pos;
-		
-		mWidgetSetFocus_update(M_WIDGET(p), TRUE);
-		mWidgetGrabPointer(M_WIDGET(p));
+		if(ev->pt.type == MEVENT_POINTER_TYPE_DBLCLK)
+		{
+			//ダブルクリック: 全選択
+			mLineEditSelectAll(p);
+		}
+		else
+		{
+			pos = _getPtToTextPos(p, ev->pt.x);
+			
+			mEditTextBuf_moveCursorPos(p->le.buf,
+				pos, ev->pt.state & M_MODS_SHIFT);
+			
+			_changeCurPos(p, FALSE);
+
+			p->le.fpress = _PRESS_F_DRAG;
+			p->le.posLast = pos;
+			
+			mWidgetSetFocus_update(M_WIDGET(p), TRUE);
+			mWidgetGrabPointer(M_WIDGET(p));
+		}
 	}
 }
 
