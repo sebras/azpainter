@@ -55,7 +55,7 @@ mBool mIsMatchString(const char *text,const char *pattern,mBool bNoCase);
 mBool mIsMatchStringSum(const char *text,const char *pattern,char split,mBool bNoCase);
 int mGetEqStringIndex(const char *text,const char *enumtext,char split,mBool bNoCase);
 
-char *mGetFormatStrParam(const char *text,const char *key,char split,char paramsplit,mBool bNoCase);
+char *mGetFormatStrParam(const char *text,const char *key,signed char split,signed char paramsplit,mBool bNoCase);
 
 #ifdef __cplusplus
 }

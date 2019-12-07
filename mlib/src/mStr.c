@@ -793,7 +793,8 @@ int mStrSetURIList(mStr *str,const char *uri,mBool localfile)
 
 void mStrSetURLEncode(mStr *str,const char *text)
 {
-	char c,flag,m[6];
+	char flag,m[6];
+	signed char c;
 	
 	mStrEmpty(str);
 

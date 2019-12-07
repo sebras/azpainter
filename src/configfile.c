@@ -166,7 +166,7 @@ static void _load_draw_rule_record(mIniRead *ini)
 static void _normalize_panel_layout(ConfigData *cf)
 {
 	char *pc;
-	char buf[4];
+	signed char buf[4];
 	int i,no,pos;
 
 	//----- ペイン
