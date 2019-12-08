@@ -655,7 +655,7 @@ int mGetEqStringIndex(const char *text,const char *enumtext,char split,mBool bNo
  * @return 確保された文字列。NULL でなし */
 
 char *mGetFormatStrParam(const char *text,const char *key,
-	char split,char paramsplit,mBool bNoCase)
+	signed char split,signed char paramsplit,mBool bNoCase)
 {
 	const char *pc,*pend,*pkeyend;
 	int ret;
