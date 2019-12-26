@@ -841,7 +841,7 @@
 +=Puntero
 +=Interfaz
 
-100=Anchura de imagen al inicio
+100=Anchura de imagen al inicio\n(valor negativo: incrementar / disminuir actual * n / 100)
 +=Altura de imagen al inicio
 +=Color de fondo del lienzo
 +=Color de fondo de la cuadrícula
