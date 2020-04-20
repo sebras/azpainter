@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -107,7 +107,8 @@ typedef struct _mX11DND mX11DND;
 struct _mAppSystem
 {
 	Display	*disp;
-	Window	root_window;
+	Window	root_window,
+		leader_window;
 	Visual	*visual;
 	Colormap colormap;
 	int		screen,

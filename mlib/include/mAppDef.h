@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -36,7 +36,10 @@ typedef struct _mApp
 	mFont *fontDefault;
 
 	char *pathConfig,
-		*pathData;
+		*pathData,
+		*res_appname,
+		*res_classname,
+		*argv_progname;
 
 	int depth;
 	uint32_t maskR,maskG,maskB;

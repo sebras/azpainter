@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -24,13 +24,30 @@ $*/
 /* glibc 2.17 以前では、clock_gettime() を使う場合 librt のリンクが必要 */
 
 
+#if defined(__APPLE__) && defined(__MACH__)
+/* MacOS */
+
+#include <mach/mach_time.h>
+#define __MDEF_MAC
+
+#else
+/* Other */
+
 #include <unistd.h>
 
 #if defined(_POSIX_TIMERS) && _POSIX_TIMERS > 0
-#include <time.h>
+/* clock_gettime() */
+# include <time.h>
+# define __MDEF_CLOCK_GETTIME
 #else
-#include <sys/time.h>
+/* gettimeofday() */
+# include <sys/time.h>
+# define __MDEF_GETTIMEOFDAY
 #endif
+
+#endif
+
+//------
 
 #include "mDef.h"
 #include "mNanoTime.h"
@@ -46,13 +63,27 @@ $*/
 
 void mNanoTimeGet(mNanoTime *nt)
 {
-#if defined(_POSIX_TIMERS) && _POSIX_TIMERS > 0
+#if defined(__MDEF_MAC)
+	/* MacOS */
+
+	static mach_timebase_info_data_t info = {0,0};
+	uint64_t t;
+
+	if(info.denom == 0)
+		mach_timebase_info(&info);
+
+	t = mach_absolute_time() * info.numer / info.denom;
+
+	nt->sec = t / ((uint64_t)1000 * 1000 * 1000);
+	nt->nsec = t % ((uint64_t)1000 * 1000 * 1000);
+
+#elif defined(__MDEF_CLOCK_GETTIME)
 
 	struct timespec ts;
 
 	clock_gettime(CLOCK_MONOTONIC, &ts);
 
-	nt->sec  = ts.tv_sec;
+	nt->sec = ts.tv_sec;
 	nt->nsec = ts.tv_nsec;
 
 #else
@@ -61,7 +92,7 @@ void mNanoTimeGet(mNanoTime *nt)
 
 	gettimeofday(&tv, NULL);
 
-	nt->sec  = tv.tv_sec;
+	nt->sec = tv.tv_sec;
 	nt->nsec = tv.tv_usec * 1000;
 
 #endif

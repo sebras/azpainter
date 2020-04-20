@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -23,7 +23,5 @@ $*/
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-
-#define MLIB_ENABLE_PENTABLET  1
 
 #endif

@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -166,7 +166,7 @@ static void _load_draw_rule_record(mIniRead *ini)
 static void _normalize_panel_layout(ConfigData *cf)
 {
 	char *pc;
-	signed char buf[4];
+	char buf[4];
 	int i,no,pos;
 
 	//----- ペイン

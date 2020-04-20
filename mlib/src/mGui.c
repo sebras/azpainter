@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -308,10 +308,12 @@ void mAppEnd(void)
 		mTranslationFree(&p->pv->transApp);
 	}
 
-	//パス文字列
+	//文字列
 
 	mFree(p->pathConfig);
 	mFree(p->pathData);
+	mFree(p->res_appname);
+	mFree(p->res_classname);
 	
 	//メモリ解放
 	
@@ -341,6 +343,8 @@ int mAppInit(int *argc,char **argv)
 	
 	MAPP = (mApp *)mMalloc(sizeof(mApp), TRUE);
 	if(!MAPP) return -1;
+
+	MAPP->argv_progname = argv[0];
 	
 	//mAppPrivate 確保
 	
@@ -390,6 +394,13 @@ ERR:
 	return -1;
 }
 
+/** クラス名の設定 */
+
+void mAppSetClassName(const char *appname,const char *classname)
+{
+	MAPP->res_appname = mStrdup(appname);
+	MAPP->res_classname = mStrdup(classname);
+}
 
 /** ユーザーアクション (キー、マウス) のイベントをブロックするか */
 

@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -793,8 +793,7 @@ int mStrSetURIList(mStr *str,const char *uri,mBool localfile)
 
 void mStrSetURLEncode(mStr *str,const char *text)
 {
-	char flag,m[6];
-	signed char c;
+	char c,flag,m[6];
 	
 	mStrEmpty(str);
 

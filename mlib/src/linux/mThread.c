@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -130,7 +130,7 @@ mBool mThreadWait(mThread *p)
 {
 	if(!p || !p->handle) return TRUE;
 
-	if(pthread_join(p->handle, NULL) != 0)
+	if(pthread_join((pthread_t)p->handle, NULL) != 0)
 		return FALSE;
 	else
 	{

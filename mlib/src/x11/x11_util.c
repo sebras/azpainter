@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -24,6 +24,7 @@ $*/
 #include <stdlib.h>
 #include <string.h>
 #include <sys/select.h>
+#include <unistd.h>
 
 #define MINC_X11_ATOM
 #define MINC_X11_UTIL
@@ -129,6 +130,24 @@ void mX11SetPropertyCompoundText(Window id,Atom prop,const char *utf8,int len)
 	}
 }
 
+/** _NET_WM_PID セット */
+
+void mX11SetProperty_wm_pid(Window id)
+{
+	long pid = getpid();
+	
+	mX11SetPropertyCARDINAL(id, mX11GetAtom("_NET_WM_PID"), &pid, 1);
+}
+
+/** WM_CLIENT_LEADER セット */
+
+void mX11SetProperty_wm_client_leader(Window id)
+{
+	Window leader = MAPP_SYS->leader_window;
+
+	mX11SetProperty32(id, "WM_CLIENT_LEADER", XA_WINDOW, &leader, 1);
+}
+
 
 //===================================
 // プロパティデータ読み込み
@@ -169,9 +188,8 @@ void *mX11GetProperty32(Window id,Atom prop,Atom proptype,int *resnum)
 {
 	Atom type;
 	int ret,format;
-	unsigned long nitems,after;
+	unsigned long nitems,after,cnt,bufnum;
 	unsigned char *pdat,*buf,*pdst;
-	long offset;
 
 	if(prop == 0) return NULL;
 
@@ -182,7 +200,7 @@ void *mX11GetProperty32(Window id,Atom prop,Atom proptype,int *resnum)
 
 	if(pdat) XFree(pdat);
 
-	if(ret != Success || format != 32 || type != proptype)
+	if(ret != Success || format != 32 || type != proptype || after == 0)
 		return NULL;
 
 	//確保
@@ -191,21 +209,18 @@ void *mX11GetProperty32(Window id,Atom prop,Atom proptype,int *resnum)
 	 * しかし、実際に取得されるデータは (long x データ数) なので注意。
 	 * X の内部では 4byte データだが、読み込み時には 4byte -> 8byte 変換される。 */
 
-	after >>= 2;
+	bufnum = after / 4;
 
-	buf = (unsigned char *)mMalloc(after * sizeof(long), TRUE);
+	buf = (unsigned char *)mMalloc(bufnum * sizeof(long), TRUE);
 	if(!buf) return NULL;
 
-	*resnum = after;
-
 	//読み込み
-	/* [!] プロパティのデータ位置とサイズは 4byte データとして扱う。 */
 
 	pdst = buf;
 
-	for(offset = 0; after > 0; offset += nitems * 4)
+	for(cnt = 0; cnt < bufnum; )
 	{
-		ret = XGetWindowProperty(XDISP, id, prop, offset / 4, after / 4,
+		ret = XGetWindowProperty(XDISP, id, prop, cnt, bufnum - cnt,
 					0, proptype, &type, &format, &nitems, &after, &pdat);
 
 		if(ret != Success)
@@ -214,13 +229,31 @@ void *mX11GetProperty32(Window id,Atom prop,Atom proptype,int *resnum)
 			return NULL;
 		}
 
-		memcpy(pdst, pdat, nitems * sizeof(long));
-		pdst += nitems * sizeof(long);
+		if(nitems)
+		{
+			memcpy(pdst, pdat, nitems * sizeof(long));
+			pdst += nitems * sizeof(long);
+
+			cnt += nitems;
+		}
 
 		XFree(pdat);
+
+		if(after == 0) break;
 	}
 
-	return buf;
+	//実際に読み込んだ数
+
+	if(cnt == 0)
+	{
+		mFree(buf);
+		return NULL;
+	}
+	else
+	{
+		*resnum = cnt;
+		return buf;
+	}
 }
 
 /** プロパティから format=8 データ取得
@@ -248,6 +281,8 @@ void *mX11GetProperty8(Window id,Atom prop,mBool append_null,uint32_t *ret_size)
 
 	if(ret != Success || type == None || format != 8)
 		return NULL;
+
+	if(after == 0 && !append_null) return NULL;
 
 	//確保
 	

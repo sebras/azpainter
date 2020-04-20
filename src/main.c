@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -368,6 +368,8 @@ static void _finish()
 int main(int argc,char **argv)
 {
 	if(mAppInit(&argc, argv)) return 1;
+
+	mAppSetClassName("AzPainter", "AzPainter");
 
 	mAppInitPenTablet();
 

@@ -1261,7 +1261,7 @@
 +=All opaque to perfect opaque
 +=HLS adjustment...
 
-### 表示
+### View
 6000=Panel(&P)
 +=Canvas flip horizontally(&Q)
 +=Show background as check pattern(&K)
@@ -1298,7 +1298,7 @@
 +=180 degree
 +=270 degree
 
-### 設定ほか
+### Setting
 7000=Environment setting(&E)...
 +=Grid setting(&G)...
 +=Shortcut key setting(&K)...

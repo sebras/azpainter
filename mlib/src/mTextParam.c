@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -185,7 +185,7 @@ void mTextParamFree(mTextParam *p)
  * @param split ';' など、各値を区切る文字
  * @param splitparam '=' など、キーと値を区切る文字 (-1 で '=') */
 
-mTextParam *mTextParamCreate(const char *text,char split,signed char splitparam)
+mTextParam *mTextParamCreate(const char *text,char split,char splitparam)
 {
 	mTextParam *p;
 
