@@ -23,6 +23,8 @@ Options:
   --docdir=[DIR]      install dir of document files
                       [DATAROOTDIR/doc/$PACKAGE]
 
+  --no-check-lib      do not check library
+
 Optional flags:
 
 Variables:
@@ -96,23 +98,25 @@ fc_check_lib() {
 	fi
 
 	# include test
-	touch conftest.c
+	if test $cf_check_lib == yes;then
+		touch conftest.c
 
-	set $tmp_includes
-	for tmp1;do
-		echo "#include <$tmp1>" >> conftest.c
-	done
+		set $tmp_includes
+		for tmp1;do
+			echo "#include <$tmp1>" >> conftest.c
+		done
 
-	echo "int main() { return 0; }" >> conftest.c
+		echo "int main() { return 0; }" >> conftest.c
 
-	$CC $CFLAGS $CFLAGS_ADD -o conftest conftest.c > /dev/null 2>&1
-	tmp1=$?
-	rm -f conftest.c conftest
+		$CC $CFLAGS $CFLAGS_ADD -o conftest conftest.c > /dev/null 2>&1
+		tmp1=$?
+		rm -f conftest.c conftest
 
-	if test $tmp1 != 0;then
-		echo "! '$tmp_name': include file not found."
-		echo "please install $tmp_help"
-		exit 1
+		if test $tmp1 != 0;then
+			echo "! '$tmp_name': include file not found."
+			echo "please install $tmp_help"
+			exit 1
+		fi
 	fi
 }
 
@@ -163,6 +167,7 @@ cf_os=unknown
 cf_debug=no
 cf_bigendian=no
 cf_make=make
+cf_check_lib=yes
 
 PACKAGE=azpainter
 PACKAGE_VERSION=2.1.6
@@ -194,6 +199,8 @@ for opt;do
 		cf_datadir=$tmp1 ;;
 	--docdir=*)
 		cf_docdir=$tmp1 ;;
+	--no-check-lib)
+		cf_check_lib=no ;;
 	*=*)
 		eval "$opt" ;;
 	*)

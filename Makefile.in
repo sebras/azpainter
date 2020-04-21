@@ -8,6 +8,8 @@ package_name := @PACKAGE_NAME@
 package_version := @PACKAGE_VERSION@
 package_full := $(package_name)-$(package_version)
 
+instfile := install -m 644
+
 CC := @CC@
 CFLAGS := @CFLAGS@ -pthread -Isrc/include -Imlib/include -I. -DHAVE_CONFIG_H \
  -DPACKAGE_DATA_DIR=\"$(datadir)\"
@@ -176,9 +178,15 @@ src/widget/calc_homography.c
 OBJS := $(SRCS:.c=.o)
 DEPS := $(OBJS:.o=.d)
 
+update_cache := if test -z "$(DESTDIR)";then \
+ echo "** Updating cache"; \
+ gtk-update-icon-cache -f -t $(datarootdir)/icons/hicolor; \
+ update-desktop-database $(datarootdir)/applications; \
+ update-mime-database $(datarootdir)/mime; fi
+
 #-----------------
 
-.PHONY: all clean install uninstall dist update-cache
+.PHONY: all clean install uninstall dist
 
 all: $(TARGET)
 
@@ -195,26 +203,47 @@ clean:
 	rm -f $(TARGET) $(OBJS) $(DEPS)
 	$(MAKE) -C mlib clean
 
-update-cache:
-	@-if test -z "$(DESTDIR)";then \
-		echo "* Updating cache."; \
-		gtk-update-icon-cache -f -t $(datarootdir)/icons/hicolor; \
-		update-mime-database $(datarootdir)/mime; \
-		update-desktop-database $(datarootdir)/applications; \
-	fi
-
 install:
-	install -d $(DESTDIR)$(bindir)
-	install $(TARGET) $(DESTDIR)$(bindir)
+	install -m 755 -d $(DESTDIR)$(bindir) \
+	 $(DESTDIR)$(datarootdir)/applications \
+	 $(DESTDIR)$(datarootdir)/icons/hicolor/48x48/apps \
+	 $(DESTDIR)$(datarootdir)/icons/hicolor/scalable/apps \
+	 $(DESTDIR)$(datarootdir)/mime/packages \
+	 $(DESTDIR)$(datadir)/doc \
+	 $(DESTDIR)$(datadir)/13x13 \
+	 $(DESTDIR)$(datadir)/16x16 \
+	 $(DESTDIR)$(datadir)/20x20 \
+	 $(DESTDIR)$(datadir)/24x24 \
+	 $(DESTDIR)$(datadir)/brush \
+	 $(DESTDIR)$(datadir)/theme \
+	 $(DESTDIR)$(datadir)/tr \
+	 $(DESTDIR)$(datadir)/texture/tone300 \
+	 $(DESTDIR)$(datadir)/texture/tone600 \
+	 $(DESTDIR)$(datadir)/texture/various
 
-	install -d $(DESTDIR)$(datadir)/doc
-	cp GPL3 AUTHORS ChangeLog README README_ja manual_ja.html $(DESTDIR)$(datadir)/doc
-	cp -r data/* $(DESTDIR)$(datadir)
+	install -m 755 $(TARGET) $(DESTDIR)$(bindir)
+	$(instfile) desktop/applications/azpainter.desktop $(DESTDIR)$(datarootdir)/applications
+	$(instfile) desktop/icons/hicolor/48x48/apps/*.png $(DESTDIR)$(datarootdir)/icons/hicolor/48x48/apps
+	$(instfile) desktop/icons/hicolor/scalable/apps/*.svg $(DESTDIR)$(datarootdir)/icons/hicolor/scalable/apps
+	$(instfile) desktop/mime/packages/azpainter.xml $(DESTDIR)$(datarootdir)/mime/packages
 
-	install -d $(DESTDIR)$(datarootdir)
-	cp -r desktop/* $(DESTDIR)$(datarootdir)
+	$(instfile) GPL3 AUTHORS ChangeLog README README_ja manual_ja.html $(DESTDIR)$(datadir)/doc
 
-	$(MAKE) update-cache
+	$(instfile) data/*.dat data/*.png data/sckey-2.conf $(DESTDIR)$(datadir)
+
+	$(instfile) data/13x13/* $(DESTDIR)$(datadir)/13x13
+	$(instfile) data/16x16/* $(DESTDIR)$(datadir)/16x16
+	$(instfile) data/20x20/* $(DESTDIR)$(datadir)/20x20
+	$(instfile) data/24x24/* $(DESTDIR)$(datadir)/24x24
+	$(instfile) data/brush/* $(DESTDIR)$(datadir)/brush
+	$(instfile) data/theme/* $(DESTDIR)$(datadir)/theme
+	$(instfile) data/tr/* $(DESTDIR)$(datadir)/tr
+
+	$(instfile) data/texture/tone300/* $(DESTDIR)$(datadir)/texture/tone300
+	$(instfile) data/texture/tone600/* $(DESTDIR)$(datadir)/texture/tone600
+	$(instfile) data/texture/various/* $(DESTDIR)$(datadir)/texture/various
+
+	@-$(update_cache)
 
 uninstall:
 	rm -f $(DESTDIR)$(bindir)/$(TARGET) \
@@ -224,9 +253,10 @@ uninstall:
 	 $(DESTDIR)$(datarootdir)/icons/hicolor/scalable/apps/azpainter.svg \
 	 $(DESTDIR)$(datarootdir)/icons/hicolor/scalable/apps/application-x-azpainter-apd.svg \
 	 $(DESTDIR)$(datarootdir)/mime/packages/azpainter.xml
+
 	rm -rf $(DESTDIR)$(datadir)
 
-	$(MAKE) update-cache
+	@-$(update_cache)
 
 dist:
 	tar czf $(package_full).tar.gz \
