@@ -185,7 +185,7 @@ void mTextParamFree(mTextParam *p)
  * @param split ';' など、各値を区切る文字
  * @param splitparam '=' など、キーと値を区切る文字 (-1 で '=') */
 
-mTextParam *mTextParamCreate(const char *text,char split,char splitparam)
+mTextParam *mTextParamCreate(const char *text,char split,signed char splitparam)
 {
 	mTextParam *p;
 

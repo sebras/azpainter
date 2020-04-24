@@ -317,7 +317,7 @@ mBool FillPolygon_getIntersection_noAA(FillPolygon *p,int yy)
 {
 	int i,x;
 	mDoublePoint *ptbuf,*pt1,*pt2;
-	char dir;
+	signed char dir;
 	double y;
 
 	//交点クリア
@@ -413,7 +413,7 @@ static mBool _get_intersection_aa(FillPolygon *p,double y)
 {
 	mDoublePoint *ptbuf,pt1,pt2,pttmp;
 	int i,x;
-	char dir;
+	signed char dir;
 
 	//交点クリア
 
