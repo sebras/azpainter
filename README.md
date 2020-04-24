@@ -164,6 +164,6 @@ To learn how to use AzPainter, take a look at the [«Tutorials» wiki-page](http
 
 ## Developer
 
-> Copyright (C) 2013-2019 Azel <azelpg@gmail.com>
+> Copyright (C) 2013-2020 Azel <azelpg@gmail.com>
 
 - https://github.com/azelpg
