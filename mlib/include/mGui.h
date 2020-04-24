@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -28,6 +28,7 @@ int mAppInit(int *argc,char **argv);
 void mAppEnd(void);
 void mAppQuit(void);
 
+void mAppSetClassName(const char *appname,const char *classname);
 mBool mAppInitPenTablet(void);
 
 void mAppSync(void);

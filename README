@@ -1,12 +1,14 @@
 **********************************************
   AzPainter
-  Copyright (C) 2013-2019 Azel
+  Copyright (C) 2013-2020 Azel
 
   http://azsky2.html.xdomain.jp/
-  https://osdn.net/projects/azpainter/
-
+  https://github.com/azelpg/azpainter
   <azelpg@gmail.com>
 **********************************************
+
+This software is released under the GPL3 License.
+Please see the file GPL3 for details.
 
 
 =====================================
@@ -20,76 +22,88 @@ It is mainly full color painting software for illustration drawing.
  * Operating environment
 =====================================
 
-- Linux
+- Linux/FreeBSD/MacOS(need XQuartz)
+
 - X11R6 or later
-  (X11R 7.5 or later when you want to recognize pen pressure)
 
 
 =====================================
  * What you need to compile
 =====================================
 
-- gcc
-- make
+You need the C compiler, make, and development files for various libraries.
 
-- Xlib       (libX11)
-- Xext       (libXext)
-- XInput2    (libXi)
-- freetype2  (libfreetype)
-- fontconfig (libfontconfig)
-- zlib
-- libpng
-- libjpeg
+[Required libraries]
+  x11 xext xinput
+  zlib libpng jpeglib(jpeg-turbo) fontconfig freetype2
 
 
 ## Required packages in each distribution
 ----------------------------------------------
 
->> Debian/Ubuntu
+(Debian/Ubuntu)
 
-  gcc make libx11-dev libxext-dev libxi-dev libfreetype6-dev
-  libfontconfig1-dev zlib1g-dev libjpeg-dev
+  gcc or clang, make libx11-dev libxext-dev libxi-dev libfreetype6-dev
+  libfontconfig1-dev zlib1g-dev libpng-dev libjpeg-dev
 
-  libpng-dev (Debian 9.0 / Ubuntu 16.10 or later)
-  or libpng12-dev (before Debian 8.0 / Ubuntu 16.04)
+(RedHat)
 
->> RedHat
-
-  gcc make libX11-devel libXext-devel libXi-devel libfreetype6-devel
+  gcc or clang, make libX11-devel libXext-devel libXi-devel libfreetype6-devel
   libfontconfig-devel zlib-devel libpng-devel libjpeg-devel
 
->> Arch Linux
+(Arch Linux)
 
-  Generally already it has been installed.
+  gcc or clang, make libx11 libxext libxi freetype2 fontconfig zlib
+  libpng libjpeg-turbo
+  
+(FreeBSD)
+
+  gmake png jpeg-turbo
+
+  - Not compatible with BSD make.
+
+(macOS)
+
+  xcode libpng jpeg-turbo
+
+  - It is assumed that XQuartz is installed.
 
 
 =====================================
  * Compile and install
 =====================================
 
-$ tar xf azpainter-2.1.5.tar.bz2
-$ cd azpainter-2.1.5
+After extracting the source archive,
+go to the directory where it was extracted, and execute the following.
+
+## Linux
 
 $ ./configure
 $ make
-$ sudo make install-strip
+$ sudo make
+
+## FreeBSD
+
+$ ./configure
+$ gmake
+# gmake install
+
+## MacOS
+
+$ ./configure --prefix=/usr/X11
+$ make
+$ sudo make install
+
 
 It will be installed in the "/usr/local" by default.
-When ./configure to specify at the options, you can change the settings.
+
+You can change the compile configuration by specifying options at configure runtime.
+The help for configure can be found at . /configure --help for help with configure.
 
 
-## Install to /usr
--------------------------
+[exsample] Install to /usr
 
 $ ./configure --prefix=/usr
-
-
-[!] If you can not find the header files of freetype
-------------------------------------------------------
-
-Please specify the location of the header files in the '--with-freetype-dir'.
-
-$ ./configure --with-freetype-dir=/usr/include/freetype2
 
 
 =====================================

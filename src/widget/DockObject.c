@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -313,7 +313,7 @@ void DockObjects_all_windowMode(int type)
 
 void DockObject_normalize_layout_config()
 {
-	signed char buf[DOCKWIDGET_NUM + 2];
+	char buf[DOCKWIDGET_NUM + 2];
 	int i,pos,paneno,no;
 	char *pc;
 

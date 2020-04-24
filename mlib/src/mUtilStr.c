@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -655,7 +655,7 @@ int mGetEqStringIndex(const char *text,const char *enumtext,char split,mBool bNo
  * @return 確保された文字列。NULL でなし */
 
 char *mGetFormatStrParam(const char *text,const char *key,
-	signed char split,signed char paramsplit,mBool bNoCase)
+	char split,char paramsplit,mBool bNoCase)
 {
 	const char *pc,*pend,*pkeyend;
 	int ret;

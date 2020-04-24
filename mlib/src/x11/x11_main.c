@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -205,6 +205,41 @@ static void _app_init_thread(mAppSystem *p)
 #endif
 }
 
+/** クライアントリーダーウィンドウ作成 */
+
+static void _create_client_leader(mAppSystem *p)
+{
+	XSetWindowAttributes attr;
+	Window id;
+	XClassHint chint;
+
+	//ウィンドウ作成
+
+	attr.override_redirect = 0;
+	attr.event_mask = 0;
+	
+	id = XCreateWindow(p->disp, p->root_window,
+		10, 10, 10, 10, 0,
+		CopyFromParent, InputOnly, CopyFromParent,
+		CWOverrideRedirect | CWEventMask,
+		&attr);
+
+	p->leader_window = id;
+
+	//
+
+	mX11SetProperty_wm_pid(id);
+	mX11SetProperty_wm_client_leader(id);
+
+	//WM_CLASS などセット
+
+	chint.res_name = MAPP->res_appname;
+	chint.res_class = MAPP->res_classname;
+
+	XmbSetWMProperties(p->disp, id,
+		NULL, NULL, &MAPP->argv_progname, 1, NULL, NULL, &chint);
+}
+
 
 //=================================
 //
@@ -268,6 +303,10 @@ void __mAppEnd(void)
 	//D&D
 
 	mX11DND_free(p->dnd);
+
+	//クライアントリーダー
+
+	XDestroyWindow(p->disp, p->leader_window);
 
 	//ディスプレイ閉じる
 
@@ -359,6 +398,10 @@ int __mAppInit(void)
 		
 	p->gc_def = XCreateGC(p->disp, p->root_window, 0, NULL);
 	
+	//クライアントリーダー
+
+	_create_client_leader(p);
+
 	//クリップボード
 	
 	p->clipb = mX11ClipboardNew();

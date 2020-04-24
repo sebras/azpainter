@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -26,6 +26,7 @@ $*/
 #include <unistd.h>
 
 #define MINC_X11_ATOM
+#define MINC_X11_UTIL
 #include "mSysX11.h"
 
 #include "mWindowDef.h"
@@ -89,9 +90,8 @@ int __mWindowNew(mWindow *p)
 	mWindowSysDat *sys;
 	XSetWindowAttributes attr;
 	Window id;
-	long pid;
 	Atom atom[3];
-	const char *pstr;
+	XClassHint chint;
 	
 	//拡張データ確保
 	
@@ -123,27 +123,41 @@ int __mWindowNew(mWindow *p)
 	sys->xid = id;
 	sys->eventmask = attr.event_mask;
 	
-	//プロセスID
+	//_NET_WM_PID (プロセスID) セット
+
+	mX11SetProperty_wm_pid(id);
+
+	//WM_CLIENT_LEADER
+
+	mX11SetProperty_wm_client_leader(id);
 	
-	pid = getpid();
-	
-	mX11SetPropertyCARDINAL(id, mX11GetAtom("_NET_WM_PID"), &pid, 1);
-	
+	//class
+
+	chint.res_name = MAPP->res_appname;
+	chint.res_class = MAPP->res_classname;
+
+	XSetClassHint(XDISP, id, &chint);
+
+	//wmhints
+
+/*
+	XWMHints wmh;
+
+	wmh.flags = InputHint | StateHint | WindowGroupHint;
+	wmh.input = 1;
+	wmh.initial_state = NormalState;
+	wmh.window_group = MAPP_SYS->leader_window;
+
+	XSetWMHints(XDISP, id, &wmh);
+*/
+
 	//ウィンドウタイプ
 	
 	if(p->win.fStyle & MWINDOW_S_DIALOG)
-	{
-		pstr = "_NET_WM_WINDOW_TYPE_DIALOG";
-		
 		sys->fMapRequest |= MX11_WIN_MAP_REQUEST_MODAL;
-	}
-	else if(p->win.fStyle & MWINDOW_S_TOOL)
-		pstr = "_NET_WM_WINDOW_TYPE_UTILITY";
 	else
-		pstr = "_NET_WM_WINDOW_TYPE_NORMAL";
+		mX11WindowSetWindowType(p, "_NET_WM_WINDOW_TYPE_NORMAL");
 	
-	mX11WindowSetWindowType(p, pstr);
-
 	//ユーザータイム
 	
 	if(!(p->win.fStyle & MWINDOW_S_POPUP)
@@ -158,7 +172,7 @@ int __mWindowNew(mWindow *p)
 		mX11SetProperty32(id, "_NET_WM_USER_TIME_WINDOW",
 			XA_WINDOW, &(sys->usertime_xid), 1);
 		
-		mX11WindowSetUserTime(p, 0);
+		//mX11WindowSetUserTime(p, 0);
 	}
 	
 	//装飾
@@ -604,7 +618,7 @@ void mX11WindowSetWindowType(mWindow *p,const char *name)
 
 void mX11WindowSetUserTime(mWindow *p,unsigned long time)
 {
-	if(p->win.sys->usertime_xid)
+	if(p->win.sys->usertime_xid && time)
 	{
 		mX11SetPropertyCARDINAL(p->win.sys->usertime_xid,
 			MAPP_SYS->atoms[MX11_ATOM_NET_WM_USER_TIME], &time, 1);

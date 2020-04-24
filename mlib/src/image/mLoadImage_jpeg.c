@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -385,7 +385,7 @@ static int _read_headers(_LOADJPEG *p)
 		if(colspace == JCS_CMYK || colspace == JCS_YCCK)
 			jpg->out_color_space = JCS_CMYK;
 		else
-			jpg->out_color_space = (p->param->format == MLOADIMAGE_FORMAT_RGBA)? JCS_EXT_RGBA: JCS_RGB;
+			jpg->out_color_space = JCS_RGB;
 	}
 
 	//展開開始
@@ -482,12 +482,32 @@ static void _convert_CMYK(_LOADJPEG *p)
 	}
 }
 
+/** イメージ変換 (RGB->RGBA) */
+
+static void _convert_RGBA(uint8_t *buf,uint32_t width)
+{
+	uint8_t *ps,*pd,r,g,b;
+
+	ps = buf + (width - 1) * 3;
+	pd = buf + ((width - 1) << 2);
+
+	for(; width; width--, ps -= 3, pd -= 4)
+	{
+		r = ps[0], g = ps[1], b = ps[2];
+
+		pd[0] = r;
+		pd[1] = g;
+		pd[2] = b;
+		pd[3] = 255;
+	}
+}
+
 /** メイン処理 */
 
 static int _main_proc(_LOADJPEG *p)
 {
 	mLoadImage *param = p->param;
-	int ret,pitch,bconvert;
+	int ret,pitch,conv;
 	
 	//イメージ部分まで処理
 
@@ -510,10 +530,14 @@ static int _main_proc(_LOADJPEG *p)
 			return (ret < 0)? RET_ERR_NOMES: RET_OK;
 	}
 
-	//変換するか
+	//変換
 
-	bconvert = (p->jpg.out_color_space == JCS_CMYK
-		&& p->param->format != MLOADIMAGE_FORMAT_RAW);
+	if(p->jpg.out_color_space == JCS_CMYK)
+		conv = (param->format == MLOADIMAGE_FORMAT_RAW)? 0: 1;
+	else if(param->format == MLOADIMAGE_FORMAT_RGBA)
+		conv = 2;
+	else
+		conv = 0;
 
 	//イメージ
 
@@ -526,7 +550,9 @@ static int _main_proc(_LOADJPEG *p)
 
 		//変換
 
-		if(bconvert)
+		if(conv == 2)
+			_convert_RGBA(p->rowbuf, param->info.width);
+		else if(conv == 1)
 			_convert_CMYK(p);
 
 		//getrow()

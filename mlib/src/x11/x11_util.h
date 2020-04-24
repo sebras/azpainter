@@ -1,5 +1,5 @@
 /*$
- Copyright (C) 2013-2019 Azel.
+ Copyright (C) 2013-2020 Azel.
 
  This file is part of AzPainter.
 
@@ -32,6 +32,9 @@ void mX11SetPropertyAtom(Window id,Atom prop,Atom *atoms,int num);
 void mX11SetProperty8(Window id,Atom prop,Atom type,
 	const void *buf,long size,mBool append);
 void mX11SetPropertyCompoundText(Window id,Atom prop,const char *utf8,int len);
+
+void mX11SetProperty_wm_pid(Window id);
+void mX11SetProperty_wm_client_leader(Window id);
 
 mBool mX11GetProperty32Array(Window id,Atom prop,Atom proptype,void *buf,int num);
 void *mX11GetProperty32(Window id,Atom prop,Atom proptype,int *resnum);
