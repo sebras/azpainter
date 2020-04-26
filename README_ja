@@ -102,7 +102,7 @@ $ gmake
 
 ## MacOS
 
-$ ./configure --prefix=/usr/X11
+$ ./configure --prefix=/opt/X11
 $ make
 $ sudo make install
 
