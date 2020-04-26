@@ -313,7 +313,7 @@ void DockObjects_all_windowMode(int type)
 
 void DockObject_normalize_layout_config()
 {
-	char buf[DOCKWIDGET_NUM + 2];
+	signed char buf[DOCKWIDGET_NUM + 2];
 	int i,pos,paneno,no;
 	char *pc;
 
